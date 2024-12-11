@@ -13,7 +13,7 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 13 "limbaj.y"
+#line 15 "limbaj.y"
 typedef union {
      char* string;
 } yy_parse_stype;

@@ -8,6 +8,8 @@ extern int yylineno;
 extern int yylex();
 void yyerror(const char * s);
 class SymTable* current;
+vector<SymTable*> tables;
+
 int errorCount = 0;
 %}
 %union {
@@ -24,23 +26,46 @@ int errorCount = 0;
 progr :  declarations main {if (errorCount == 0) cout<< "The program is correct!" << endl;}
       ;
 
-declarations : decl           
-	      |  declarations decl    
-	      ;
+declarations   :   decl_var          
+	          |   declarations decl_var
+               |   declarations def_func
+               |   def_func
+	          ;
 
-decl       :  TYPE ID ';' { 
-                              if(!current->existsId($2)) {
-                                    current->addVar($1,$2);
-                              } else {
-                                   errorCount++; 
-                                   yyerror("Variable already defined");
+def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
+                                   {
+                                        /*update current pointer to match the new scope*/
+                                        /*if ID does not exist in current scope, add function info to the current symtable */
+                                   }
+          | TYPE ID  '(' list_param ')' ';'
+decl_var  :    TYPE ID ';'    { 
+                                   if(!current->existsId($2)) {
+                                             current->addVar($1,$2);
+                                   } else {
+                                        errorCount++; 
+                                        yyerror("Variable already defined");
+                                   }
                               }
-                          }
-              | TYPE ID  '(' list_param ')' ';'
+          |    TYPE ID '[' list_array ']' ';'     {
+                                                       if(!current->existsId($2)) {
+                                                            current->addVar($1,$2);
+                                                       } else {
+                                                            errorCount++; 
+                                                            yyerror("Variable already defined");
+                                                       } 
+                                                  }    
            ;
+list_array     :    list_array ',' NR
+               |    NR
+fblock : fblock decl_var
+       | fblock statement
+       |
+       ;
 
+     
 list_param : param
             | list_param ','  param 
+            |
             ;
             
 param : TYPE ID 

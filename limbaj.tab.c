@@ -109,9 +109,11 @@ extern int yylineno;
 extern int yylex();
 void yyerror(const char * s);
 class SymTable* current;
+vector<SymTable*> tables;
+
 int errorCount = 0;
 
-#line 13 "limbaj.y"
+#line 15 "limbaj.y"
 typedef union {
      char* string;
 } yy_parse_stype;
@@ -449,26 +451,26 @@ YY_parse_CONSTRUCTOR_CODE;
  #line 352 "/usr/share/bison++/bison.cc"
 
 
-#define	YYFINAL		45
+#define	YYFINAL		62
 #define	YYFLAG		-32768
-#define	YYNTBASE	16
+#define	YYNTBASE	20
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 263 ? yytranslate[x] : 26)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 263 ? yytranslate[x] : 34)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,    13,
-    14,    11,     9,    15,    10,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,    12,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,    12,
+    13,    11,     9,    19,    10,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,    16,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+    17,     2,    18,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,    14,     2,    15,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -487,92 +489,107 @@ static const char yytranslate[] = {     0,
 
 #if YY_parse_DEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     3,     5,     8,    12,    19,    21,    25,    28,    32,
-    35,    39,    44,    48,    52,    56,    58,    62,    66,    70,
-    72
+     0,     3,     5,     8,    11,    13,    14,    24,    31,    35,
+    42,    46,    48,    51,    54,    55,    57,    61,    62,    65,
+    69,    72,    76,    81,    85,    89,    93,    95,    99,   103,
+   107,   109
 };
 
-static const short yyrhs[] = {    17,
-    21,     0,    18,     0,    17,    18,     0,     8,     7,    12,
-     0,     8,     7,    13,    19,    14,    12,     0,    20,     0,
-    19,    15,    20,     0,     8,     7,     0,     3,    22,     4,
-     0,    23,    12,     0,    22,    23,    12,     0,     7,    13,
-    24,    14,     0,     7,    13,    14,     0,     7,     5,    25,
-     0,    24,    15,    25,     0,    25,     0,    25,     9,    25,
-     0,    25,    11,    25,     0,    13,    25,    14,     0,     7,
-     0,     6,     0
+static const short yyrhs[] = {    21,
+    29,     0,    24,     0,    21,    24,     0,    21,    22,     0,
+    22,     0,     0,     8,     7,    12,    27,    13,    14,    23,
+    26,    15,     0,     8,     7,    12,    27,    13,    16,     0,
+     8,     7,    16,     0,     8,     7,    17,    25,    18,    16,
+     0,    25,    19,     6,     0,     6,     0,    26,    24,     0,
+    26,    31,     0,     0,    28,     0,    27,    19,    28,     0,
+     0,     8,     7,     0,     3,    30,     4,     0,    31,    16,
+     0,    30,    31,    16,     0,     7,    12,    32,    13,     0,
+     7,    12,    13,     0,     7,     5,    33,     0,    32,    19,
+    33,     0,    33,     0,    33,     9,    33,     0,    33,    11,
+    33,     0,    12,    33,    13,     0,     7,     0,     6,     0
 };
 
 #endif
 
 #if (YY_parse_DEBUG != 0) || defined(YY_parse_ERROR_VERBOSE) 
 static const short yyrline[] = { 0,
-    24,    27,    28,    31,    39,    42,    43,    46,    49,    53,
-    54,    57,    58,    59,    62,    63,    66,    67,    68,    69,
-    70
+    26,    29,    30,    31,    32,    35,    35,    40,    41,    49,
+    58,    59,    60,    61,    62,    66,    67,    68,    71,    74,
+    78,    79,    82,    83,    84,    87,    88,    91,    92,    93,
+    94,    95
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","BGIN","END",
-"ASSIGN","NR","ID","TYPE","'+'","'-'","'*'","';'","'('","')'","','","progr",
-"declarations","decl","list_param","param","main","list","statement","call_list",
-"e",""
+"ASSIGN","NR","ID","TYPE","'+'","'-'","'*'","'('","')'","'{'","'}'","';'","'['",
+"']'","','","progr","declarations","def_func","@1","decl_var","list_array","fblock",
+"list_param","param","main","list","statement","call_list","e",""
 };
 #endif
 
 static const short yyr1[] = {     0,
-    16,    17,    17,    18,    18,    19,    19,    20,    21,    22,
-    22,    23,    23,    23,    24,    24,    25,    25,    25,    25,
-    25
+    20,    21,    21,    21,    21,    23,    22,    22,    24,    24,
+    25,    25,    26,    26,    26,    27,    27,    27,    28,    29,
+    30,    30,    31,    31,    31,    32,    32,    33,    33,    33,
+    33,    33
 };
 
 static const short yyr2[] = {     0,
-     2,     1,     2,     3,     6,     1,     3,     2,     3,     2,
-     3,     4,     3,     3,     3,     1,     3,     3,     3,     1,
-     1
+     2,     1,     2,     2,     1,     0,     9,     6,     3,     6,
+     3,     1,     2,     2,     0,     1,     3,     0,     2,     3,
+     2,     3,     4,     3,     3,     3,     1,     3,     3,     3,
+     1,     1
 };
 
 static const short yydefact[] = {     0,
-     0,     0,     2,     0,     0,     3,     1,     4,     0,     0,
-     0,     0,     0,     0,     6,     0,     0,     9,     0,    10,
-     8,     0,     0,    21,    20,     0,    14,    13,     0,    16,
-    11,     5,     7,     0,     0,     0,    12,     0,    19,    17,
-    18,    15,     0,     0,     0
+     0,     0,     5,     2,     0,     0,     4,     3,     1,    18,
+     9,     0,     0,     0,     0,     0,     0,    16,    12,     0,
+     0,     0,    20,     0,    21,    19,     0,     0,     0,     0,
+    32,    31,     0,    25,    24,     0,    27,    22,     6,     8,
+    17,    10,    11,     0,     0,     0,    23,     0,    15,    30,
+    28,    29,    26,     0,     0,     7,    13,    14,     0,     0,
+     0,     0
 };
 
-static const short yydefgoto[] = {    43,
-     2,     3,    14,    15,     7,    11,    12,    29,    27
+static const short yydefgoto[] = {    60,
+     2,     3,    49,     4,    20,    54,    17,    18,     9,    14,
+    15,    36,    34
 };
 
-static const short yypact[] = {     8,
-    22,    12,-32768,    -6,    25,-32768,-32768,-32768,    26,     0,
-    18,    11,    28,    13,-32768,    -5,    -3,-32768,    21,-32768,
--32768,    24,    26,-32768,-32768,    -5,    15,-32768,    16,    15,
--32768,-32768,-32768,     3,    -5,    -5,-32768,    -5,-32768,    27,
--32768,    15,    37,    39,-32768
+static const short yypact[] = {    28,
+    -1,    27,-32768,-32768,    17,    16,-32768,-32768,-32768,    36,
+-32768,    40,     0,     3,    31,    41,     5,-32768,-32768,     1,
+    10,     2,-32768,    33,-32768,-32768,    23,    36,    35,    44,
+-32768,-32768,    10,    34,-32768,     8,    34,-32768,-32768,-32768,
+-32768,-32768,-32768,    29,    10,    10,-32768,    10,-32768,-32768,
+    42,-32768,    34,    -4,    47,-32768,-32768,-32768,    15,    55,
+    56,-32768
 };
 
 static const short yypgoto[] = {-32768,
--32768,    38,-32768,    19,-32768,-32768,    30,-32768,   -17
+-32768,    57,-32768,    -2,-32768,-32768,-32768,    30,-32768,-32768,
+   -13,-32768,   -20
 };
 
 
-#define	YYLAST		42
+#define	YYLAST		59
 
 
-static const short yytable[] = {    30,
-    24,    25,    24,    25,    16,     8,     9,    26,    34,    26,
-    28,    35,    17,    36,     5,     1,    39,    40,    41,     1,
-    42,    18,    20,    35,    10,    36,    22,    23,     4,    37,
-    38,    10,    31,    13,    21,    32,    44,    36,    45,     6,
-    19,    33
+static const short yytable[] = {     8,
+    24,    37,    13,    55,    21,     5,    23,    31,    32,    13,
+    56,    22,    44,    33,    35,    31,    32,    27,    29,    30,
+    47,    33,    13,    28,    51,    52,    48,    53,    10,     6,
+    11,    12,    11,    12,     1,     1,    39,    45,    40,    46,
+    58,    50,    45,    16,    46,    19,    25,    26,    38,    43,
+    42,    57,    46,    59,    61,    62,     0,    41,     7
 };
 
-static const short yycheck[] = {    17,
-     6,     7,     6,     7,     5,    12,    13,    13,    26,    13,
-    14,     9,    13,    11,     3,     8,    14,    35,    36,     8,
-    38,     4,    12,     9,     7,    11,    14,    15,     7,    14,
-    15,     7,    12,     8,     7,    12,     0,    11,     0,     2,
-    11,    23
+static const short yycheck[] = {     2,
+    14,    22,     7,     8,     5,     7,     4,     6,     7,     7,
+    15,    12,    33,    12,    13,     6,     7,    13,    18,    19,
+    13,    12,     7,    19,    45,    46,    19,    48,    12,     3,
+    16,    17,    16,    17,     8,     8,    14,     9,    16,    11,
+    54,    13,     9,     8,    11,     6,    16,     7,    16,     6,
+    16,    54,    11,     7,     0,     0,    -1,    28,     2
 };
 
 #line 352 "/usr/share/bison++/bison.cc"
@@ -1069,19 +1086,41 @@ YYLABEL(yyreduce)
   switch (yyn) {
 
 case 1:
-#line 24 "limbaj.y"
+#line 26 "limbaj.y"
 {if (errorCount == 0) cout<< "The program is correct!" << endl;;
     break;}
-case 4:
-#line 31 "limbaj.y"
+case 6:
+#line 35 "limbaj.y"
+{/*create function symtable,update current*/;
+    break;}
+case 7:
+#line 36 "limbaj.y"
+{
+                                        /*update current pointer to match the new scope*/
+                                        /*if ID does not exist in current scope, add function info to the current symtable */
+                                   ;
+    break;}
+case 9:
+#line 41 "limbaj.y"
 { 
-                              if(!current->existsId(yyvsp[-1].string)) {
-                                    current->addVar(yyvsp[-2].string,yyvsp[-1].string);
-                              } else {
-                                   errorCount++; 
-                                   yyerror("Variable already defined");
-                              }
-                          ;
+                                   if(!current->existsId(yyvsp[-1].string)) {
+                                             current->addVar(yyvsp[-2].string,yyvsp[-1].string);
+                                   } else {
+                                        errorCount++; 
+                                        yyerror("Variable already defined");
+                                   }
+                              ;
+    break;}
+case 10:
+#line 49 "limbaj.y"
+{
+                                                       if(!current->existsId(yyvsp[-4].string)) {
+                                                            current->addVar(yyvsp[-5].string,yyvsp[-4].string);
+                                                       } else {
+                                                            errorCount++; 
+                                                            yyerror("Variable already defined");
+                                                       } 
+                                                  ;
     break;}
 }
 
@@ -1287,7 +1326,7 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 72 "limbaj.y"
+#line 97 "limbaj.y"
 
 void yyerror(const char * s){
      cout << "error:" << s << " at line: " << yylineno << endl;

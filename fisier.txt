@@ -2,8 +2,13 @@ intreg x;
 intreg y;
 caracter z;
 caracter c;
+intreg arr[10,9];
 clasa B2;
-intreg functie(intreg w, intreg m);
+real foo();
+intreg functie(intreg w, intreg m) {
+    intreg yy;
+    caracter B3;
+}
 sir propozitie;
 start_programel
 x <- 2; y <- 4; z <- x;

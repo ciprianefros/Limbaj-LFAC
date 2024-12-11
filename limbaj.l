@@ -5,6 +5,7 @@
 %option noyywrap
 %%
 "intreg"|"real"|"caracter"|"sir"|"bool"|"clasa" {yylval.string = strdup(yytext);return TYPE;}
+
 "start_programel" {return BGIN;}
 "sfarsit_programel" {return END;}
 [a-zA-Z][a-zA-Z0-9]* {yylval.string = strdup(yytext); return ID;}
