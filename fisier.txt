@@ -1,0 +1,12 @@
+intreg x;
+intreg y;
+caracter z;
+intreg functie(intreg w, intreg m);
+sir propozitie;
+start_programel
+x <- 2; y <- 4; z <- x;
+z <- 4;
+w <- 345 + y *56 + 7;
+functie(56+3,234+x,y+5);
+f();
+sfarsit_programel
