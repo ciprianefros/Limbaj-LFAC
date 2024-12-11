@@ -1,6 +1,7 @@
 intreg x;
 intreg y;
 caracter z;
+caracter c;
 intreg functie(intreg w, intreg m);
 sir propozitie;
 start_programel
