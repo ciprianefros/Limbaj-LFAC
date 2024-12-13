@@ -50,16 +50,30 @@ global_declarations   :    BGINGLOBAL declarations ENDGLOBAL
 
 declarations   : vars_declarations class_declarations func_declarations
 
-vars_declarations   : BGIN decl_var     
-                    | global_declarations decl_var 
+vars_declarations   : BGINVARS decl_vars ENDVARS    
+                    |
                     ;
 
-class_declarations  : decl_class     
-                    | class_declarations decl_class                    ;
+decl_vars      : decl_var
+               | decl_vars decl_var
+               ;
 
-func_declarations   : decl_func     
-                    | func_declarations decl_func
+class_declarations  : BGINCLASS decl_classes ENDCLASS
+                    | 
                     ;
+
+decl_classes   : decl_class
+               | decl_classes decl_class
+               ;
+
+func_declarations   : BGINFUNC decl_funcs ENDFUNC
+                    |
+                    ;
+
+decl_funcs     : decl_func
+               | decl_funcs decl_func
+               ;
+
 
 decl_var  :    TYPE ID ';'    { 
                                    if(!current->existsId($2)) 
@@ -85,8 +99,15 @@ decl_var  :    TYPE ID ';'    {
                                                   }    
            ;
 
-decl_class :   CLASS ID  '{' memb_list '}' ';'
+decl_class :   CLASS ID  '{' membs_list '}' ';'
 
+membs_list : memb_list
+           | membs_list memb_list
+           ;
+
+memb_list : ID ':' TYPE ';'
+          | altfeldacavreiasadacorect
+          ;
 
 def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
                                    {
