@@ -13,14 +13,25 @@ vector<SymTable*> tables;
 int errorCount = 0;
 %}
 %union {
+     int number;
+     float real_number;
+     char caracter;
+     ASTNode ast;
      char* string;
 }
 %token  BGIN END ASSIGN NR 
 %token<string> ID TYPE
 %start progr
 
+%left OR
+%left AND
+%left EQ NEQ
+%left GT LT LTE GTE
 %left '+' '-' 
-%left '*'
+%left '*' '/' 
+%left '^' 
+%left NOT
+%left '(' ')' '[' ']'
 
 %%
 progr :  declarations main {if (errorCount == 0) cout<< "The program is correct!" << endl;}
