@@ -12,15 +12,22 @@ vector<SymTable*> tables;
 
 int errorCount = 0;
 %}
-%union {
+%union 
+{
      int number;
      float real_number;
+     bool true_or_false;
      char caracter;
      ASTNode ast;
      char* string;
 }
-%token  BGIN END ASSIGN NR 
-%token<string> ID TYPE
+%token  BGIN END ASSIGN NR BGINCLASS ENDCLASS BGINGLOBAL ENDGLOBAL BGINFUNC ENDFUNC 
+%token EQ NEQ GT LT GTE LTE AND OR NOT
+%token PRINT TYPEOF EVAL IF ELSE WHILE
+%token<string> ID TYPE STRING CHAR
+%token<real_number> FLOAT
+%token<number> INT
+%token<true_or_false> BOOL
 %start progr
 
 %left OR
@@ -31,17 +38,55 @@ int errorCount = 0;
 %left '*' '/' 
 %left '^' 
 %left NOT
-%left '(' ')' '[' ']'
+%left '[' ']' '(' ')'
 
 %%
-progr :  declarations main {if (errorCount == 0) cout<< "The program is correct!" << endl;}
+progr :  global_declarations main {if (errorCount == 0) cout<< "The program is correct!" << endl;}
       ;
 
-declarations   :   decl_var          
-	          |   declarations decl_var
-               |   declarations def_func
-               |   def_func
-	          ;
+global_declarations   :    BGINGLOBAL declarations ENDGLOBAL
+                      |    
+                      ;
+
+declarations   : vars_declarations class_declarations func_declarations
+
+vars_declarations   : BGIN decl_var     
+                    | global_declarations decl_var 
+                    ;
+
+class_declarations  : decl_class     
+                    | class_declarations decl_class                    ;
+
+func_declarations   : decl_func     
+                    | func_declarations decl_func
+                    ;
+
+decl_var  :    TYPE ID ';'    { 
+                                   if(!current->existsId($2)) 
+                                   {
+                                             current->addVar($1,$2);
+                                   } 
+                                   else 
+                                   {
+                                        errorCount++; 
+                                        yyerror("Variable already defined");
+                                   }
+                              }
+          |    TYPE ID '[' list_array ']' ';'     {
+                                                       if(!current->existsId($2)) 
+                                                       {
+                                                            current->addVar($1,$2);
+                                                       } 
+                                                       else 
+                                                       {
+                                                            errorCount++; 
+                                                            yyerror("Variable already defined");
+                                                       } 
+                                                  }    
+           ;
+
+decl_class :   CLASS ID  '{' memb_list '}' ';'
+
 
 def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
                                    {
@@ -49,23 +94,7 @@ def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update curr
                                         /*if ID does not exist in current scope, add function info to the current symtable */
                                    }
           | TYPE ID  '(' list_param ')' ';'
-decl_var  :    TYPE ID ';'    { 
-                                   if(!current->existsId($2)) {
-                                             current->addVar($1,$2);
-                                   } else {
-                                        errorCount++; 
-                                        yyerror("Variable already defined");
-                                   }
-                              }
-          |    TYPE ID '[' list_array ']' ';'     {
-                                                       if(!current->existsId($2)) {
-                                                            current->addVar($1,$2);
-                                                       } else {
-                                                            errorCount++; 
-                                                            yyerror("Variable already defined");
-                                                       } 
-                                                  }    
-           ;
+
 list_array     :    list_array ',' NR
                |    NR
 fblock : fblock decl_var
@@ -92,7 +121,18 @@ list :  statement ';'
 
 statement: ID '(' call_list ')'
          | ID '('')'
+         | declarations
+         | 
+
+
+          
          | ID ASSIGN e
+         | ID ASSIGN ID
+         | ID ASSIGN INT
+         | ID ASSIGN BOOL
+         | ID ASSIGN CHAR
+         | ID ASSIGN STRING
+         | ID ASSIGN FLOAT
          ;
         
 call_list :  call_list ',' e
