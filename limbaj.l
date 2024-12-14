@@ -5,6 +5,7 @@
 %option noyywrap
 %%
 "intreg"|"real"|"caracter"|"sir"|"bool" {yylval.string = strdup(yytext);return TYPE;}
+
 "clasa" {return CLASS;}
 "constant" {return CONST;}
 "start_programel" {return BGIN;}
@@ -13,7 +14,7 @@
 "start_global" {return BGINGLOBAL;}
 "sfarsit_global" {return ENDGLOBAL;}
 "start_vars" {return BGINVARS;}
-"sfarsit_vars" {return ENDVARS}
+"sfarsit_vars" {return ENDVARS;}
 "start_clasa" {return BGINCLASS;}
 "sfarsit_clasa" {return ENDCLASS;}
 "start_functions" {return BGINFUNC;}

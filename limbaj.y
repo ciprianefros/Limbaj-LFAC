@@ -21,7 +21,7 @@ int errorCount = 0;
      ASTNode ast;
      char* string;
 }
-%token  BGIN END ASSIGN NR BGINCLASS ENDCLASS BGINGLOBAL ENDGLOBAL BGINFUNC ENDFUNC 
+%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE
 %token<string> ID TYPE STRING CHAR
@@ -99,14 +99,24 @@ decl_var  :    TYPE ID ';'    {
                                                   }    
            ;
 
-decl_class :   CLASS ID  '{' membs_list '}' ';'
+decl_class :   CLASS ID  '{' membs_list methods_list '}' ';'
 
-membs_list : memb_list
-           | membs_list memb_list
+membs_list : class_memb
+           | membs_list class_memb
            ;
 
-memb_list : ID ':' TYPE ';'
-          | altfeldacavreiasadacorect
+methods_list : methods_list method
+             |
+             ;
+
+method : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
+                                   {
+                                        /*update current pointer to match the new scope*/
+                                        /*if ID does not exist in current scope, add function info to the current symtable */
+                                   }
+       ;
+
+class_memb : ID ':' TYPE ';' 
           ;
 
 def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
@@ -118,6 +128,7 @@ def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update curr
 
 list_array     :    list_array ',' NR
                |    NR
+
 fblock : fblock decl_var
        | fblock statement
        |
@@ -135,36 +146,27 @@ param : TYPE ID
 main : BGIN list END  
      ;
      
-
 list :  statement ';' 
      | list statement ';'
      ;
 
 statement: ID '(' call_list ')'
          | ID '('')'
-         | declarations
-         | 
-
-
-          
          | ID ASSIGN e
-         | ID ASSIGN ID
-         | ID ASSIGN INT
-         | ID ASSIGN BOOL
-         | ID ASSIGN CHAR
-         | ID ASSIGN STRING
-         | ID ASSIGN FLOAT
          ;
         
 call_list :  call_list ',' e
-           | e
-           ;
+          | e
+          ;
 
 e : e '+' e  
   | e '*' e  
+  | e '/' e
+  | e '-' e
   |'(' e ')'
-  | ID 
-  | NR
+  | '-' e
+  | ID
+  | INT
   ;
 %%
 void yyerror(const char * s){
