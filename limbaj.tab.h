@@ -225,13 +225,16 @@ typedef
 #define	WHILE	286
 #define	FOR	287
 #define	DO	288
-#define	ID	289
-#define	TYPE	290
-#define	STRING	291
-#define	CHAR	292
-#define	FLOAT	293
-#define	INT	294
-#define	BOOL	295
+#define	LOOP	289
+#define	BREAK	290
+#define	CONTINUE	291
+#define	ID	292
+#define	TYPE	293
+#define	STRING	294
+#define	CHAR	295
+#define	FLOAT	296
+#define	INT	297
+#define	BOOL	298
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -311,6 +314,9 @@ static const int ELSE;
 static const int WHILE;
 static const int FOR;
 static const int DO;
+static const int LOOP;
+static const int BREAK;
+static const int CONTINUE;
 static const int ID;
 static const int TYPE;
 static const int STRING;
@@ -357,13 +363,16 @@ static const int BOOL;
 	,WHILE=286
 	,FOR=287
 	,DO=288
-	,ID=289
-	,TYPE=290
-	,STRING=291
-	,CHAR=292
-	,FLOAT=293
-	,INT=294
-	,BOOL=295
+	,LOOP=289
+	,BREAK=290
+	,CONTINUE=291
+	,ID=292
+	,TYPE=293
+	,STRING=294
+	,CHAR=295
+	,FLOAT=296
+	,INT=297
+	,BOOL=298
 
 
 #line 215 "/usr/share/bison++/bison.h"

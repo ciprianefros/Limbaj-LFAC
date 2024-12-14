@@ -23,7 +23,7 @@ int errorCount = 0;
 }
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
 %token EQ NEQ GT LT GTE LTE AND OR NOT
-%token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO
+%token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE
 %token<string> ID TYPE STRING CHAR
 %token<real_number> FLOAT
 %token<number> INT
@@ -117,7 +117,7 @@ method : TYPE ID '(' list_param ')' '{'{/*create function symtable,update curren
        ;
 
 class_memb : ID ':' TYPE ';' 
-          ;
+           ;
 
 def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update current*/}  fblock '}'
                                    {
@@ -151,10 +151,37 @@ list :  statement ';'
      ;
 
 statement: ID '(' call_list ')'
-         | ID '('')'
+         | ID '(' ')'
+         | TYPE ID ASSIGN e
          | ID ASSIGN e
+         | ID '[' INT ']' ASSIGN e
+         | ID '.' ID ASSIGN e
+         | IF '(' bool_expr ')' '{' list '}' 
+         | IF '(' bool_expr ')' '{' list '}' ELSE '{' list '}'
+         | WHILE '(' bool_expr ')' '{' list '}'
+         | DO '{' list '}' WHILE '(' bool_expr ')'
+         | LOOP '{' list '}'
+         | FOR '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}'
+         | CONTINUE
+         | BREAK 
          ;
-        
+
+assignment_stmt : TYPE ID ASSIGN e
+                | ID ASSIGN e
+                ;
+
+bool_expr : bool_expr NEQ bool_expr 
+          | bool_expr EQ bool_expr
+          | bool_expr LT bool_expr
+          | bool_expr LTE bool_expr 
+          | bool_expr GT bool_expr 
+          | bool_expr GTE bool_expr 
+          | bool_expr AND bool_expr
+          | bool_expr OR bool_expr
+          | NOT bool_expr
+          | e
+          ;
+
 call_list :  call_list ',' e
           | e
           ;
@@ -167,6 +194,8 @@ e : e '+' e
   | '-' e
   | ID
   | INT
+  | FLOAT
+  | CHAR
   ;
 %%
 void yyerror(const char * s){

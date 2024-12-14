@@ -7,7 +7,12 @@ caracter c;
 intreg arr[10,9];
 sfarsit_vars
 start_clasa
-clasa B2 {chh : caracter;};
+clasa B2 {
+    chh : caracter;
+    intreg funct() {
+        intreg sdf;
+    }
+};
 sfarsit_clasa
 start_functions
 real foo();
@@ -21,6 +26,42 @@ start_programel
 x <- 2; y <- 4; z <- x;
 z <- 4;
 w <- 345 + y *56 + 7;
+daca ( 3 + 4 <= 5) {
+    c <- 23;
+};
+
+daca (!(3 + 4) - 20 && 20 + 4 * 6 || 4 + 5) {
+    c <- 3;
+} altfel {
+    c <- 5;
+};
+
+catTimp (c != 12) {
+    c <- c + 1;
+};
+
+bucla {
+    daca( x > 5) {
+        rupe;
+    } altfel {
+        x <- x + 1.5;
+    };
+};
+
+lucreaza {
+    caracter chhhhh <- 'a';
+    daca (ch != 'z') {
+        chhhhh <- chhhhh + 1;
+    };
+} catTimp (chhhhh != 'z');
+
+pentru (intreg _hehe <- 0; _hehe < 10; _hehe <- _hehe + 1) {
+    daca (_hehe == 9) {
+        rupe;
+    };
+    _hehe <- _hehe;
+    intreg lol <- lolololo;
+};
 functie(56+3,234+x,y+5);
 f();
 sfarsit_programel
