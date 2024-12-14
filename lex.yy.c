@@ -982,12 +982,12 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 38 "limbaj.l"
-{ yylval.bul = true; return BOOL; }
+{ yylval.true_or_false = true; return BOOL; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 39 "limbaj.l"
-{ yylval.bul = false; return BOOL; }
+{ yylval.true_or_false = false; return BOOL; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP

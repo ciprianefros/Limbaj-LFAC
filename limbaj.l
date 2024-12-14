@@ -35,8 +35,8 @@
 "daca" {return IF;}
 "altfel" {return ELSE;}
 "catTimp" {return WHILE;}
-"adevarat"  { yylval.bul = true; return BOOL; }
-"fals" { yylval.bul = false; return BOOL; }
+"adevarat"  { yylval.true_or_false = true; return BOOL; }
+"fals" { yylval.true_or_false = false; return BOOL; }
 \"[0-9a-zA-Z ]*\" { yylval.string = strdup(yytext); return STRING; }
 ['][0-9a-zA-Z]['] { yylval.caracter = yytext[1]; return CHAR; }
 [1-9]+[0-9]*[.][0-9]+[0-9]* {    yylval.real_number = atof(yytext);return FLOAT;}

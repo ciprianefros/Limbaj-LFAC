@@ -1,15 +1,22 @@
+start_global
+start_vars
 intreg x;
 intreg y;
 caracter z;
 caracter c;
 intreg arr[10,9];
-clasa B2;
+sfarsit_vars
+start_clasa
+clasa B2 {chh : caracter;};
+sfarsit_clasa
+start_functions
 real foo();
 intreg functie(intreg w, intreg m) {
     intreg yy;
     caracter B3;
 }
-sir propozitie;
+sfarsit_functions
+sfarsit_global
 start_programel
 x <- 2; y <- 4; z <- x;
 z <- 4;

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include "SymTable.h"
+#include "AST.h"
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
@@ -18,10 +19,9 @@ int errorCount = 0;
      float real_number;
      bool true_or_false;
      char caracter;
-     ASTNode ast;
      char* string;
 }
-%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
+%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE
 %token<string> ID TYPE STRING CHAR
@@ -70,8 +70,8 @@ func_declarations   : BGINFUNC decl_funcs ENDFUNC
                     |
                     ;
 
-decl_funcs     : decl_func
-               | decl_funcs decl_func
+decl_funcs     : def_func
+               | decl_funcs def_func
                ;
 
 
@@ -126,8 +126,8 @@ def_func : TYPE ID '(' list_param ')' '{'{/*create function symtable,update curr
                                    }
           | TYPE ID  '(' list_param ')' ';'
 
-list_array     :    list_array ',' NR
-               |    NR
+list_array     :    list_array ',' INT
+               |    INT
 
 fblock : fblock decl_var
        | fblock statement

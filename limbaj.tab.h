@@ -13,8 +13,13 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 15 "limbaj.y"
-typedef union {
+#line 16 "limbaj.y"
+typedef union 
+{
+     int number;
+     float real_number;
+     bool true_or_false;
+     char caracter;
      char* string;
 } yy_parse_stype;
 #define YY_parse_STYPE yy_parse_stype
@@ -193,8 +198,38 @@ typedef
 #define	END	259
 #define	ASSIGN	260
 #define	NR	261
-#define	ID	262
-#define	TYPE	263
+#define	BGINGLOBAL	262
+#define	ENDGLOBAL	263
+#define	BGINVARS	264
+#define	ENDVARS	265
+#define	BGINCLASS	266
+#define	ENDCLASS	267
+#define	BGINFUNC	268
+#define	ENDFUNC	269
+#define	CLASS	270
+#define	CONST	271
+#define	EQ	272
+#define	NEQ	273
+#define	GT	274
+#define	LT	275
+#define	GTE	276
+#define	LTE	277
+#define	AND	278
+#define	OR	279
+#define	NOT	280
+#define	PRINT	281
+#define	TYPEOF	282
+#define	EVAL	283
+#define	IF	284
+#define	ELSE	285
+#define	WHILE	286
+#define	ID	287
+#define	TYPE	288
+#define	STRING	289
+#define	CHAR	290
+#define	FLOAT	291
+#define	INT	292
+#define	BOOL	293
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -247,8 +282,38 @@ static const int BGIN;
 static const int END;
 static const int ASSIGN;
 static const int NR;
+static const int BGINGLOBAL;
+static const int ENDGLOBAL;
+static const int BGINVARS;
+static const int ENDVARS;
+static const int BGINCLASS;
+static const int ENDCLASS;
+static const int BGINFUNC;
+static const int ENDFUNC;
+static const int CLASS;
+static const int CONST;
+static const int EQ;
+static const int NEQ;
+static const int GT;
+static const int LT;
+static const int GTE;
+static const int LTE;
+static const int AND;
+static const int OR;
+static const int NOT;
+static const int PRINT;
+static const int TYPEOF;
+static const int EVAL;
+static const int IF;
+static const int ELSE;
+static const int WHILE;
 static const int ID;
 static const int TYPE;
+static const int STRING;
+static const int CHAR;
+static const int FLOAT;
+static const int INT;
+static const int BOOL;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -261,8 +326,38 @@ static const int TYPE;
 	,END=259
 	,ASSIGN=260
 	,NR=261
-	,ID=262
-	,TYPE=263
+	,BGINGLOBAL=262
+	,ENDGLOBAL=263
+	,BGINVARS=264
+	,ENDVARS=265
+	,BGINCLASS=266
+	,ENDCLASS=267
+	,BGINFUNC=268
+	,ENDFUNC=269
+	,CLASS=270
+	,CONST=271
+	,EQ=272
+	,NEQ=273
+	,GT=274
+	,LT=275
+	,GTE=276
+	,LTE=277
+	,AND=278
+	,OR=279
+	,NOT=280
+	,PRINT=281
+	,TYPEOF=282
+	,EVAL=283
+	,IF=284
+	,ELSE=285
+	,WHILE=286
+	,ID=287
+	,TYPE=288
+	,STRING=289
+	,CHAR=290
+	,FLOAT=291
+	,INT=292
+	,BOOL=293
 
 
 #line 215 "/usr/share/bison++/bison.h"
