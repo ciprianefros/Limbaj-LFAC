@@ -33,6 +33,8 @@
 "TypeOf" {return TYPEOF;}
 "Eval" {return EVAL;}
 "daca" {return IF;}
+"pentru" {return FOR;}
+"lucreaza" {return DO;}
 "altfel" {return ELSE;}
 "catTimp" {return WHILE;}
 "adevarat"  { yylval.true_or_false = true; return BOOL; }
