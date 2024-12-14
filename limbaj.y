@@ -13,7 +13,6 @@ vector<SymTable*> tables;
 
 int errorCount = 0;
 %}
-
 %union 
 {
      int number;
@@ -22,12 +21,7 @@ int errorCount = 0;
      char caracter;
      char* string;
 }
-<<<<<<< HEAD
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
-=======
-
-%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
->>>>>>> 63a25e9765fe477b90cee235ace84ae1a2d83c9e
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO
 %token<string> ID TYPE STRING CHAR
@@ -156,30 +150,7 @@ list :  statement ';'
      | list statement ';'
      ;
 
-primaexpfor :
-            | e    
-            | decl_var
-            ;
-adouaexpfor :
-            | e     
-            ;
-atreiaexprfor :
-              | e     
-              ;
-
-
-statement: ';'
-         | decl_var
-         | decl_func
-         | e ';'
-         | PRINT '(' e ')' ';'
-         | RETURN e ';'
-         | IF '(' e ')' '{' statement '}'      
-         | IF '(' e ')' '{' statement '}' ELSE '{' statement '}'   
-         | WHILE '(' e ')' '{' statement '}'    
-         | DO '{'statement '}' WHILE '(' e ')' ';' 
-         | FOR '(' primaexpfor ';' adouaexpfor ';' atreiaexprfor ')' '{' statement '}'
-         | ID '(' list ')'
+statement: ID '(' call_list ')'
          | ID '('')'
          | ID ASSIGN e
          ;

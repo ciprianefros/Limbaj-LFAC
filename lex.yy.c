@@ -989,30 +989,22 @@ YY_RULE_SETUP
 case 29:
 YY_RULE_SETUP
 #line 38 "limbaj.l"
-<<<<<<< HEAD
-{ yylval.true_or_false = true; return BOOL; }
-=======
 {return ELSE;}
->>>>>>> 63a25e9765fe477b90cee235ace84ae1a2d83c9e
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 39 "limbaj.l"
-<<<<<<< HEAD
-{ yylval.true_or_false = false; return BOOL; }
-=======
 {return WHILE;}
->>>>>>> 63a25e9765fe477b90cee235ace84ae1a2d83c9e
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 40 "limbaj.l"
-{ yylval.bul = true; return BOOL; }
+{ yylval.true_or_false = true; return BOOL; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 41 "limbaj.l"
-{ yylval.bul = false; return BOOL; }
+{ yylval.true_or_false = false; return BOOL; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
