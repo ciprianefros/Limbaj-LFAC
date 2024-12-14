@@ -12,6 +12,7 @@ vector<SymTable*> tables;
 
 int errorCount = 0;
 %}
+
 %union 
 {
      int number;
@@ -21,9 +22,10 @@ int errorCount = 0;
      ASTNode ast;
      char* string;
 }
+
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
 %token EQ NEQ GT LT GTE LTE AND OR NOT
-%token PRINT TYPEOF EVAL IF ELSE WHILE
+%token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO
 %token<string> ID TYPE STRING CHAR
 %token<real_number> FLOAT
 %token<number> INT
@@ -150,7 +152,30 @@ list :  statement ';'
      | list statement ';'
      ;
 
-statement: ID '(' call_list ')'
+primaexpfor :
+            | e    
+            | decl_var
+            ;
+adouaexpfor :
+            | e     
+            ;
+atreiaexprfor :
+              | e     
+              ;
+
+
+statement: ';'
+         | decl_var
+         | decl_func
+         | e ';'
+         | PRINT '(' e ')' ';'
+         | RETURN e ';'
+         | IF '(' e ')' '{' statement '}'      
+         | IF '(' e ')' '{' statement '}' ELSE '{' statement '}'   
+         | WHILE '(' e ')' '{' statement '}'    
+         | DO '{'statement '}' WHILE '(' e ')' ';' 
+         | FOR '(' primaexpfor ';' adouaexpfor ';' atreiaexprfor ')' '{' statement '}'
+         | ID '(' list ')'
          | ID '('')'
          | ID ASSIGN e
          ;
