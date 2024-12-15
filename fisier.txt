@@ -22,18 +22,31 @@ intreg functie(intreg w, intreg m) {
 }
 sfarsit_functions
 sfarsit_global
+
 start_programel
 x <- 2; y <- 4; z <- x;
 z <- 4;
 w <- 345 + y *56 + 7;
+
+B2 SergiuChelba ;
+B2 CiprianEfros ;
+B2 A { Y <- 2 ; } ; 
+
 daca ( 3 + 4 <= 5) {
     c <- 23;
 };
 
-daca (!(3 + 4) - 20 && 20 + 4 * 6 || 4 + 5) {
+daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5)) {
     c <- 3;
 } altfel {
     c <- 5;
+};
+
+daca(c % 4 == 2) {
+    rupe;
+}
+altfel {
+    c <- c + (5 % 2);
 };
 
 catTimp (c != 12) {

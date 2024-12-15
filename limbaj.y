@@ -35,7 +35,7 @@ int errorCount = 0;
 %left EQ NEQ
 %left GT LT LTE GTE
 %left '+' '-' 
-%left '*' '/' 
+%left '*' '/' '%'
 %left '^' 
 %left NOT
 %left '[' ']' '(' ')'
@@ -152,6 +152,8 @@ list :  statement ';'
 
 statement: ID '(' call_list ')'
          | ID '(' ')'
+         | ID ID
+         | ID ID '{' init_instante '}'
          | TYPE ID ASSIGN e
          | ID ASSIGN e
          | ID '[' INT ']' ASSIGN e
@@ -166,18 +168,31 @@ statement: ID '(' call_list ')'
          | BREAK 
          ;
 
+init_instante : ID ASSIGN e ';'
+              | init_instante ID ASSIGN e ';'
+              ;
+
 assignment_stmt : TYPE ID ASSIGN e
                 | ID ASSIGN e
                 ;
 
-bool_expr : bool_expr NEQ bool_expr 
+bool_expr : '(' bool_expr NEQ bool_expr ')'
+          | bool_expr NEQ bool_expr
+          | '(' bool_expr EQ bool_expr ')'
           | bool_expr EQ bool_expr
+          | '(' bool_expr LT bool_expr ')'
           | bool_expr LT bool_expr
+          | '(' bool_expr LTE bool_expr ')' 
           | bool_expr LTE bool_expr 
+          | '(' bool_expr GT bool_expr ')'
           | bool_expr GT bool_expr 
-          | bool_expr GTE bool_expr 
+          | '(' bool_expr GTE bool_expr ')'
+          | bool_expr GTE bool_expr  
+          | '(' bool_expr AND bool_expr ')'
           | bool_expr AND bool_expr
+          | '(' bool_expr OR bool_expr ')'
           | bool_expr OR bool_expr
+          | '(' NOT bool_expr ')'
           | NOT bool_expr
           | e
           ;
@@ -190,6 +205,7 @@ e : e '+' e
   | e '*' e  
   | e '/' e
   | e '-' e
+  | e '%' e
   |'(' e ')'
   | '-' e
   | ID
