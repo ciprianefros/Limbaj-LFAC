@@ -32,6 +32,7 @@ class IdInfo {
 
 class SymTable {
     map<string, IdInfo> ids;
+    map<string, IdInfo> funcids;
     string name;
     SymTable* prev;
     public:
@@ -39,7 +40,7 @@ class SymTable {
     bool existsId(const char* s);
     void addVar(const char* type, const char* name );
     void addFunc(const char* type, const char* name);
-    void printFunc();
+    void printFuncs();
     void printVars();
     void setValue(const char* name);
     ~SymTable();

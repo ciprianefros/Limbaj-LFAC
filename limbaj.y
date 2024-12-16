@@ -152,29 +152,41 @@ list :  statement ';'
 
 statement: ID '(' call_list ')'
          | ID '(' ')'
+         | PRINT '(' what ')'
+         | TYPEOF '(' ID ')'
          | ID ID
          | ID ID '{' init_instante '}'
-         | TYPE ID ASSIGN e
-         | ID ASSIGN e
-         | ID '[' INT ']' ASSIGN e
-         | ID '.' ID ASSIGN e
          | IF '(' bool_expr ')' '{' list '}' 
          | IF '(' bool_expr ')' '{' list '}' ELSE '{' list '}'
          | WHILE '(' bool_expr ')' '{' list '}'
          | DO '{' list '}' WHILE '(' bool_expr ')'
          | LOOP '{' list '}'
          | FOR '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}'
-         | CONTINUE
+         | assignment_stmt  
+         | CONTINUE   
          | BREAK 
          ;
 
-init_instante : ID ASSIGN e ';'
-              | init_instante ID ASSIGN e ';'
+init_instante : ID ASSIGN arithm_expr ';'
+              | init_instante ID ASSIGN arithm_expr ';'
               ;
 
-assignment_stmt : TYPE ID ASSIGN e
-                | ID ASSIGN e
+assignment_stmt : TYPE ID ASSIGN arithm_expr
+                | ID ASSIGN arithm_expr
+                | ID '[' list_array ']' ASSIGN arithm_expr
+                | ID '[' list_array ']' ASSIGN call_expr
+                | ID '.' ID ASSIGN arithm_expr
                 ;
+
+call_expr : ID '(' call_list ')'
+          | ID '(' ')'
+          ;
+
+call_list : call_list ',' arithm_expr
+          | call_list ',' ID '(' call_list ')'
+          | arithm_expr
+          | ID '(' call_list ')'
+          ;
 
 bool_expr : '(' bool_expr NEQ bool_expr ')'
           | bool_expr NEQ bool_expr
@@ -194,20 +206,16 @@ bool_expr : '(' bool_expr NEQ bool_expr ')'
           | bool_expr OR bool_expr
           | '(' NOT bool_expr ')'
           | NOT bool_expr
-          | e
+          | arithm_expr
           ;
 
-call_list :  call_list ',' e
-          | e
-          ;
-
-e : e '+' e  
-  | e '*' e  
-  | e '/' e
-  | e '-' e
-  | e '%' e
-  |'(' e ')'
-  | '-' e
+arithm_expr : arithm_expr '+' arithm_expr  
+  | arithm_expr '*' arithm_expr  
+  | arithm_expr '/' arithm_expr
+  | arithm_expr '-' arithm_expr
+  | arithm_expr '%' arithm_expr
+  |'(' arithm_expr ')'
+  | '-' arithm_expr
   | ID
   | INT
   | FLOAT

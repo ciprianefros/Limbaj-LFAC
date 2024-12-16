@@ -2,28 +2,43 @@
 
 using namespace std;
 
-void SymTable::addVar(const char* type, const char*name) {
+void SymTable::addVar(const char* type, const char*name) 
+{
     IdInfo var(type, name, "var");
     ids[name] = var; 
 }
 
-void SymTable::addFunc(const char* type, const char*name) {
+void SymTable::addFunc(const char* type, const char*name) 
+{
     IdInfo var(type, name, "func");
     ids[name] = var; 
 }
 
-bool SymTable::existsId(const char* var) {
+bool SymTable::existsId(const char* var) 
+{
     return ids.find(var)!= ids.end();  
 }
 
 
-void SymTable::printVars() {
-    for (const pair<string, IdInfo>& v : ids) {
+void SymTable::printVars() 
+{
+    for (const pair<string, IdInfo>& v : ids) 
+    {
         cout << "name: " << v.first << " type:" << v.second.type << endl; 
      }
 }
 
-SymTable::~SymTable() {
+void SymTable::printFuncs() 
+{
+    for (const pair<string, IdInfo>& v : ids) 
+    {
+        cout << "name: " << v.first << " type:" << v.second.type << endl; 
+     }
+}
+
+
+SymTable::~SymTable() 
+{
     ids.clear();
 }
 

@@ -29,6 +29,7 @@
 "&&"         { return AND; }
 "||"         { return OR; }
 "!"          { return NOT; }
+
 "Print" {return PRINT;}
 "TypeOf" {return TYPEOF;}
 "Eval" {return EVAL;}
