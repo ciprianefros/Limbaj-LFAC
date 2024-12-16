@@ -152,7 +152,7 @@ list :  statement ';'
 
 statement: ID '(' call_list ')'
          | ID '(' ')'
-         | PRINT '(' what ')'
+         | PRINT '(' arithm_expr ')'
          | TYPEOF '(' ID ')'
          | ID ID
          | ID ID '{' init_instante '}'
