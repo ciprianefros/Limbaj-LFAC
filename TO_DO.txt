@@ -1,2 +1,2 @@
-* function calls
-* 
+* function calls                                                   +
+* decl_vars in statement(de vazut cum de facut!)

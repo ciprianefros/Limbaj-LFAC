@@ -43,7 +43,7 @@
 "continua" {return CONTINUE;}
 "adevarat"  { yylval.true_or_false = true; return BOOL; }
 "fals" { yylval.true_or_false = false; return BOOL; }
-\"[0-9a-zA-Z ]*\" { yylval.string = strdup(yytext); return STRING; }
+\"([a-zA-Z0-9 .,!?;:_\t\n\r\\\"']|\\.)*\" { yylval.string = strdup(yytext); return STRING; }
 ['][0-9a-zA-Z]['] { yylval.caracter = yytext[1]; return CHAR; }
 [1-9]+[0-9]*[.][0-9]+[0-9]* {    yylval.real_number = atof(yytext);return FLOAT;}
 [0].[0-9]+[0-9]* {yylval.real_number = atof(yytext); return FLOAT;}
