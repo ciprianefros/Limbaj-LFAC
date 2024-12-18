@@ -70,11 +70,11 @@ lucreaza {
     };
 } catTimp (chhhhh != 'z');
 
-pentru (intreg _hehe <- 0; _hehe < 10; _hehe <- _hehe + 1) {
-    daca (_hehe == 9) {
+pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
+    daca (i32 == 9) {
         rupe;
     };
-    _hehe <- _hehe;
+    i32 <- i32;
     intreg lol <- lolololo;
 };
 functie(56+3,234+x,y+5);

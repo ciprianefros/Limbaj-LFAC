@@ -166,6 +166,8 @@ list                      :     statement ';'
 /*Tot felul de expresii din interiorul programului*/
 statement                 :     call_expr
                           |     PRINT '(' arithm_expr ')'
+                          |     TYPE ID
+                          |     TYPE ID '[' list_array ']'
                           |     TYPEOF '(' ID ')'
                           |     ID ID
                           |     ID ID '{' init_instante '}'
