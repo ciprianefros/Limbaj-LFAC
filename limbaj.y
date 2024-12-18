@@ -225,18 +225,18 @@ bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     expression
                           ;
 
-expression                :     expression EQ expression
-                          |     '(' expression EQ expression ')'
-                          |     expression NEQ expression
-                          |     '(' expression NEQ expression ')'
-                          |     expression GT expression
-                          |     '(' expression GT expression ')'
-                          |     expression GTE expression
-                          |     '(' expression GTE expression ')'
-                          |     expression LT expression
-                          |     '(' expression LT expression ')'
-                          |     expression LTE expression
-                          |     '(' expression LTE expression ')'
+expression                :     arithm_expr EQ arithm_expr
+                          |     '(' arithm_expr EQ arithm_expr ')'
+                          |     arithm_expr NEQ arithm_expr
+                          |     '(' arithm_expr NEQ arithm_expr ')'
+                          |     arithm_expr GT arithm_expr
+                          |     '(' arithm_expr GT arithm_expr ')'
+                          |     arithm_expr GTE arithm_expr
+                          |     '(' arithm_expr GTE arithm_expr ')'
+                          |     arithm_expr LT arithm_expr
+                          |     '(' arithm_expr LT arithm_expr ')'
+                          |     arithm_expr LTE arithm_expr
+                          |     '(' arithm_expr LTE arithm_expr ')'
                           |     arithm_expr
                           ;
 
