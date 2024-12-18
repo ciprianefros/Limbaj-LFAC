@@ -191,6 +191,7 @@ init_instante             :     ID ASSIGN arithm_expr ';'
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     TYPE ID ASSIGN arithm_expr
                           |     ID ASSIGN arithm_expr
+                          |     ID ASSIGN STRING
                           |     ID '[' list_array ']' ASSIGN arithm_expr
                           |     ID '[' list_array ']' ASSIGN call_func
                           |     ID '.' ID ASSIGN arithm_expr
@@ -199,7 +200,7 @@ assignment_stmt           :     TYPE ID ASSIGN arithm_expr
 /*Apeluri de functii*/
 call_func                 :     ID '(' call_list ')'
                           |     ID '(' ')'
-                          |     PRINT '(' arithm_expr ')'
+                          |     PRINT '(' STRING ')'
                           |     TYPEOF '(' ID ')'
                           ;
 
@@ -228,6 +229,7 @@ bool_expr                 :     '(' bool_expr NEQ bool_expr ')'
                           |     '(' bool_expr OR bool_expr ')'
                           |     bool_expr OR bool_expr
                           |     '(' NOT bool_expr ')'
+                          |     BOOL
                           |     NOT bool_expr
                           |     arithm_expr
                           ;
@@ -244,7 +246,12 @@ arithm_expr               :     arithm_expr '+' arithm_expr
                           |     INT
                           |     FLOAT
                           |     CHAR
+                          |     ID '[' list_array ']'
+                          |     ID '.' ID
+                          |     ID '.' call_func
+                          |     call_func //genereaza conflicte
                           ;
+
 
 %%
 void yyerror(const char * s){
