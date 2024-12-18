@@ -23,7 +23,7 @@ int errorCount = 0;
 }
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
 %token EQ NEQ GT LT GTE LTE AND OR NOT
-%token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE
+%token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE RETURN
 %token<string> ID TYPE STRING CHAR
 %token<real_number> FLOAT
 %token<number> INT
@@ -90,7 +90,7 @@ decl_var                  :    TYPE ID  {
 class_declarations        :    BGINCLASS decl_classes ENDCLASS
                           |    
                           ;
-/*Declarearea a oricator clase*/
+/*Declararea a oricator clase*/
 decl_classes              :    decl_class
                           |    decl_classes decl_class
                           ;
@@ -102,6 +102,10 @@ decl_class                :    CLASS ID '{' membs_list methods_list '}' ';'
 /*Lista de membri a unei clase*/
 membs_list                :    class_memb
                           |    membs_list class_memb
+                          ;
+
+/*Definirea membrilor unei clase: A.x*/
+class_memb                :    ID ':' TYPE ';'
                           ;
 
 /*Permite definirea oricator metode la o clasa*/
@@ -117,13 +121,12 @@ method                    :    TYPE ID '(' list_param ')' '{' {
                                    /* if ID does not exist in current scope, add function info to the current symtable */
                                }
                           ;
-/*Definirea membrilor unei clase: A.x*/
-class_memb                :    ID ':' TYPE ';'
-                          ;
 
+/*Partea de definire a functiilor*/
 func_declarations         :    BGINFUNC decl_funcs ENDFUNC
                           |    
                           ;
+
 /*Declararea de functii*/
 decl_funcs                :    def_func
                           |    decl_funcs def_func
@@ -142,20 +145,21 @@ def_func                  :    TYPE ID '(' list_param ')' '{' {
 list_param                :    param
                           |    list_param ',' param
                           |    
-                          ;                      
+                          ;  
+/*Parametrii pentru functii*/
+param                     :     TYPE ID
+                          ;
+
 /*Definirea unui array: uni, multi dimensional*/
 list_array                :    list_array ',' INT
                           |    INT
                           ;
+
 /*Blocul unei functii*/
-fblock                    :     fblock decl_var ';'
-                          |     fblock statement
+fblock                    :     fblock statement ';'
                           |     
                           ;
 
-/*Parametrii pentru functii*/
-param                     :     TYPE ID
-                          ;
 /*main function*/
 main                      :     BGIN list END
                           ;
@@ -163,12 +167,10 @@ main                      :     BGIN list END
 list                      :     statement ';'
                           |     list statement ';'
                           ;
+
 /*Tot felul de expresii din interiorul programului*/
-statement                 :     call_expr
-                          |     PRINT '(' arithm_expr ')'
-                          |     TYPE ID
-                          |     TYPE ID '[' list_array ']'
-                          |     TYPEOF '(' ID ')'
+statement                 :     call_func
+                          |     decl_var
                           |     ID ID
                           |     ID ID '{' init_instante '}'
                           |     IF '(' bool_expr ')' '{' list '}'
@@ -180,6 +182,7 @@ statement                 :     call_expr
                           |     assignment_stmt
                           |     CONTINUE
                           |     BREAK
+                          |     RETURN arithm_expr
                           ;
 /*Asignari ale membrilor unei clase*/
 init_instante             :     ID ASSIGN arithm_expr ';'
@@ -189,13 +192,15 @@ init_instante             :     ID ASSIGN arithm_expr ';'
 assignment_stmt           :     TYPE ID ASSIGN arithm_expr
                           |     ID ASSIGN arithm_expr
                           |     ID '[' list_array ']' ASSIGN arithm_expr
-                          |     ID '[' list_array ']' ASSIGN call_expr
+                          |     ID '[' list_array ']' ASSIGN call_func
                           |     ID '.' ID ASSIGN arithm_expr
                           ;
 
 /*Apeluri de functii*/
-call_expr                 :     ID '(' call_list ')'
+call_func                 :     ID '(' call_list ')'
                           |     ID '(' ')'
+                          |     PRINT '(' arithm_expr ')'
+                          |     TYPEOF '(' ID ')'
                           ;
 
 /*Parametrii de apel al unei functii*/
