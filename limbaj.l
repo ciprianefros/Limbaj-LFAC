@@ -8,15 +8,19 @@
 
 "clasa" {return CLASS;}
 "constant" {return CONST;}
+
 "start_programel" {return BGIN;}
 "sfarsit_programel" {return END;}
 
 "start_global" {return BGINGLOBAL;}
 "sfarsit_global" {return ENDGLOBAL;}
+
 "start_vars" {return BGINVARS;}
 "sfarsit_vars" {return ENDVARS;}
+
 "start_clasa" {return BGINCLASS;}
 "sfarsit_clasa" {return ENDCLASS;}
+
 "start_functions" {return BGINFUNC;}
 "sfarsit_functions" {return ENDFUNC;}
 

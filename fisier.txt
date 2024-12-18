@@ -1,4 +1,5 @@
 start_global
+
 start_vars
 intreg x;
 intreg y;
@@ -6,6 +7,7 @@ caracter z;
 caracter c;
 intreg arr[10,9];
 sfarsit_vars
+
 start_clasa
 clasa B2 {
     chh : caracter;
@@ -14,6 +16,7 @@ clasa B2 {
     }
 };
 sfarsit_clasa
+
 start_functions
 real foo();
 intreg functie(intreg w, intreg m) {
@@ -21,9 +24,11 @@ intreg functie(intreg w, intreg m) {
     caracter B3;
 }
 sfarsit_functions
+
 sfarsit_global
 
 start_programel
+
 x <- 2; y <- 4; z <- x;
 z <- 4;
 w <- 345 + y *56 + 7;
@@ -32,6 +37,7 @@ B2 SergiuChelba ;
 B2 CiprianEfros ;
 B2 A { Y <- 2 ; } ; 
 B2.chh <- 'm';
+
 arr[2] <- foo(f(2));
 
 daca ( 3 + 4 <= 5) {
