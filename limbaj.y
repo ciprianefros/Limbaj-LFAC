@@ -215,25 +215,28 @@ call_list                 :     call_list ',' arithm_expr
                           ;
 
 /*Expresii boolene (true sau false)*/
-bool_expr                 :     '(' bool_expr NEQ bool_expr ')'
-                          |     bool_expr NEQ bool_expr
-                          |     '(' bool_expr EQ bool_expr ')'
-                          |     bool_expr EQ bool_expr
-                          |     '(' bool_expr LT bool_expr ')'
-                          |     bool_expr LT bool_expr
-                          |     '(' bool_expr LTE bool_expr ')' 
-                          |     bool_expr LTE bool_expr 
-                          |     '(' bool_expr GT bool_expr ')'
-                          |     bool_expr GT bool_expr 
-                          |     '(' bool_expr GTE bool_expr ')'
-                          |     bool_expr GTE bool_expr  
-                          |     '(' bool_expr AND bool_expr ')'
+bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     bool_expr AND bool_expr
                           |     '(' bool_expr OR bool_expr ')'
                           |     bool_expr OR bool_expr
                           |     '(' NOT bool_expr ')'
                           |     BOOL
                           |     NOT bool_expr
+                          |     expression
+                          ;
+
+expression                :     expression EQ expression
+                          |     '(' expression EQ expression ')'
+                          |     expression NEQ expression
+                          |     '(' expression NEQ expression ')'
+                          |     expression GT expression
+                          |     '(' expression GT expression ')'
+                          |     expression GTE expression
+                          |     '(' expression GTE expression ')'
+                          |     expression LT expression
+                          |     '(' expression LT expression ')'
+                          |     expression LTE expression
+                          |     '(' expression LTE expression ')'
                           |     arithm_expr
                           ;
 
