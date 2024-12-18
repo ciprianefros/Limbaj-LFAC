@@ -190,11 +190,14 @@ init_instante             :     ID ASSIGN arithm_expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     TYPE ID ASSIGN arithm_expr
+                          |     TYPE ID ASSIGN STRING
                           |     ID ASSIGN arithm_expr
                           |     ID ASSIGN STRING
                           |     ID '[' list_array ']' ASSIGN arithm_expr
                           |     ID '[' list_array ']' ASSIGN call_func
+                          |     ID '[' list_array ']' ASSIGN STRING
                           |     ID '.' ID ASSIGN arithm_expr
+                          |     ID '.' ID ASSIGN STRING
                           ;
 
 /*Apeluri de functii*/
