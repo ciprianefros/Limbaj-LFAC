@@ -5,6 +5,7 @@ intreg x;
 intreg y;
 caracter z;
 caracter c;
+sir s;
 intreg arr[10,9];
 sfarsit_vars
 
@@ -44,7 +45,7 @@ daca ( 3 + 4 <= 5) {
     c <- 23;
 };
 
-daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5)) {
+daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + v[2] + f(x) + ob.met() + ob.field)) {
     c <- 3;
 } altfel {
     c <- 5;
