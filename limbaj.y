@@ -182,7 +182,7 @@ statement                 :     call_func
                           |     assignment_stmt
                           |     CONTINUE
                           |     BREAK
-                          |     RETURN arithm_expr
+                          |     RETURN bool_expr
                           ;
 /*Asignari ale membrilor unei clase*/
 init_instante             :     ID ASSIGN arithm_expr ';'
