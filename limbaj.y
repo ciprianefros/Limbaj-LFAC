@@ -257,6 +257,7 @@ arithm_expr               :     arithm_expr '+' arithm_expr
                           |     ID '.' call_func
                           |     call_func //genereaza conflicte
                           ;
+                          
 
 
 %%
