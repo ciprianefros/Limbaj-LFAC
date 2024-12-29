@@ -14,7 +14,12 @@ string Value::toString() {
     if (type == 2) return to_string(floatValue);
     return stringValue;
 }
+//Definitia clasei ClassInfo
+ClassInfo::ClassInfo(const string& name) : name(name) {}
 
+ClassInfo::~ClassInfo() {
+    // Curățare sau alte operațiuni dacă este necesar
+}
 // Definiția clasei IdInfo
 IdInfo::IdInfo() {}
 
@@ -23,31 +28,87 @@ IdInfo::IdInfo(const string& type, const string& name, const string& idType)
 
 // Definiția clasei SymTable
 SymTable::SymTable(const string& name, SymTable* parent)
-    : name(name), prev(parent) {}
+    : ScopeName(name), prev(parent) {}
 
-bool SymTable::existsId(const string& s) {
-    return ids.find(s) != ids.end() || funcids.find(s) != funcids.end();
+
+
+bool SymTable::existsId(const string& name) {
+    if(ids.find(name) != ids.end()) {
+        return true;
+    }
+    return prev ? prev->existsId(name) : false;
+}
+bool SymTable::existsFunc(const string& name) {
+    if(funcids.find(name) != funcids.end()) {
+        return true;
+    }
+    return prev ? prev->existsId(name) : false;
+}
+bool SymTable::existsClass(const string& name) {
+    if(classids.find(name) != classids.end()) {
+        return true;
+    }
+    return prev ? prev->existsId(name) : false;
 }
 
-void SymTable::addVar(const string& type, const string& name) {
+bool SymTable::addVar(const string& type, const string& name) {
+    if(ids.find(name) != ids.end()) {
+        return false;
+    }
     ids[name] = IdInfo(type, name, "var");
+    return true;
 }
 
-void SymTable::addFunc(const string& type, const string& name) {
+bool SymTable::addFunc(const string& type, const string& name) {
+    if(funcids.find(name) != funcids.end()) {
+        return false;
+    }
     funcids[name] = IdInfo(type, name, "func");
+    return true;
+}
+bool SymTable::addClass(const string& name) {
+    if(classids.find(name) != classids.end()) {
+        return false;
+    }
+    classids[name] = ClassInfo(name);
+    return true;
 }
 
-void SymTable::printVars() {
-    for (const auto& var : ids) {
-        cout << "Variable: " << var.second.name << " of type " << var.second.type << endl;
+void SymTable::printTable(const string& filename) {
+    std::ofstream outFile(filename, ios::app); // Deschide fișierul în modul append
+
+    if (!outFile) {
+        std::cerr << "Error: Unable to open file " << filename << " for writing." << std::endl;
+        return;
     }
+
+    outFile << "Scope: " << ScopeName << "\n";
+    outFile << "Variabile:\n";
+    for (const auto& [name, var] : ids) {
+        outFile << "  " << var.type << " " << var.name << "\n";
+    }
+
+    outFile << "Functions:\n";
+    for (const auto& [name, func] : funcids) {
+        outFile << "  " << func.type << " " << func.name << " (";
+
+        for (const auto& [paramType, paramName] : func.params.params) {
+            outFile << paramType << " " << paramName;
+            if (&paramType != &func.params.params.back().first) // Evită virgula pentru ultimul parametru
+                outFile << ", ";
+        }
+        outFile << ")\n";
+    }
+
+    outFile << "Classes:\n";
+    for (const auto& [name, cls] : classids) {
+        outFile << "  Class " << cls.name << "\n";
+    }
+
+    outFile << "\n"; // Linie separatoare pentru claritate
+    outFile.close(); // Închide fișierul
 }
 
-void SymTable::printFuncs() {
-    for (const auto& func : funcids) {
-        cout << "Function: " << func.second.name << " of type " << func.second.type << endl;
-    }
-}
 
 void SymTable::setValue(const string& name, const Value& value) {
     if (ids.find(name) != ids.end()) {

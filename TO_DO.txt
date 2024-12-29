@@ -1,2 +1,3 @@
 * function calls                                                   +
 * decl_vars in statement(de vazut cum de facut!)
+* scope-uri globale multiple, de vazut unde se adauga!

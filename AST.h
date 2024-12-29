@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AST_H
+#define AST_H
 #include <string>
 #include <iostream>
 using namespace std;
@@ -15,4 +16,5 @@ class ASTNode {
     void AddNode(string value,string type, Node* left, Node* right);
     ~ASTNode();
 };
+#endif
 

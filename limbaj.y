@@ -15,6 +15,7 @@ vector<SymTable*> tables;
 SymTable* globalTable = new SymTable("global");
 SymTable* currentTable = globalTable;
 
+
 int errorCount = 0;
 %}
 %union 
@@ -53,7 +54,10 @@ progr                     :    global_declarations main {
                           ;
 
 /*Global scope*/
-global_declarations       :    BGINGLOBAL declarations ENDGLOBAL
+global_declarations       :     BGINGLOBAL declarations ENDGLOBAL  {
+                                    current = globalTable;
+                                    tables.push_back(globalTable);
+                                }
                           |    
                           ;
 
@@ -74,16 +78,16 @@ decl_vars                 :    decl_var ';'
 
 /*Declararea de variabile sau array-uri*/
 decl_var                  :    TYPE ID  {
-                                   if (!current->existsId($2)) {
-                                       current->addVar($1, $2);
+                                   if (!currentTable->existsId($2)) {
+                                       currentTable->addVar($1, $2);
                                    } else {
                                        errorCount++; 
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
                                    }
                                }
                           |    TYPE ID '[' list_array ']' {
-                                   if (!current->existsId($2)) {
-                                       current->addVar($1, $2);
+                                   if (!currentTable->existsId($2)) {
+                                       currentTable->addVar($1, $2);
                                    } else {
                                        errorCount++; 
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
@@ -104,10 +108,11 @@ decl_classes              :    decl_class
 decl_class
     : CLASS ID '{' {
         // Creează tabelă pentru clasa curentă
-        if (current->existsId($2)) { // Verifică dacă clasa există deja
+        if (currentTable->existsId($2)) { // Verifică dacă clasa există deja
             errorCount++;
             yyerror(("Class already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
+            currentTable->addClass($2);
             currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable); // Adaugă în lista globală de tabele
         }
@@ -161,9 +166,22 @@ decl_funcs                :    def_func
 /*Definirea unei functii*/
 def_func
     : TYPE ID '(' list_param ')' '{' {
+        if(!currentTable->existsFunc($2)) {
+            currentTable->addFunc($1, $2);
+        }
         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
         tables.push_back(currentTable);  // Adaugă tabelul global
     } fblock '}' {
+        currentTable = currentTable->prev; // Revenire la scopul părinte
+    }
+    | TYPE ID '(' list_param ')' ';' {
+        if(!currentTable->existsFunc($2)) {
+            currentTable->addFunc($1, $2);
+        }
+        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
+        tables.push_back(currentTable);  // Adaugă tabelul global
+    }
+    {
         currentTable = currentTable->prev; // Revenire la scopul părinte
     }
     ;
@@ -184,11 +202,12 @@ list_array                :    list_array ',' INT
 
 /*Blocul unei functii*/
 fblock
-    : '{' {
+    :  fblock   
+    {
         // Creează un nou scop pentru acest bloc
         currentTable = new SymTable("block", currentTable);
         tables.push_back(currentTable); // Salvează tabelă în lista globală
-    } fblock statement ';' '}' {
+    } statement {
         // Revenire la scopul părinte după încheierea blocului
         currentTable = currentTable->prev;
     }
@@ -208,21 +227,23 @@ main
     ;
 
 /*Expresiile acceptate in main, pentru a fi recursive!*/
-list                      :     statement ';'
-                          |     list statement ';'
+list                      :     statement 
+                          |     list statement 
                           ;
 
 /*Tot felul de expresii din interiorul programului*/
 statement
-    : call_func
-    | decl_var
-    | ID ID
-    | ID ID '{' init_instante '}'
-    | IF '(' bool_expr ')' '{' {
+    : call_func ';'
+    | decl_var ';'
+    | ID ID ';'
+    | ID ID '{' init_instante '}' ';'
+    | IF '(' bool_expr ')' '{' list '}' 
+    {
         // Creează o tabelă pentru scopul IF
         currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
-    } list '}' {
+    }  
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
@@ -230,63 +251,75 @@ statement
         // Creează o tabelă pentru scopul IF
         currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
-    } list '}' ELSE '{' list '}' {
+    } 
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | WHILE '(' bool_expr ')' '{' {
+    | WHILE '(' bool_expr ')' '{' list '}' {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("while", currentTable);
         tables.push_back(currentTable);
-    } list '}' {
+    }  
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | DO '{' list '}' WHILE '(' bool_expr ')'
+    | DO '{' list '}' WHILE '(' bool_expr ')' 
+    {
+        // Creează o tabelă pentru scopul WHILE
+        currentTable = new SymTable("while", currentTable);
+        tables.push_back(currentTable);
+    } 
+    {
+        // Revenire la scopul părinte
+        currentTable = currentTable->prev;
+    }
     | LOOP '{' list '}' {
         // Creează o tabelă pentru scopul LOOP
         currentTable = new SymTable("loop", currentTable);
         tables.push_back(currentTable);
-    } list '}' {
+    }
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | FOR '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' {
+    | FOR '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}' {
         // Creează o tabelă pentru scopul FOR
         currentTable = new SymTable("for", currentTable);
         tables.push_back(currentTable);
-    } list '}' {
+    }  
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | assignment_stmt
-    | CONTINUE
-    | BREAK
-    | RETURN bool_expr
+    | assignment_stmt ';'
+    | CONTINUE ';'
+    | BREAK ';'
+    | RETURN bool_expr ';'
     ;
 
 /*Asignari ale membrilor unei clase*/
-init_instante             :     ID ASSIGN arithm_expr ';'
-                          |     init_instante ID ASSIGN arithm_expr ';'
+init_instante             :     ID ASSIGN expr ';'
+                          |     init_instante ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
-assignment_stmt           :     TYPE ID ASSIGN arithm_expr
-                          |     TYPE ID ASSIGN STRING
-                          |     ID ASSIGN arithm_expr
-                          |     ID ASSIGN STRING
-                          |     ID '[' list_array ']' ASSIGN arithm_expr
-                          |     ID '[' list_array ']' ASSIGN call_func
-                          |     ID '[' list_array ']' ASSIGN STRING
-                          |     ID '.' ID ASSIGN arithm_expr
-                          |     ID '.' ID ASSIGN STRING
+assignment_stmt           :     left_hand_side ASSIGN expr
+                          |     left_hand_side ASSIGN STRING
+                          ;
+
+left_hand_side            :     ID '.' ID
+                          |     ID '[' list_array ']'
+                          |     TYPE ID  
+                          |     ID
                           ;
 
 /*Apeluri de functii*/
 call_func                 : ID '(' call_list ')' {
-                               if (!current->existsId($1)) { // Verifică dacă funcția există
-                                   errorCount++;
-                                   yyerror(("Function " + std::string($1) + " not declared at line: " + std::to_string(yylineno)).c_str());
-                               }
+                                if (!currentTable->existsId($1)) { // Verifică dacă funcția există
+                                    errorCount++;
+                                    yyerror(("Function " + std::string($1) + " not declared at line: " + std::to_string(yylineno)).c_str());
+                                }
                            }
                            | ID '(' ')'
                            | PRINT '(' STRING ')'
@@ -295,10 +328,8 @@ call_func                 : ID '(' call_list ')' {
 
 
 /*Parametrii de apel al unei functii*/
-call_list                 :     call_list ',' arithm_expr
-                          |     call_list ',' ID '(' call_list ')'
-                          |     arithm_expr
-                          |     ID '(' call_list ')'
+call_list                 :     call_list ',' expr
+                          |     expr
                           ;
 
 /*Expresii boolene (true sau false)*/
@@ -309,32 +340,27 @@ bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     '(' NOT bool_expr ')'
                           |     BOOL
                           |     NOT bool_expr
-                          |     expression
+                          |     expr
                           ;
 
-expression                :     arithm_expr EQ arithm_expr
-                          |     '(' arithm_expr EQ arithm_expr ')'
-                          |     arithm_expr NEQ arithm_expr
-                          |     '(' arithm_expr NEQ arithm_expr ')'
-                          |     arithm_expr GT arithm_expr
-                          |     '(' arithm_expr GT arithm_expr ')'
-                          |     arithm_expr GTE arithm_expr
-                          |     '(' arithm_expr GTE arithm_expr ')'
-                          |     arithm_expr LT arithm_expr
-                          |     '(' arithm_expr LT arithm_expr ')'
-                          |     arithm_expr LTE arithm_expr
-                          |     '(' arithm_expr LTE arithm_expr ')'
-                          |     arithm_expr
+logical_expr              :     expr EQ expr
+                          |     '(' expr EQ expr ')'
+                          |     expr NEQ expr
+                          |     '(' expr NEQ expr ')'
+                          |     expr GT expr
+                          |     '(' expr GT expr ')'
+                          |     expr GTE expr
+                          |     '(' expr GTE expr ')'
+                          |     expr LT expr
+                          |     '(' expr LT expr ')'
+                          |     expr LTE expr
+                          |     '(' expr LTE expr ')'
                           ;
-
-/*Expresii aritmetice*/
-arithm_expr               :     arithm_expr '+' arithm_expr  
-                          |     arithm_expr '*' arithm_expr  
-                          |     arithm_expr '/' arithm_expr
-                          |     arithm_expr '-' arithm_expr
-                          |     arithm_expr '%' arithm_expr
-                          |     '(' arithm_expr ')'
-                          |     '-' arithm_expr
+                          
+expr                      :     arithm_expr
+                          |     logical_expr
+                          |    '(' expr ')'
+                          |     '-' expr
                           |     ID
                           |     INT
                           |     FLOAT
@@ -342,7 +368,15 @@ arithm_expr               :     arithm_expr '+' arithm_expr
                           |     ID '[' list_array ']'
                           |     ID '.' ID
                           |     ID '.' call_func
-                          |     call_func //genereaza conflicte
+                          |     call_func
+                          ;
+
+/*Expresii aritmetice*/
+arithm_expr               :     expr '+' expr  
+                          |     expr '*' expr    
+                          |     expr '/' expr
+                          |     expr '-' expr
+                          |     expr '%' expr
                           ;
                           
 
@@ -353,14 +387,19 @@ void yyerror(const char * s){
 }
 
 int main(int argc, char** argv) {
+    #ifdef YYDEBUG
+    yydebug = 1;
+    #endif
     yyin = fopen(argv[1], "r");
     current = new SymTable("global");
     tables.push_back(current);
     yyparse();
 
-    std::cout << "Variables in global scope:" << std::endl;
-    globalTable->printVars();
-
+    //std::cout << "Variables in global scope:" << std::endl;
+    for(auto table : tables) {
+        table->printTable("scope.txt");
+    }
+    
     // Eliberare memorie pentru toate tabelele
     for (SymTable* table : tables) {
         delete table;
