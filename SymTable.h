@@ -13,7 +13,8 @@ using namespace std;
 class ParamList {
     public: 
         vector<pair<string, string>> params; //vector de (tip, nume)
-        void addParam(const string&type, const string& name) {
+        void addParam(const string&type, const string& name) 
+        {
             params.emplace_back(type, name);
         }
 };

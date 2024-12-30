@@ -1,3 +1,5 @@
 * function calls                                                   +
 * decl_vars in statement(de vazut cum de facut!)
 * scope-uri globale multiple, de vazut unde se adauga!
+* ar trebui sa adaugam informatii pentru fiecare functie, clasa, etc. in parte
+!! la functii sa nu uitam de faza cu adaugarea parametrilor la currentTable

@@ -12,7 +12,11 @@ sfarsit_vars
 start_clasa
 clasa B2 {
     chh : caracter;
-
+    intreg foc(intreg wx, real ww)
+    {
+        real wy;
+        wy <- 2;
+    }
 };
 sfarsit_clasa
 

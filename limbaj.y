@@ -26,6 +26,7 @@ int errorCount = 0;
      char caracter;
      char* string;
 }
+
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE RETURN
@@ -54,10 +55,11 @@ progr                     :    global_declarations main {
                           ;
 
 /*Global scope*/
-global_declarations       :     BGINGLOBAL declarations ENDGLOBAL  {
+global_declarations       :     BGINGLOBAL   {
                                     current = globalTable;
                                     tables.push_back(globalTable);
                                 }
+                                declarations ENDGLOBAL
                           |    
                           ;
 
@@ -129,7 +131,14 @@ membs_list                :    class_memb
 
 /*Definirea membrilor unei clase: A.x*/
 class_memb                :    ID ':' TYPE ';'
-                          ;
+                                {
+                                   if (!currentTable->existsId($1)) {
+                                       currentTable->addVar($3, $1);
+                                   } else {
+                                       errorCount++; 
+                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
+                                   }
+                               }
 
 /*Permite definirea oricator metode la o clasa*/
 methods_list              :    methods_list method
@@ -138,18 +147,22 @@ methods_list              :    methods_list method
 
 /*Definirea unei metode într-o clasă*/
 method
-    : TYPE ID '(' list_param ')' '{' {
+    : TYPE ID '(' list_param ')' '{'  {
         // Verifică dacă funcția este deja definită
-        if (currentTable->existsId($2)) { 
+        if (currentTable->existsFunc($2)) 
+        { 
             errorCount++;
             yyerror(("Function " + std::string($2) + " already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
             // Adaugă funcția în tabela simbolurilor a clasei
             currentTable->addFunc($1, $2);
         }
-    } fblock '}' {
+    } 
+    fblock '}'
+    {
+
         // Revenire la tabelul simbolurilor al clasei
-        currentTable = currentTable->prev;
+        current = current->prev;
     }
     ;
 
@@ -165,13 +178,21 @@ decl_funcs                :    def_func
 
 /*Definirea unei functii*/
 def_func
-    : TYPE ID '(' list_param ')' '{' {
+    : TYPE ID '(' list_param ')' '{' 
+    {
         if(!currentTable->existsFunc($2)) {
             currentTable->addFunc($1, $2);
         }
         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
         tables.push_back(currentTable);  // Adaugă tabelul global
-    } fblock '}' {
+
+        for (const auto& param : $4.params) 
+        {
+            currentTable->funcids[$2]->addParam(param.second, param.first);  // Adaugă parametrii la tabela curentă
+        }
+    }
+    fblock '}' 
+    {
         currentTable = currentTable->prev; // Revenire la scopul părinte
     }
     | TYPE ID '(' list_param ')' ';' {
@@ -180,6 +201,11 @@ def_func
         }
         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
         tables.push_back(currentTable);  // Adaugă tabelul global
+
+        for (const auto& param : $4.params) 
+        {
+            currentTable->funcids[$2]->addParam(param.second, param.first);  // Adaugă parametrii la tabela curentă
+        }
     }
     {
         currentTable = currentTable->prev; // Revenire la scopul părinte
@@ -187,13 +213,39 @@ def_func
     ;
 
 /*Lista de parametri pentru functii*/
-list_param                :    param
-                          |    list_param ',' param
-                          |    
-                          ;  
+// list_param                :    param
+//                           { 
+//                               $$.params.push_back($1); // Salvează parametrul în lista de parametri
+//                           }
+//                           |    list_param ',' param
+//                           {
+//                               $$.params = $1.params;  // Concatenează parametrii
+//                               $$.params.push_back($3); // Adaugă noul parametru
+//                           }
+//                           |    
+//                           ;
+
+list_param 
+    : param
+    {
+        $$ = new ParamList();
+    }
+    | list_param ',' param
+    {
+        $$ = $1;
+    }
+    ;
+
+
 /*Parametrii pentru functii*/
 param                     :     TYPE ID
+                          {
+                                ParamList* paramList = new ParamList();
+                                paramList->addParam($1, $2);
+                                currentTable->funcids[$2]->params = *paramList; 
+                          }
                           ;
+
 
 /*Definirea unui array: uni, multi dimensional*/
 list_array                :    list_array ',' INT
@@ -202,15 +254,7 @@ list_array                :    list_array ',' INT
 
 /*Blocul unei functii*/
 fblock
-    :  fblock   
-    {
-        // Creează un nou scop pentru acest bloc
-        currentTable = new SymTable("block", currentTable);
-        tables.push_back(currentTable); // Salvează tabelă în lista globală
-    } statement {
-        // Revenire la scopul părinte după încheierea blocului
-        currentTable = currentTable->prev;
-    }
+    :  fblock statement 
     | 
     ;
 
@@ -391,8 +435,8 @@ int main(int argc, char** argv) {
     yydebug = 1;
     #endif
     yyin = fopen(argv[1], "r");
-    current = new SymTable("global");
-    tables.push_back(current);
+    //current = new SymTable("global");
+    //tables.push_back(current);
     yyparse();
 
     //std::cout << "Variables in global scope:" << std::endl;
