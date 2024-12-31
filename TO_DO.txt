@@ -3,3 +3,4 @@
 * scope-uri globale multiple, de vazut unde se adauga!
 * ar trebui sa adaugam informatii pentru fiecare functie, clasa, etc. in parte
 !! la functii sa nu uitam de faza cu adaugarea parametrilor la currentTable
+* la if, de vazut cum de pus blocruile pentru a nu crea conflicte, nu merge de pus blocurile de cod!!

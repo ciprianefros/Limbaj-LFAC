@@ -7,17 +7,22 @@ Variabile:
   intreg y
   caracter z
 Functions:
-  real foo ()
-  intreg functie ()
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
 Classes:
   Class B2
 
 Scope: B2
 Variabile:
   caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
   real wy
 Functions:
-  intreg foc ()
 Classes:
 
 Scope: foo
@@ -34,6 +39,7 @@ Classes:
 
 Scope: main
 Variabile:
+  caracter bibi
 Functions:
 Classes:
 
@@ -49,11 +55,7 @@ Classes:
 
 Scope: while
 Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
+  caracter yolo
 Functions:
 Classes:
 
@@ -72,117 +74,20 @@ Variabile:
 Functions:
 Classes:
 
-Scope: while
+Scope: if
 Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
 Functions:
 Classes:
 
 Scope: for
 Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  intreg arr
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
-Functions:
-Classes:
-  Class B2
-
-Scope: B2
-Variabile:
-  caracter chh
-  real wy
-Functions:
-  intreg foc ()
-Classes:
-
-Scope: global
-Variabile:
-  intreg arr
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
-Functions:
-  real foo ()
-  intreg functie ()
-Classes:
-  Class B2
-
-Scope: B2
-Variabile:
-  caracter chh
-  real wy
-Functions:
-  intreg foc ()
-Classes:
-
-Scope: foo
-Variabile:
-Functions:
-Classes:
-
-Scope: functie
-Variabile:
-  caracter B3
-  intreg yy
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: while
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: loop
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: while
-Variabile:
-Functions:
-Classes:
-
-Scope: for
-Variabile:
+  intreg lol
 Functions:
 Classes:
 

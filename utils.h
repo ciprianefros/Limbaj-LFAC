@@ -7,10 +7,10 @@
 #include "AST.h"
 
 
-ParamList currentParams;
-VarInfo currentFunction;
-FuncInfo currentVariable;
+FuncInfo currentFunction;
+VarInfo currentVariable;
 ClassInfo currentClass;
+vector<VarInfo> currentParams;
 
 using namespace std;
 

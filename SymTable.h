@@ -10,21 +10,13 @@
 
 using namespace std;
 
-class ParamList {
-    public: 
-        vector<pair<string, string>> params; //vector de (tip, nume)
-        void addParam(const string&type, const string& name) 
-        {
-            params.emplace_back(type, name);
-        }
-};
 
 enum Types {
-    INT, 
-    FLOAT, 
-    CHAR, 
-    BOOL,
-    STRING
+    TYPE_INT, 
+    TYPE_FLOAT, 
+    TYPE_CHAR, 
+    TYPE_BOOL,
+    TYPE_STRING
 };
 
 struct Type {
@@ -55,6 +47,8 @@ class VarInfo {
         Value value;
         string name;
         Type type;
+        vector<VarInfo> fields;
+
         VarInfo();
         VarInfo(short type, const string& name);
 };
@@ -63,10 +57,11 @@ class FuncInfo {
     public:
         string name;
         short returnType;
-        ParamList params;
+        vector<VarInfo> params; 
 
         FuncInfo();
-        FuncInfo(short type, const string& name);
+        FuncInfo(short type, const string& name, vector<VarInfo> params);
+        
 };
 
 class ClassInfo {
@@ -94,7 +89,7 @@ class SymTable {
         bool existsFunc(const string& name);
         bool existsClass(const string& name);
         bool addVar(short type, const string& name);
-        bool addFunc(short type, const string& name);
+        bool addFunc(short type, const string& name, vector<VarInfo> params);
         bool addClass(const string& name);
         void printTable(const std::string& filename);
         void setValue(const string& name, const Value& value);

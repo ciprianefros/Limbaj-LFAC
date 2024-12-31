@@ -79,31 +79,37 @@ decl_vars                 :    decl_var ';'
                           ;
 
 TYPE : INT 
-{
-          currentVariable.type.typeName = INT;
+     {
+          currentVariable.type.typeName = TYPE_INT;
+          currentFunction.returnType = TYPE_INT;
      }
      | FLOAT 
      {
-          currentVariable.type.typeName = FLOAT;
+          currentVariable.type.typeName = TYPE_FLOAT;
+          currentFunction.returnType = TYPE_FLOAT;
      }
      | STRING 
      {
-          currentVariable.type.typeName = STRING;
+          currentVariable.type.typeName = TYPE_STRING;
+          currentFunction.returnType = TYPE_STRING;
      }
      | BOOL 
      {
-          currentVariable.type.typeName = BOOL;
+          currentVariable.type.typeName = TYPE_BOOL;
+          currentFunction.returnType = TYPE_BOOL;
      }
      | CHAR  
      {
-          currentVariable.type.typeName = CHAR;
+          currentVariable.type.typeName = TYPE_CHAR;
+          currentFunction.returnType = TYPE_CHAR;
      }
      ;
 
 /*Declararea de variabile sau array-uri*/
 decl_var                  :    TYPE ID  {
                                    if (!currentTable->existsId($2)) {
-                                       currentTable->addVar($1, $2);
+                                        currentVariable.name = $2;
+                                        currentTable->addVar(currentVariable.type.typeName, $2);
                                    } else {
                                        errorCount++; 
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
@@ -111,7 +117,7 @@ decl_var                  :    TYPE ID  {
                                }
                           |    TYPE ID '[' list_array ']' {
                                    if (!currentTable->existsId($2)) {
-                                       currentTable->addVar($1, $2);
+                                       currentTable->addVar(currentVariable.type.typeName, $2);
                                    } else {
                                        errorCount++; 
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
@@ -160,7 +166,7 @@ membs_list                :    class_memb
 class_memb                :    ID ':' TYPE ';'
                                 {
                                    if (!currentTable->existsId($1)) {
-                                       currentTable->addVar($3, $1);
+                                       currentTable->addVar(currentVariable.type.typeName, $1);
                                    } else {
                                        errorCount++; 
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
@@ -182,13 +188,18 @@ method
             yyerror(("Function " + std::string($2) + " already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
             // Adaugă funcția în tabela simbolurilor a clasei
-            currentTable->addFunc($1, $2);
+            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+            currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
+            tables.push_back(currentTable);
         }
     } 
     fblock '}'
     {
         // Revenire la tabelul simbolurilor al clasei
-        current = current->prev;
+        currentTable = currentTable->prev;
+        //current = current->prev;
+        //stergerea parametrilor
+        currentParams.clear();
     }
     ;
 
@@ -203,33 +214,36 @@ decl_funcs                :    def_func
                           ;
 
 /*Definirea unei functii*/
-def_func
-    : TYPE ID '(' list_param ')' '{' 
-    {
-        if(!currentTable->existsFunc($2)) {
-            currentTable->addFunc($1, $2);
-        }
-        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
-        tables.push_back(currentTable);  // Adaugă tabelul global
-        currentFunction.name = $2;
-        currentFunction.type = $1;
-    }
-    fblock '}' 
-    {
-        currentTable = currentTable->prev; // Revenire la scopul părinte
-    }
-    | TYPE ID '(' list_param ')' ';' {
-        if(!currentTable->existsFunc($2)) {
-            currentTable->addFunc($1, $2);
-        }
-        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
-        tables.push_back(currentTable);  // Adaugă tabelul global
+def_func  : TYPE ID '(' list_param ')'
+                    {   
+                        if(!currentTable->existsFunc($2)) {
+                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+                        }
+                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
+                        tables.push_back(currentTable);  // Adaugă tabelul global
+                        currentFunction.name = $2; 
+                    }  
+                    function_definition
+                    {
+                        currentParams.clear();
+                        currentTable = currentTable->prev; // Revenire la scopul părinte
+                    }
+                    | TYPE ID '(' list_param ')' ';' {
+                        if(!currentTable->existsFunc($2)) {
+                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+                        }
+                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
+                        tables.push_back(currentTable);  // Adaugă tabelul global
 
-    }
-    {
-        currentTable = currentTable->prev; // Revenire la scopul părinte
-    }
-    ;
+                    }
+                    {
+                        currentParams.clear();
+                        currentTable = currentTable->prev; // Revenire la scopul părinte
+                    }
+                    ;
+
+function_definition : '{' fblock '}' 
+                    ;
 
 
 list_param 
@@ -243,14 +257,24 @@ list_param
 param                     :     TYPE ID  
                                 {
                                     currentVariable.name = $2;
-                                    currentVariable.type = $1;
+                                    currentVariable.type.isArray = false;
+
+                                    currentParams.push_back(currentVariable);
+                                    
+                                }
+                          |     TYPE ID '[' list_array ']' 
+                                {
+                                    currentVariable.name = $2;
+                                    currentVariable.type.isArray = true;
+
+                                    currentParams.push_back(currentVariable);
                                 }
                           ;
 
 
 /*Definirea unui array: uni, multi dimensional*/
-list_array                :    list_array ',' INT
-                          |    INT
+list_array                :    list_array ',' IVAL
+                          |    IVAL
                           ;
 
 /*Blocul unei functii*/
@@ -284,56 +308,64 @@ statement
     | ID ID '{' init_instante '}' ';'
     | IF '(' bool_expr ')' '{' list '}' 
     {
-        // Creează o tabelă pentru scopul IF
-        currentTable = new SymTable("if", currentTable);
-        tables.push_back(currentTable);
-    }  
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
-    | IF '(' bool_expr ')' '{' list '}' ELSE '{' list '}' {
-        // Creează o tabelă pentru scopul IF
-        currentTable = new SymTable("if", currentTable);
-        tables.push_back(currentTable);
+    
+    currentTable = new SymTable("if", currentTable);
+    tables.push_back(currentTable);
     } 
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
+    {  
+    // Revenire la scopul părinte
+    currentTable = currentTable->prev;
     }
-    | WHILE '(' bool_expr ')' '{' list '}' {
-        // Creează o tabelă pentru scopul WHILE
-        currentTable = new SymTable("while", currentTable);
+    | IF '(' bool_expr ')' '{' list '}' ELSE '{' list '}'
+    {
+        // Creează o tabelă pentru scopul IF
+        currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
-    }  
+    }
     {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | DO '{' list '}' WHILE '(' bool_expr ')' 
+    | WHILE 
     {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("while", currentTable);
         tables.push_back(currentTable);
-    } 
+    }
+    '(' bool_expr ')' '{' list '}'   
     {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | LOOP '{' list '}' {
+    | DO 
+    {
+        // Creează o tabelă pentru scopul WHILE
+        currentTable = new SymTable("do-while", currentTable);
+        tables.push_back(currentTable);
+    } 
+    '{' list '}' WHILE '(' bool_expr ')' 
+    {
+        // Revenire la scopul părinte
+        currentTable = currentTable->prev;
+    }
+    | LOOP 
+    {
         // Creează o tabelă pentru scopul LOOP
         currentTable = new SymTable("loop", currentTable);
         tables.push_back(currentTable);
     }
+    '{' list '}' 
     {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | FOR '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}' {
+    | FOR 
+    {
         // Creează o tabelă pentru scopul FOR
         currentTable = new SymTable("for", currentTable);
         tables.push_back(currentTable);
-    }  
+    } 
+    '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}'  
     {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
@@ -343,19 +375,20 @@ statement
     | RETURN bool_expr ';'
     ;
 
+
 /*Asignari ale membrilor unei clase*/
 init_instante             :     ID ASSIGN expr ';'
                           |     init_instante ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     left_hand_side ASSIGN expr
-                          |     ID '[' list_array ']' ASSIGN '{' init_list '}'
                           |     TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
                           ;
 
 left_hand_side            :     ID '.' ID
                           |     ID
                           |     TYPE ID
+                          |     ID '[' list_array ']'
                           ;
 
 /*Apeluri de functii*/

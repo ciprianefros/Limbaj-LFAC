@@ -28,11 +28,13 @@ VarInfo::VarInfo(short type, const string& name)
 // Definiția clasei FuncInfo
 FuncInfo::FuncInfo() {}
 
-FuncInfo::FuncInfo(short type, const string& name)
+FuncInfo::FuncInfo(short type, const string& name, vector<VarInfo> params)
 {
     this->returnType = type;
     this->name = name;
+    this->params = params;
 }
+
 
 //Definitia clasei ClassInfo
 ClassInfo::ClassInfo(const string& name) : name(name) {}
@@ -74,13 +76,14 @@ bool SymTable::addVar(short type, const string& name) {
     return true;
 }
 
-bool SymTable::addFunc(short type, const string& name) {
+bool SymTable::addFunc(short type, const string& name, vector<VarInfo> params) {
     if(funcids.find(name) != funcids.end()) {
         return false;
     }
-    funcids[name] = FuncInfo(type, name);
+    funcids[name] = FuncInfo(type, name, params);
     return true;
 }
+
 bool SymTable::addClass(const string& name) {
     if(classids.find(name) != classids.end()) {
         return false;
@@ -100,17 +103,43 @@ void SymTable::printTable(const string& filename) {
     outFile << "Scope: " << ScopeName << "\n";
     outFile << "Variabile:\n";
     for (const auto& [name, var] : ids) {
-        outFile << "  " << var.type.typeName << " " << var.name << "\n";
+        string type;
+        switch(var.type.typeName) {
+            case 0 : {type = "intreg"; break;}
+            case 1 : {type = "real"; break;}
+            case 2 : {type = "caracter"; break;}
+            case 3 : {type = "bool"; break;}
+            case 4 : {type = "sir"; break;}
+            default : {type = "customType";}
+        }
+        outFile << "  " << type << " " << var.name << "\n";
     }
 
     outFile << "Functions:\n";
     for (const auto& [name, func] : funcids) {
-        outFile << "  " << func.returnType << " " << func.name << " (";
+        string type;
+        switch(func.returnType) {
+            case 0 : {type = "intreg"; break;}
+            case 1 : {type = "real"; break;}
+            case 2 : {type = "caracter"; break;}
+            case 3 : {type = "bool"; break;}
+            case 4 : {type = "sir"; break;}
+            default : {type = "customType";}
+        }
+        outFile << "  " << type << " " << func.name << " (";
 
-        for (const auto& [paramType, paramName] : func.params.params) {
-            outFile << paramType << " " << paramName;
-            if (&paramType != &func.params.params.back().first) // Evită virgula pentru ultimul parametru
-                outFile << ", ";
+        for(auto param : func.params) {
+            string type;
+            switch(func.returnType) {
+                case 0 : {type = "intreg"; break;}
+                case 1 : {type = "real"; break;}
+                case 2 : {type = "caracter"; break;}
+                case 3 : {type = "bool"; break;}
+                case 4 : {type = "sir"; break;}
+                default : {type = "customType";}
+            }
+            outFile << type << " " << param.name;
+            outFile << ",";
         }
         outFile << ")\n";
     }
