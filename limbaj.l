@@ -4,7 +4,12 @@
 %}
 %option noyywrap
 %%
-"intreg"|"real"|"caracter"|"sir"|"bool" {yylval.string = strdup(yytext);return TYPE;}
+
+"intreg" { return INT;}
+"real" { return FLOAT;}
+"caracter" { return CHAR;}
+"sir" { return STRING;}
+"bool" { return BOOL;}
 
 "clasa" {return CLASS;}
 
@@ -44,14 +49,14 @@
 "rupe" {return BREAK;}
 "continua" {return CONTINUE;}
 "returneaza" {return RETURN;}
-"adevarat"  { yylval.true_or_false = true; return BOOL; }
-"fals" { yylval.true_or_false = false; return BOOL; }
-\"([a-zA-Z0-9 .,!?;:_\t\n\r\\\"']|\\.)*\" { yylval.string = strdup(yytext); return STRING; }
-['][0-9a-zA-Z]['] { yylval.caracter = yytext[1]; return CHAR; }
-[0].[0-9]+[0-9]*|[1-9]+[0-9]*[.][0-9]+[0-9]* {    yylval.real_number = atof(yytext);return FLOAT;}
+"adevarat"  { yylval.true_or_false = true; return BVAL; }
+"fals" { yylval.true_or_false = false; return BVAL; }
+\"([a-zA-Z0-9 .,!?;:_\t\n\r\\\"']|\\.)*\" { yylval.string = strdup(yytext); return SVAL; }
+['][0-9a-zA-Z]['] { yylval.caracter = yytext[1]; return CVAL; }
+[0].[0-9]+[0-9]*|[1-9]+[0-9]*[.][0-9]+[0-9]* {    yylval.real_number = atof(yytext);return FVAL;}
 [_a-zA-Z][a-zA-Z0-9]* {yylval.string = strdup(yytext); return ID;}
 "<-" {return ASSIGN;}
-0|[1-9]+[0-9]* {yylval.number = atoi(yytext); return INT;}
+0|[1-9]+[0-9]* {yylval.number = atoi(yytext); return IVAL;}
 [ \t] ;
 \n {yylineno++;}
 . {return yytext[0];}

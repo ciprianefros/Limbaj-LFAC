@@ -29,10 +29,12 @@ int errorCount = 0;
 %token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE RETURN
-%token<string> ID TYPE STRING CHAR
-%token<real_number> FLOAT
-%token<number> INT
-%token<true_or_false> BOOL
+%token<string> ID SVAL
+%token CHAR STRING FLOAT INT BOOL
+%token<real_number> FVAL
+%token<number> IVAL
+%token<true_or_false> BVAL
+%token<caracter> CVAL
 %start progr
 
 %left OR
@@ -76,6 +78,27 @@ decl_vars                 :    decl_var ';'
                           |    decl_vars decl_var ';'
                           ;
 
+TYPE : INT 
+{
+          currentVariable.type.typeName = INT;
+     }
+     | FLOAT 
+     {
+          currentVariable.type.typeName = FLOAT;
+     }
+     | STRING 
+     {
+          currentVariable.type.typeName = STRING;
+     }
+     | BOOL 
+     {
+          currentVariable.type.typeName = BOOL;
+     }
+     | CHAR  
+     {
+          currentVariable.type.typeName = CHAR;
+     }
+     ;
 
 /*Declararea de variabile sau array-uri*/
 decl_var                  :    TYPE ID  {
@@ -94,8 +117,7 @@ decl_var                  :    TYPE ID  {
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
                                    }
                                }
-                          | TYPE ID ASSIGN expr
-                          | TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
+                          | assignment_stmt
                           ;
 
 init_list                 : init_list ',' expr
@@ -316,7 +338,6 @@ statement
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | assignment_stmt ';' 
     | CONTINUE ';'
     | BREAK ';'
     | RETURN bool_expr ';'
@@ -328,11 +349,13 @@ init_instante             :     ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     left_hand_side ASSIGN expr
+                          |     ID '[' list_array ']' ASSIGN '{' init_list '}'
+                          |     TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
                           ;
 
 left_hand_side            :     ID '.' ID
-                          |     ID '[' list_array ']' 
                           |     ID
+                          |     TYPE ID
                           ;
 
 /*Apeluri de functii*/
@@ -359,7 +382,7 @@ bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     '(' bool_expr OR bool_expr ')'
                           |     bool_expr OR bool_expr
                           |     '(' NOT bool_expr ')'
-                          |     BOOL
+                          |     BVAL
                           |     NOT bool_expr
                           |     expr
                           ;
@@ -383,10 +406,10 @@ expr                      :     arithm_expr
                           |    '(' expr ')'
                           |     '-' expr
                           |     ID
-                          |     INT
-                          |     FLOAT
-                          |     CHAR
-                          |     STRING
+                          |     IVAL
+                          |     FVAL
+                          |     CVAL
+                          |     SVAL
                           |     ID '[' list_array ']'
                           |     ID '.' ID
                           |     ID '.' call_func

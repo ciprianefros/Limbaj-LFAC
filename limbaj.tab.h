@@ -229,12 +229,16 @@ typedef
 #define	CONTINUE	290
 #define	RETURN	291
 #define	ID	292
-#define	TYPE	293
-#define	STRING	294
-#define	CHAR	295
+#define	SVAL	293
+#define	CHAR	294
+#define	STRING	295
 #define	FLOAT	296
 #define	INT	297
 #define	BOOL	298
+#define	FVAL	299
+#define	IVAL	300
+#define	BVAL	301
+#define	CVAL	302
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -318,12 +322,16 @@ static const int BREAK;
 static const int CONTINUE;
 static const int RETURN;
 static const int ID;
-static const int TYPE;
-static const int STRING;
+static const int SVAL;
 static const int CHAR;
+static const int STRING;
 static const int FLOAT;
 static const int INT;
 static const int BOOL;
+static const int FVAL;
+static const int IVAL;
+static const int BVAL;
+static const int CVAL;
 
 
 #line 212 "/usr/share/bison++/bison.h"
@@ -367,12 +375,16 @@ static const int BOOL;
 	,CONTINUE=290
 	,RETURN=291
 	,ID=292
-	,TYPE=293
-	,STRING=294
-	,CHAR=295
+	,SVAL=293
+	,CHAR=294
+	,STRING=295
 	,FLOAT=296
 	,INT=297
 	,BOOL=298
+	,FVAL=299
+	,IVAL=300
+	,BVAL=301
+	,CVAL=302
 
 
 #line 215 "/usr/share/bison++/bison.h"

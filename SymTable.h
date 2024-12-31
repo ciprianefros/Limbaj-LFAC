@@ -18,19 +18,21 @@ class ParamList {
             params.emplace_back(type, name);
         }
 };
+
 enum Types {
     INT, 
     FLOAT, 
     CHAR, 
     BOOL,
     STRING
-}
+};
 
 struct Type {
     short typeName; //0 int 1 float 2 char 3 bool 4 string
     bool isArray;
     vector<short> arraySizes;
-}
+};
+
 class Value {
     private:
         int intValue;
@@ -54,8 +56,9 @@ class VarInfo {
         string name;
         Type type;
         VarInfo();
-        VarInfo(const string& type, const string& name);
+        VarInfo(short type, const string& name);
 };
+
 class FuncInfo {
     public:
         string name;
@@ -63,8 +66,8 @@ class FuncInfo {
         ParamList params;
 
         FuncInfo();
-        FuncInfo(const string& type, const string& name);
-}
+        FuncInfo(short type, const string& name);
+};
 
 class ClassInfo {
     public: 
@@ -90,8 +93,8 @@ class SymTable {
         bool existsId(const string& name);
         bool existsFunc(const string& name);
         bool existsClass(const string& name);
-        bool addVar(const string& type, const string& name);
-        bool addFunc(const string& type, const string& name);
+        bool addVar(short type, const string& name);
+        bool addFunc(short type, const string& name);
         bool addClass(const string& name);
         void printTable(const std::string& filename);
         void setValue(const string& name, const Value& value);

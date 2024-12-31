@@ -1,4 +1,5 @@
 #include "SymTable.h"
+#include <string.h>
 
 // Definiția clasei Value
 Value::Value() : type(0) {}
@@ -14,17 +15,31 @@ string Value::toString() {
     if (type == 2) return to_string(floatValue);
     return stringValue;
 }
+
+// Definiția clasei VarInfo
+VarInfo::VarInfo() {}
+
+VarInfo::VarInfo(short type, const string& name)
+{
+    this->type.typeName = type;
+    this->name = name;
+}
+
+// Definiția clasei FuncInfo
+FuncInfo::FuncInfo() {}
+
+FuncInfo::FuncInfo(short type, const string& name)
+{
+    this->returnType = type;
+    this->name = name;
+}
+
 //Definitia clasei ClassInfo
 ClassInfo::ClassInfo(const string& name) : name(name) {}
 
 ClassInfo::~ClassInfo() {
     // Curățare sau alte operațiuni dacă este necesar
 }
-// Definiția clasei IdInfo
-IdInfo::IdInfo() {}
-
-IdInfo::IdInfo(const string& type, const string& name, const string& idType)
-    : type(type), name(name), idType(idType) {}
 
 // Definiția clasei SymTable
 SymTable::SymTable(const string& name, SymTable* parent)
@@ -51,19 +66,19 @@ bool SymTable::existsClass(const string& name) {
     return prev ? prev->existsId(name) : false;
 }
 
-bool SymTable::addVar(const string& type, const string& name) {
+bool SymTable::addVar(short type, const string& name) {
     if(ids.find(name) != ids.end()) {
         return false;
     }
-    ids[name] = IdInfo(type, name, "var");
+    ids[name] = VarInfo(type, name);
     return true;
 }
 
-bool SymTable::addFunc(const string& type, const string& name) {
+bool SymTable::addFunc(short type, const string& name) {
     if(funcids.find(name) != funcids.end()) {
         return false;
     }
-    funcids[name] = IdInfo(type, name, "func");
+    funcids[name] = FuncInfo(type, name);
     return true;
 }
 bool SymTable::addClass(const string& name) {
@@ -85,12 +100,12 @@ void SymTable::printTable(const string& filename) {
     outFile << "Scope: " << ScopeName << "\n";
     outFile << "Variabile:\n";
     for (const auto& [name, var] : ids) {
-        outFile << "  " << var.type << " " << var.name << "\n";
+        outFile << "  " << var.type.typeName << " " << var.name << "\n";
     }
 
     outFile << "Functions:\n";
     for (const auto& [name, func] : funcids) {
-        outFile << "  " << func.type << " " << func.name << " (";
+        outFile << "  " << func.returnType << " " << func.name << " (";
 
         for (const auto& [paramType, paramName] : func.params.params) {
             outFile << paramType << " " << paramName;
@@ -113,9 +128,7 @@ void SymTable::printTable(const string& filename) {
 void SymTable::setValue(const string& name, const Value& value) {
     if (ids.find(name) != ids.end()) {
         ids[name].value = value;
-    } else if (funcids.find(name) != funcids.end()) {
-        funcids[name].value = value;  // Poți adăuga gestionarea valorii funcțiilor, dacă e necesar
-    }
+    } 
 }
 
 SymTable::~SymTable() {
