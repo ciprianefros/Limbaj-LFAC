@@ -7,7 +7,6 @@
 "intreg"|"real"|"caracter"|"sir"|"bool" {yylval.string = strdup(yytext);return TYPE;}
 
 "clasa" {return CLASS;}
-"constant" {return CONST;}
 
 "start_programel" {return BGIN;}
 "sfarsit_programel" {return END;}

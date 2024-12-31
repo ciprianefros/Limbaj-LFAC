@@ -13,7 +13,7 @@
 
  #line 8 "/usr/share/bison++/bison.h"
 
-#line 21 "limbaj.y"
+#line 20 "limbaj.y"
 typedef union 
 {
      int number;
@@ -207,35 +207,34 @@ typedef
 #define	BGINFUNC	268
 #define	ENDFUNC	269
 #define	CLASS	270
-#define	CONST	271
-#define	EQ	272
-#define	NEQ	273
-#define	GT	274
-#define	LT	275
-#define	GTE	276
-#define	LTE	277
-#define	AND	278
-#define	OR	279
-#define	NOT	280
-#define	PRINT	281
-#define	TYPEOF	282
-#define	EVAL	283
-#define	IF	284
-#define	ELSE	285
-#define	WHILE	286
-#define	FOR	287
-#define	DO	288
-#define	LOOP	289
-#define	BREAK	290
-#define	CONTINUE	291
-#define	RETURN	292
-#define	ID	293
-#define	TYPE	294
-#define	STRING	295
-#define	CHAR	296
-#define	FLOAT	297
-#define	INT	298
-#define	BOOL	299
+#define	EQ	271
+#define	NEQ	272
+#define	GT	273
+#define	LT	274
+#define	GTE	275
+#define	LTE	276
+#define	AND	277
+#define	OR	278
+#define	NOT	279
+#define	PRINT	280
+#define	TYPEOF	281
+#define	EVAL	282
+#define	IF	283
+#define	ELSE	284
+#define	WHILE	285
+#define	FOR	286
+#define	DO	287
+#define	LOOP	288
+#define	BREAK	289
+#define	CONTINUE	290
+#define	RETURN	291
+#define	ID	292
+#define	TYPE	293
+#define	STRING	294
+#define	CHAR	295
+#define	FLOAT	296
+#define	INT	297
+#define	BOOL	298
 
 
 #line 169 "/usr/share/bison++/bison.h"
@@ -297,7 +296,6 @@ static const int ENDCLASS;
 static const int BGINFUNC;
 static const int ENDFUNC;
 static const int CLASS;
-static const int CONST;
 static const int EQ;
 static const int NEQ;
 static const int GT;
@@ -347,35 +345,34 @@ static const int BOOL;
 	,BGINFUNC=268
 	,ENDFUNC=269
 	,CLASS=270
-	,CONST=271
-	,EQ=272
-	,NEQ=273
-	,GT=274
-	,LT=275
-	,GTE=276
-	,LTE=277
-	,AND=278
-	,OR=279
-	,NOT=280
-	,PRINT=281
-	,TYPEOF=282
-	,EVAL=283
-	,IF=284
-	,ELSE=285
-	,WHILE=286
-	,FOR=287
-	,DO=288
-	,LOOP=289
-	,BREAK=290
-	,CONTINUE=291
-	,RETURN=292
-	,ID=293
-	,TYPE=294
-	,STRING=295
-	,CHAR=296
-	,FLOAT=297
-	,INT=298
-	,BOOL=299
+	,EQ=271
+	,NEQ=272
+	,GT=273
+	,LT=274
+	,GTE=275
+	,LTE=276
+	,AND=277
+	,OR=278
+	,NOT=279
+	,PRINT=280
+	,TYPEOF=281
+	,EVAL=282
+	,IF=283
+	,ELSE=284
+	,WHILE=285
+	,FOR=286
+	,DO=287
+	,LOOP=288
+	,BREAK=289
+	,CONTINUE=290
+	,RETURN=291
+	,ID=292
+	,TYPE=293
+	,STRING=294
+	,CHAR=295
+	,FLOAT=296
+	,INT=297
+	,BOOL=298
 
 
 #line 215 "/usr/share/bison++/bison.h"

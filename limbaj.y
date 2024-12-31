@@ -1,8 +1,7 @@
 %{
 #include <iostream>
 #include <vector>
-#include "SymTable.h"
-#include "AST.h"
+#include "utils.h"
 extern FILE* yyin;
 extern char* yytext;
 extern int yylineno;
@@ -27,7 +26,7 @@ int errorCount = 0;
      char* string;
 }
 
-%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS CONST
+%token BGIN END ASSIGN NR BGINGLOBAL ENDGLOBAL BGINVARS ENDVARS BGINCLASS ENDCLASS BGINFUNC ENDFUNC CLASS
 %token EQ NEQ GT LT GTE LTE AND OR NOT
 %token PRINT TYPEOF EVAL IF ELSE WHILE FOR DO LOOP BREAK CONTINUE RETURN
 %token<string> ID TYPE STRING CHAR
@@ -95,6 +94,12 @@ decl_var                  :    TYPE ID  {
                                        yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
                                    }
                                }
+                          | TYPE ID ASSIGN expr
+                          | TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
+                          ;
+
+init_list                 : init_list ',' expr
+                          | expr 
                           ;
 
 /*Partea in program de declarare a claselor*/
@@ -160,7 +165,6 @@ method
     } 
     fblock '}'
     {
-
         // Revenire la tabelul simbolurilor al clasei
         current = current->prev;
     }
@@ -185,11 +189,8 @@ def_func
         }
         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
         tables.push_back(currentTable);  // Adaugă tabelul global
-
-        for (const auto& param : $4.params) 
-        {
-            currentTable->funcids[$2]->addParam(param.second, param.first);  // Adaugă parametrii la tabela curentă
-        }
+        currentFunction.name = $2;
+        currentFunction.type = $1;
     }
     fblock '}' 
     {
@@ -202,48 +203,26 @@ def_func
         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
         tables.push_back(currentTable);  // Adaugă tabelul global
 
-        for (const auto& param : $4.params) 
-        {
-            currentTable->funcids[$2]->addParam(param.second, param.first);  // Adaugă parametrii la tabela curentă
-        }
     }
     {
         currentTable = currentTable->prev; // Revenire la scopul părinte
     }
     ;
 
-/*Lista de parametri pentru functii*/
-// list_param                :    param
-//                           { 
-//                               $$.params.push_back($1); // Salvează parametrul în lista de parametri
-//                           }
-//                           |    list_param ',' param
-//                           {
-//                               $$.params = $1.params;  // Concatenează parametrii
-//                               $$.params.push_back($3); // Adaugă noul parametru
-//                           }
-//                           |    
-//                           ;
 
 list_param 
     : param
-    {
-        $$ = new ParamList();
-    }
     | list_param ',' param
-    {
-        $$ = $1;
-    }
+    |
     ;
 
 
 /*Parametrii pentru functii*/
-param                     :     TYPE ID
-                          {
-                                ParamList* paramList = new ParamList();
-                                paramList->addParam($1, $2);
-                                currentTable->funcids[$2]->params = *paramList; 
-                          }
+param                     :     TYPE ID  
+                                {
+                                    currentVariable.name = $2;
+                                    currentVariable.type = $1;
+                                }
                           ;
 
 
@@ -337,7 +316,7 @@ statement
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
-    | assignment_stmt ';'
+    | assignment_stmt ';' 
     | CONTINUE ';'
     | BREAK ';'
     | RETURN bool_expr ';'
@@ -349,12 +328,10 @@ init_instante             :     ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     left_hand_side ASSIGN expr
-                          |     left_hand_side ASSIGN STRING
                           ;
 
 left_hand_side            :     ID '.' ID
-                          |     ID '[' list_array ']'
-                          |     TYPE ID  
+                          |     ID '[' list_array ']' 
                           |     ID
                           ;
 
@@ -366,8 +343,8 @@ call_func                 : ID '(' call_list ')' {
                                 }
                            }
                            | ID '(' ')'
-                           | PRINT '(' STRING ')'
-                           | TYPEOF '(' ID ')'
+                           | PRINT '(' expr ')'
+                           | TYPEOF '(' expr ')'
                            ;
 
 
@@ -409,6 +386,7 @@ expr                      :     arithm_expr
                           |     INT
                           |     FLOAT
                           |     CHAR
+                          |     STRING
                           |     ID '[' list_array ']'
                           |     ID '.' ID
                           |     ID '.' call_func
