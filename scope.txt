@@ -1,6 +1,6 @@
 Scope: global
 Variabile:
-  intreg arr
+  intreg arr[10,9]
   caracter c
   sir s
   intreg x
@@ -52,7 +52,7 @@ Classes:
 
 Scope: else
 Variabile:
-  intreg salutari
+  intreg salutari[20,10,3]
 Functions:
 Classes:
 

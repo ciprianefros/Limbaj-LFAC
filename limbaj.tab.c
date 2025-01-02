@@ -108,17 +108,13 @@ extern char* yytext;
 extern int yylineno;
 extern int yylex();
 
-void yyerror(const char * s);
 
-class SymTable* current;
-vector<SymTable*> tables;
-SymTable* globalTable = new SymTable("global");
-SymTable* currentTable = globalTable;
-SymTable* p;
+
+
 
 int errorCount = 0;
 
-#line 20 "limbaj.y"
+#line 16 "limbaj.y"
 typedef union 
 {
      int number;
@@ -728,19 +724,19 @@ static const short yyrhs[] = {    65,
 
 #if (YY_parse_DEBUG != 0) || defined(YY_parse_ERROR_VERBOSE) 
 static const short yyrline[] = { 0,
-    52,    59,    63,    64,    68,    72,    73,    77,    78,    81,
-    86,    91,    96,   101,   109,   118,   126,   129,   130,   134,
-   135,   138,   139,   144,   154,   161,   162,   166,   177,   178,
-   183,   196,   207,   208,   212,   213,   217,   227,   231,   239,
-   245,   250,   251,   252,   257,   265,   276,   277,   282,   283,
-   288,   292,   299,   300,   305,   306,   307,   308,   309,   314,
-   320,   324,   330,   335,   341,   346,   352,   357,   363,   368,
-   369,   370,   373,   374,   379,   380,   383,   384,   387,   388,
-   404,   405,   409,   415,   416,   417,   422,   423,   427,   428,
-   429,   430,   431,   432,   433,   434,   437,   438,   439,   440,
-   441,   442,   443,   444,   445,   446,   447,   448,   451,   452,
-   453,   454,   455,   456,   457,   458,   459,   460,   461,   462,
-   463,   467,   468,   469,   470,   471
+    48,    55,    59,    60,    64,    68,    69,    73,    74,    77,
+    82,    87,    92,    97,   105,   111,   117,   120,   121,   125,
+   126,   129,   130,   135,   146,   153,   154,   158,   169,   170,
+   175,   188,   199,   200,   204,   205,   209,   219,   223,   231,
+   237,   242,   243,   244,   249,   257,   268,   269,   274,   275,
+   280,   284,   291,   292,   297,   298,   299,   300,   301,   306,
+   312,   316,   322,   327,   333,   338,   344,   349,   355,   360,
+   361,   362,   365,   366,   371,   372,   375,   376,   379,   380,
+   396,   397,   401,   407,   408,   409,   414,   415,   419,   420,
+   421,   422,   423,   424,   425,   426,   429,   430,   431,   432,
+   433,   434,   435,   436,   437,   438,   439,   440,   443,   444,
+   445,   446,   447,   448,   449,   450,   451,   452,   453,   454,
+   455,   459,   460,   461,   462,   463
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","BGIN","END",
@@ -1501,85 +1497,79 @@ YYLABEL(yyreduce)
   switch (yyn) {
 
 case 1:
-#line 52 "limbaj.y"
+#line 48 "limbaj.y"
 { 
                                    if (errorCount == 0) 
                                        std::cout << "The program is correct!" << std::endl; 
                                ;
     break;}
 case 2:
-#line 59 "limbaj.y"
+#line 55 "limbaj.y"
 {
-                                    current = globalTable;
+                                    currentTable = globalTable;
                                     tables.push_back(globalTable);
                                 ;
     break;}
 case 10:
-#line 82 "limbaj.y"
+#line 78 "limbaj.y"
 {
           currentVariable.type.typeName = TYPE_INT;
           currentFunction.returnType = TYPE_INT;
      ;
     break;}
 case 11:
-#line 87 "limbaj.y"
+#line 83 "limbaj.y"
 {
           currentVariable.type.typeName = TYPE_FLOAT;
           currentFunction.returnType = TYPE_FLOAT;
      ;
     break;}
 case 12:
-#line 92 "limbaj.y"
+#line 88 "limbaj.y"
 {
           currentVariable.type.typeName = TYPE_STRING;
           currentFunction.returnType = TYPE_STRING;
      ;
     break;}
 case 13:
-#line 97 "limbaj.y"
+#line 93 "limbaj.y"
 {
           currentVariable.type.typeName = TYPE_BOOL;
           currentFunction.returnType = TYPE_BOOL;
      ;
     break;}
 case 14:
-#line 102 "limbaj.y"
+#line 98 "limbaj.y"
 {
           currentVariable.type.typeName = TYPE_CHAR;
           currentFunction.returnType = TYPE_CHAR;
      ;
     break;}
 case 15:
-#line 109 "limbaj.y"
+#line 106 "limbaj.y"
 {
-                                   if (!currentTable->existsId(yyvsp[0].string)) {
-                                        currentVariable.name = yyvsp[0].string;
-                                        currentTable->addVar(currentVariable.type.typeName, yyvsp[0].string);
-                                   } else {
-                                       errorCount++; 
-                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
-                                   }
-                               ;
+                                    if(!exists_or_add(yyvsp[0].string, false)) {
+
+                                    }
+                                ;
     break;}
 case 16:
-#line 118 "limbaj.y"
+#line 112 "limbaj.y"
 {
-                                   if (!currentTable->existsId(yyvsp[-3].string)) {
-                                       currentTable->addVar(currentVariable.type.typeName, yyvsp[-3].string);
-                                   } else {
-                                       errorCount++; 
-                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
+                                   if(!exists_or_add(yyvsp[-3].string, true)) {
+
                                    }
-                               ;
+                                ;
     break;}
 case 24:
-#line 144 "limbaj.y"
+#line 135 "limbaj.y"
 {
         // Creează tabelă pentru clasa curentă
         if (currentTable->existsId(yyvsp[-1].string)) { // Verifică dacă clasa există deja
             errorCount++;
             yyerror(("Class already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
+            currentClass.name = yyvsp[-1].string;
             currentTable->addClass(yyvsp[-1].string);
             currentTable = new SymTable(yyvsp[-1].string, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable); // Adaugă în lista globală de tabele
@@ -1587,14 +1577,14 @@ case 24:
     ;
     break;}
 case 25:
-#line 154 "limbaj.y"
+#line 146 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 28:
-#line 167 "limbaj.y"
+#line 159 "limbaj.y"
 {
                                    if (!currentTable->existsId(yyvsp[-3].string)) {
                                        currentTable->addVar(currentVariable.type.typeName, yyvsp[-3].string);
@@ -1605,7 +1595,7 @@ case 28:
                                ;
     break;}
 case 31:
-#line 183 "limbaj.y"
+#line 175 "limbaj.y"
 {
         // Verifică dacă funcția este deja definită
         if (currentTable->existsFunc(yyvsp[-4].string)) 
@@ -1614,14 +1604,14 @@ case 31:
             yyerror(("Function " + std::string(yyvsp[-4].string) + " already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
             // Adaugă funcția în tabela simbolurilor a clasei
-            currentTable->addFunc(currentFunction.returnType, yyvsp[-4].string, currentParams);
+            currentTable->addFunc(currentFunction.returnType, yyvsp[-4].string, currentParams, currentClass.name);
             currentTable = new SymTable(yyvsp[-4].string, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable);
         }
     ;
     break;}
 case 32:
-#line 197 "limbaj.y"
+#line 189 "limbaj.y"
 {
         // Revenire la tabelul simbolurilor al clasei
         currentTable = currentTable->prev;
@@ -1631,7 +1621,7 @@ case 32:
     ;
     break;}
 case 37:
-#line 218 "limbaj.y"
+#line 210 "limbaj.y"
 {   
                         if(!currentTable->existsFunc(yyvsp[-3].string)) {
                             currentTable->addFunc(currentFunction.returnType, yyvsp[-3].string, currentParams);
@@ -1642,14 +1632,14 @@ case 37:
                     ;
     break;}
 case 38:
-#line 227 "limbaj.y"
+#line 219 "limbaj.y"
 {
                         currentParams.clear();
                         currentTable = currentTable->prev; // Revenire la scopul părinte
                     ;
     break;}
 case 39:
-#line 231 "limbaj.y"
+#line 223 "limbaj.y"
 {
                         if(!currentTable->existsFunc(yyvsp[-4].string)) {
                             currentTable->addFunc(currentFunction.returnType, yyvsp[-4].string, currentParams);
@@ -1660,14 +1650,14 @@ case 39:
                     ;
     break;}
 case 40:
-#line 239 "limbaj.y"
+#line 231 "limbaj.y"
 {
                         currentParams.clear();
                         currentTable = currentTable->prev; // Revenire la scopul părinte
                     ;
     break;}
 case 45:
-#line 258 "limbaj.y"
+#line 250 "limbaj.y"
 {
                                     currentVariable.name = yyvsp[0].string;
                                     currentVariable.type.isArray = false;
@@ -1677,7 +1667,7 @@ case 45:
                                 ;
     break;}
 case 46:
-#line 266 "limbaj.y"
+#line 258 "limbaj.y"
 {
                                     currentVariable.name = yyvsp[-3].string;
                                     currentVariable.type.isArray = true;
@@ -1685,8 +1675,16 @@ case 46:
                                     currentParams.push_back(currentVariable);
                                 ;
     break;}
+case 47:
+#line 268 "limbaj.y"
+{currentArraySizes.push_back(yyvsp[0].number);
+    break;}
+case 48:
+#line 269 "limbaj.y"
+{ currentArraySizes.push_back(yyvsp[0].number);
+    break;}
 case 51:
-#line 288 "limbaj.y"
+#line 280 "limbaj.y"
 { 
         // Creare tabelă pentru scopul main
         currentTable = new SymTable("main", currentTable);
@@ -1694,35 +1692,35 @@ case 51:
     ;
     break;}
 case 52:
-#line 292 "limbaj.y"
+#line 284 "limbaj.y"
 {
         // Revenire la scopul global
         currentTable = currentTable->prev;
     ;
     break;}
 case 59:
-#line 310 "limbaj.y"
+#line 302 "limbaj.y"
 {
         currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
     ;
     break;}
 case 60:
-#line 315 "limbaj.y"
+#line 307 "limbaj.y"
 {
         currentTable = new SymTable("else", currentTable->prev);
         tables.push_back(currentTable);
     ;
     break;}
 case 61:
-#line 320 "limbaj.y"
+#line 312 "limbaj.y"
 {  
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 62:
-#line 325 "limbaj.y"
+#line 317 "limbaj.y"
 {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("while", currentTable);
@@ -1730,14 +1728,14 @@ case 62:
     ;
     break;}
 case 63:
-#line 331 "limbaj.y"
+#line 323 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 64:
-#line 336 "limbaj.y"
+#line 328 "limbaj.y"
 {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("do-while", currentTable);
@@ -1745,14 +1743,14 @@ case 64:
     ;
     break;}
 case 65:
-#line 342 "limbaj.y"
+#line 334 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 66:
-#line 347 "limbaj.y"
+#line 339 "limbaj.y"
 {
         // Creează o tabelă pentru scopul LOOP
         currentTable = new SymTable("loop", currentTable);
@@ -1760,14 +1758,14 @@ case 66:
     ;
     break;}
 case 67:
-#line 353 "limbaj.y"
+#line 345 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 68:
-#line 358 "limbaj.y"
+#line 350 "limbaj.y"
 {
         // Creează o tabelă pentru scopul FOR
         currentTable = new SymTable("for", currentTable);
@@ -1775,14 +1773,14 @@ case 68:
     ;
     break;}
 case 69:
-#line 364 "limbaj.y"
+#line 356 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 80:
-#line 389 "limbaj.y"
+#line 381 "limbaj.y"
 {
                                 currentVariable.name = yyvsp[0].string;
                                 currentVariable.type.isArray = 0;
@@ -1800,7 +1798,7 @@ case 80:
                           ;
     break;}
 case 83:
-#line 409 "limbaj.y"
+#line 401 "limbaj.y"
 {
                                 if (!currentTable->existsId(yyvsp[-3].string)) { // Verifică dacă funcția există
                                     errorCount++;
@@ -2012,7 +2010,7 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 476 "limbaj.y"
+#line 468 "limbaj.y"
 
 void yyerror(const char * s){
      cout << "error: " << s << " at line: " << yylineno << endl;

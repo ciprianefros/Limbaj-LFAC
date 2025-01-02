@@ -7,13 +7,9 @@ extern char* yytext;
 extern int yylineno;
 extern int yylex();
 
-void yyerror(const char * s);
 
-class SymTable* current;
-vector<SymTable*> tables;
-SymTable* globalTable = new SymTable("global");
-SymTable* currentTable = globalTable;
-SymTable* p;
+
+
 
 int errorCount = 0;
 %}
@@ -57,7 +53,7 @@ progr                     :    global_declarations main {
 
 /*Global scope*/
 global_declarations       :     BGINGLOBAL   {
-                                    current = globalTable;
+                                    currentTable = globalTable;
                                     tables.push_back(globalTable);
                                 }
                                 declarations ENDGLOBAL
@@ -106,23 +102,18 @@ TYPE : INT
      ;
 
 /*Declararea de variabile sau array-uri*/
-decl_var                  :    TYPE ID  {
-                                   if (!currentTable->existsId($2)) {
-                                        currentVariable.name = $2;
-                                        currentTable->addVar(currentVariable.type.typeName, $2);
-                                   } else {
-                                       errorCount++; 
-                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
+decl_var                  :    TYPE ID  
+                                {
+                                    if(!exists_or_add($2, false)) {
+
+                                    }
+                                }
+                          |    TYPE ID '[' list_array ']' 
+                                {
+                                   if(!exists_or_add($2, true)) {
+
                                    }
-                               }
-                          |    TYPE ID '[' list_array ']' {
-                                   if (!currentTable->existsId($2)) {
-                                       currentTable->addVar(currentVariable.type.typeName, $2);
-                                   } else {
-                                       errorCount++; 
-                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
-                                   }
-                               }
+                                }
                           | assignment_stmt
                           ;
 
@@ -147,6 +138,7 @@ decl_class
             errorCount++;
             yyerror(("Class already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
+            currentClass.name = $2;
             currentTable->addClass($2);
             currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable); // Adaugă în lista globală de tabele
@@ -188,7 +180,7 @@ method
             yyerror(("Function " + std::string($2) + " already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
             // Adaugă funcția în tabela simbolurilor a clasei
-            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+            currentTable->addFunc(currentFunction.returnType, $2, currentParams, currentClass.name);
             currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable);
         }
@@ -273,8 +265,8 @@ param                     :     TYPE ID
 
 
 /*Definirea unui array: uni, multi dimensional*/
-list_array                :    list_array ',' IVAL
-                          |    IVAL
+list_array                :    list_array ',' IVAL {currentArraySizes.push_back($3)}
+                          |    IVAL { currentArraySizes.push_back($1)}
                           ;
 
 /*Blocul unei functii*/

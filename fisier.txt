@@ -49,7 +49,7 @@ daca(c % 4 == 2) {
     rupe;
 }
 altfel {
-    intreg salutari;
+    intreg salutari[20,10,3];
     c <- c + (5 % 2);
 }
 
