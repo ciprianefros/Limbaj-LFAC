@@ -44,19 +44,14 @@ arr[2] <- foo();
 
 
 daca(c % 4 == 2) {
+    intreg lmnop;
+    caracter charact;
     rupe;
 }
-
 altfel {
+    intreg salutari;
     c <- c + (5 % 2);
 }
-
-daca (3 < 4) {
-    c <- 3;
-} altfel {
-    c <- 5;
-}
-
 
 catTimp (c != 12) {
     c <- c + 1;

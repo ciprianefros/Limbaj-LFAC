@@ -13,7 +13,7 @@ class SymTable* current;
 vector<SymTable*> tables;
 SymTable* globalTable = new SymTable("global");
 SymTable* currentTable = globalTable;
-
+SymTable* p;
 
 int errorCount = 0;
 %}
@@ -306,23 +306,18 @@ statement
     | decl_var ';'
     | ID ID ';'
     | ID ID '{' init_instante '}' ';'
-    | IF '(' bool_expr ')' '{' list '}' 
+    | IF 
     {
-    
-    currentTable = new SymTable("if", currentTable);
-    tables.push_back(currentTable);
-    } 
-    {  
-    // Revenire la scopul părinte
-    currentTable = currentTable->prev;
-    }
-    | IF '(' bool_expr ')' '{' list '}' ELSE '{' list '}'
-    {
-        // Creează o tabelă pentru scopul IF
         currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
-    }
+    } 
+    '(' bool_expr ')' '{' list '}'
     {
+        currentTable = new SymTable("else", currentTable->prev);
+        tables.push_back(currentTable);
+    } 
+    else_statement   
+    {  
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
@@ -375,6 +370,10 @@ statement
     | RETURN bool_expr ';'
     ;
 
+else_statement  : 
+                | ELSE '{' list '}'
+                ;
+
 
 /*Asignari ale membrilor unei clase*/
 init_instante             :     ID ASSIGN expr ';'
@@ -387,6 +386,21 @@ assignment_stmt           :     left_hand_side ASSIGN expr
 
 left_hand_side            :     ID '.' ID
                           |     ID
+                          {
+                                currentVariable.name = $1;
+                                currentVariable.type.isArray = 0;
+                                
+                                p = currentTable;
+
+                                while(p->prev!=nullptr)
+                                {
+                                    if(p->existsId($1))
+                                    {
+                                        break;
+                                    }
+                                    p = p->prev;
+                                }
+                          }
                           |     TYPE ID
                           |     ID '[' list_array ']'
                           ;

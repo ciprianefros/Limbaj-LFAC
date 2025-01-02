@@ -45,11 +45,14 @@ Classes:
 
 Scope: if
 Variabile:
+  caracter charact
+  intreg lmnop
 Functions:
 Classes:
 
-Scope: if
+Scope: else
 Variabile:
+  intreg salutari
 Functions:
 Classes:
 
@@ -69,12 +72,27 @@ Variabile:
 Functions:
 Classes:
 
-Scope: if
+Scope: else
 Variabile:
 Functions:
 Classes:
 
 Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
 Variabile:
 Functions:
 Classes:
