@@ -40,7 +40,7 @@ w <- 345 + y + 56 + 7;
 B2 A { Y <- 2 ; } ; 
 B2.chh <- 'm';
 
-arr[2] <- foo();
+arr[2] <- foo(2,3);
 
 
 daca(c % 4 == 2) {
@@ -69,7 +69,7 @@ bucla {
 daca(c % 4 == 2) {
     rupe;
 }
-daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + arr[3] + A.b2 + A.func())) {
+daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + arr[3] + A.b2 + A.foc())) {
     rupe;
 }
 
@@ -83,7 +83,11 @@ pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
     i32 <- i32;
     intreg lol;
 }
-foo();
+
 f();
 foo();
+B2.foc();
+
+nedefinita();
+
 sfarsit_programel

@@ -295,6 +295,7 @@ list                      :     statement
 /*Tot felul de expresii din interiorul programului*/
 statement
     : call_func ';'
+    | ID '.' call_method ';'
     | decl_var ';'
     | ID ID ';'
     | ID ID '{' init_instante '}' ';'
@@ -398,21 +399,37 @@ left_hand_side            :     ID '.' ID
                           ;
 
 /*Apeluri de functii*/
-call_func                 : ID '(' call_list ')' {
-                                if (!currentTable->existsId($1)) { // Verifică dacă funcția există
-                                    errorCount++;
-                                    yyerror(("Function " + std::string($1) + " not declared at line: " + std::to_string(yylineno)).c_str());
-                                }
-                           }
+call_func                 : ID '(' call_list ')' 
+                            {
+                                checkFunction($1);
+                            }
                            | ID '(' ')'
+                           {
+                                checkFunction($1);
+                           }
                            | PRINT '(' expr ')'
                            | TYPEOF '(' expr ')'
                            ;
 
+call__method               : ID '(' call_list ')' 
+                           {
+                                checkMethod($1);
+                           }
+                           | ID '(' ')'
+                           {
+                                checkMethod($1);
+                           } 
+                           ;
 
 /*Parametrii de apel al unei functii*/
 call_list                 :     call_list ',' expr
+                          { 
+                                currentParams.push_back(currentVariable);
+                          }
                           |     expr
+                          {                                
+                                currentParams.push_back(currentVariable);
+                          }
                           ;
 
 /*Expresii boolene (true sau false)*/
@@ -446,6 +463,9 @@ expr                      :     arithm_expr
                           |     '-' expr
                           |     ID
                           |     IVAL
+                          {
+                                currentVariable.type.typeName = 0;
+                          }
                           |     FVAL
                           |     CVAL
                           |     SVAL

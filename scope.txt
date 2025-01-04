@@ -109,3 +109,1779 @@ Variabile:
 Functions:
 Classes:
 
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  intreg arr[10,9]
+  caracter c
+  sir s
+  intreg x
+  intreg y
+  caracter z
+Functions:
+  intreg foo (intreg sdfs,intreg sgsg,)
+  intreg functie (intreg w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh
+Functions:
+  real foc (real wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3
+  intreg yy
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  caracter bibi
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+  caracter charact
+  intreg lmnop
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+  intreg salutari[20,10,3]
+Functions:
+Classes:
+
+Scope: while
+Variabile:
+  caracter yolo
+Functions:
+Classes:
+
+Scope: loop
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: if
+Variabile:
+Functions:
+Classes:
+
+Scope: else
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while
+Variabile:
+  sir ccc
+Functions:
+Classes:
+
+Scope: for
+Variabile:
+  intreg lol
+Functions:
+Classes:
+
