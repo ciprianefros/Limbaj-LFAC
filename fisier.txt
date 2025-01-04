@@ -12,8 +12,10 @@ sfarsit_vars
 start_clasa
 clasa B2 {
     chh : caracter;
-    intreg foc(intreg wx, real ww)
+    x   : intreg;
+    intreg foc(sir wx, real ww)
     {
+        intreg x;
         real wy;
         wy <- 2;
     }
@@ -22,7 +24,7 @@ sfarsit_clasa
 
 start_functions
 real foo(intreg sdfs, intreg sgsg);
-intreg functie(intreg w, intreg m) {
+intreg functie(real w, intreg m) {
     intreg yy;
     caracter B3;
 }
@@ -37,7 +39,7 @@ z <- 4;
 w <- 345 + y + 56 + 7;
 
 
-B2 A { Y <- 2 ; } ; 
+B2 A { chh <- 'c' ; } ; 
 B2.chh <- 'm';
 
 arr[2] <- foo(2,3);
@@ -60,6 +62,9 @@ catTimp (c != 12) {
 
 bucla {
     daca( x > 5) {
+        intreg x;
+        intreg z[10];
+        foo(x, z[1]);
         rupe;
     } altfel {
         x <- x + 1.5 + 3;
@@ -69,7 +74,7 @@ bucla {
 daca(c % 4 == 2) {
     rupe;
 }
-daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + arr[3] + A.b2 + A.foc())) {
+daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + arr[3] + A.b2 + A.foc("hello world", 3.5))) {
     rupe;
 }
 
@@ -84,10 +89,10 @@ pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
     intreg lol;
 }
 
-f();
-foo();
-B2.foc();
+functie(foo(2, 2), A.x);
 
-nedefinita();
+foo(A.foc("1", 2.2), 3);
+A.foc("1", 2.1);
+
 
 sfarsit_programel

@@ -93,6 +93,7 @@ VarInfo::VarInfo(short type, const string& name, Value valoare)
 VarInfo::VarInfo(const VarInfo& v)
 {
     this->type = v.type;
+    this->type.className = v.type.className;
     this->name = v.name;
     this->value = v.value;
     this->fields = v.fields;
@@ -134,7 +135,7 @@ bool SymTable::existsId(const string& name) {
     if(ids.find(name) != ids.end()) {
         return true;
     }
-    return prev ? prev->existsId(name) : false;
+    return false;
 }
 bool SymTable::existsFunc(const string& name) {
     if(funcids.find(name) != funcids.end()) {
@@ -228,6 +229,7 @@ void SymTable::printTable(const string& filename) {
             case 2 : {type = "caracter"; break;}
             case 3 : {type = "bool"; break;}
             case 4 : {type = "sir"; break;}
+            case 5 : {type = var.type.className; break;}
             default : {type = "customType";}
         } if (!var.type.isArray) {
             outFile << "  " << type << " " << var.name << "\n";
@@ -244,28 +246,28 @@ void SymTable::printTable(const string& filename) {
 
     outFile << "Functions:\n";
     for (const auto& [name, func] : funcids) {
-        string type;
+        string type1;
         switch(func.returnType) {
-            case 0 : {type = "intreg"; break;}
-            case 1 : {type = "real"; break;}
-            case 2 : {type = "caracter"; break;}
-            case 3 : {type = "bool"; break;}
-            case 4 : {type = "sir"; break;}
-            default : {type = "customType";}
+            case 0 : {type1 = "intreg"; break;}
+            case 1 : {type1 = "real"; break;}
+            case 2 : {type1 = "caracter"; break;}
+            case 3 : {type1 = "bool"; break;}
+            case 4 : {type1 = "sir"; break;}
+            default : {type1 = "customType";}
         }
-        outFile << "  " << type << " " << func.name << " (";
+        outFile << "  " << type1 << " " << func.name << " (";
 
         for(auto param : func.params) {
-            string type;
-            switch(func.returnType) {
-                case 0 : {type = "intreg"; break;}
-                case 1 : {type = "real"; break;}
-                case 2 : {type = "caracter"; break;}
-                case 3 : {type = "bool"; break;}
-                case 4 : {type = "sir"; break;}
-                default : {type = "customType";}
+            string type2;
+            switch(param.type.typeName) {
+                case 0 : {type2 = "intreg"; break;}
+                case 1 : {type2 = "real"; break;}
+                case 2 : {type2 = "caracter"; break;}
+                case 3 : {type2 = "bool"; break;}
+                case 4 : {type2 = "sir"; break;}
+                default : {type2 = "customType";}
             }
-            outFile << type << " " << param.name;
+            outFile << type2 << " " << param.name;
             outFile << ",";
         }
         outFile << ")\n";

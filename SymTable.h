@@ -22,7 +22,8 @@ enum Types {
 };
 
 struct Type {
-    short typeName; //0 int 1 float 2 char 3 bool 4 string
+    short typeName; //0 int 1 float 2 char 3 bool 4 string 5 customClass
+    string className;
     bool isArray;
     vector<short> arraySizes;
 };

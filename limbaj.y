@@ -74,41 +74,58 @@ decl_vars                 :    decl_var ';'
                           |    decl_vars decl_var ';'
                           ;
 
-TYPE : INT 
+F_TYPE : INT 
      {
-          currentVariable.type.typeName = TYPE_INT;
           currentFunction.returnType = TYPE_INT;
      }
      | FLOAT 
      {
-          currentVariable.type.typeName = TYPE_FLOAT;
           currentFunction.returnType = TYPE_FLOAT;
      }
      | STRING 
      {
-          currentVariable.type.typeName = TYPE_STRING;
           currentFunction.returnType = TYPE_STRING;
      }
      | BOOL 
      {
-          currentVariable.type.typeName = TYPE_BOOL;
           currentFunction.returnType = TYPE_BOOL;
      }
      | CHAR  
      {
-          currentVariable.type.typeName = TYPE_CHAR;
           currentFunction.returnType = TYPE_CHAR;
      }
      ;
 
+V_TYPE : INT 
+     {
+          currentVariable.type.typeName = TYPE_INT;
+     }
+     | FLOAT 
+     {
+          currentVariable.type.typeName = TYPE_FLOAT;
+     }
+     | STRING 
+     {
+          currentVariable.type.typeName = TYPE_STRING;
+     }
+     | BOOL 
+     {
+          currentVariable.type.typeName = TYPE_BOOL;
+     }
+     | CHAR  
+     {
+          currentVariable.type.typeName = TYPE_CHAR;
+     }
+     ;
+
 /*Declararea de variabile sau array-uri*/
-decl_var                  :    TYPE ID  
+decl_var                  :    V_TYPE ID  
                                 {
                                     if(!exists_or_add($2, false)) {
 
                                     }
                                 }
-                          |    TYPE ID '[' list_array ']' 
+                          |    V_TYPE ID '[' list_array ']' 
                                 {
                                    if(!exists_or_add($2, true)) {
 
@@ -140,7 +157,7 @@ decl_class
         } else {
             currentClass.name = $2;
             currentTable->addClass($2);
-            currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
+            currentTable = new SymTable($2, currentTable);// Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable); // Adaugă în lista globală de tabele
         }
     } membs_list methods_list '}' ';' {
@@ -155,14 +172,9 @@ membs_list                :    class_memb
                           ;
 
 /*Definirea membrilor unei clase: A.x*/
-class_memb                :    ID ':' TYPE ';'
+class_memb                :    ID ':' V_TYPE ';'
                                 {
-                                   if (!currentTable->existsId($1)) {
-                                       currentTable->addVar(currentVariable.type.typeName, $1);
-                                   } else {
-                                       errorCount++; 
-                                       yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
-                                   }
+                                   exists_or_add($1, false);
                                }
 
 /*Permite definirea oricator metode la o clasa*/
@@ -172,7 +184,7 @@ methods_list              :    methods_list method
 
 /*Definirea unei metode într-o clasă*/
 method
-    : TYPE ID '(' list_param ')' '{'  {
+    : F_TYPE ID '(' list_param ')' '{'  {
         // Verifică dacă funcția este deja definită
         if (currentTable->existsFunc($2)) 
         { 
@@ -206,7 +218,7 @@ decl_funcs                :    def_func
                           ;
 
 /*Definirea unei functii*/
-def_func  : TYPE ID '(' list_param ')'
+def_func  : F_TYPE ID '(' list_param ')'
                     {   
                         if(!currentTable->existsFunc($2)) {
                             currentTable->addFunc(currentFunction.returnType, $2, currentParams);
@@ -220,7 +232,7 @@ def_func  : TYPE ID '(' list_param ')'
                         currentParams.clear();
                         currentTable = currentTable->prev; // Revenire la scopul părinte
                     }
-                    | TYPE ID '(' list_param ')' ';' {
+                    | F_TYPE ID '(' list_param ')' ';' {
                         if(!currentTable->existsFunc($2)) {
                             currentTable->addFunc(currentFunction.returnType, $2, currentParams);
                         }
@@ -239,27 +251,27 @@ function_definition : '{' fblock '}'
 
 
 list_param 
-    : param
-    | list_param ',' param
+    : param {
+        currentParams.push_back(currentVariable);
+    }
+    | list_param ',' param {
+        currentParams.push_back(currentVariable);
+    }
     |
     ;
 
 
 /*Parametrii pentru functii*/
-param                     :     TYPE ID  
+param                     :     V_TYPE ID  
                                 {
                                     currentVariable.name = $2;
                                     currentVariable.type.isArray = false;
-
-                                    currentParams.push_back(currentVariable);
                                     
                                 }
-                          |     TYPE ID '[' list_array ']' 
+                          |     V_TYPE ID '[' list_array ']' 
                                 {
                                     currentVariable.name = $2;
                                     currentVariable.type.isArray = true;
-
-                                    currentParams.push_back(currentVariable);
                                 }
                           ;
 
@@ -295,10 +307,21 @@ list                      :     statement
 /*Tot felul de expresii din interiorul programului*/
 statement
     : call_func ';'
-    | ID '.' call_method ';'
+    | call_method ';'
     | decl_var ';'
-    | ID ID ';'
-    | ID ID '{' init_instante '}' ';'
+    | ID ID ';' {
+        currentVariable.name = $2;
+        currentVariable.type.typeName = 5;
+        currentVariable.type.className = $1;
+        currentTable->addVar(currentVariable);
+    }
+    | ID ID '{' init_instante '}' ';' {
+        currentVariable.name = $2;
+        currentVariable.type.typeName = 5;
+        currentVariable.value.setType(5);
+        currentVariable.type.className = $1;
+        currentTable->addVar(currentVariable);
+    }
     | IF 
     {
         currentTable = new SymTable("if", currentTable);
@@ -374,7 +397,7 @@ init_instante             :     ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
 assignment_stmt           :     left_hand_side ASSIGN expr
-                          |     TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
+                          |     V_TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
                           ;
 
 left_hand_side            :     ID '.' ID
@@ -394,7 +417,7 @@ left_hand_side            :     ID '.' ID
                                     p = p->prev;
                                 }
                           }
-                          |     TYPE ID
+                          |     V_TYPE ID
                           |     ID '[' list_array ']'
                           ;
 
@@ -411,14 +434,16 @@ call_func                 : ID '(' call_list ')'
                            | TYPEOF '(' expr ')'
                            ;
 
-call__method               : ID '(' call_list ')' 
-                           {
-                                checkMethod($1);
-                           }
-                           | ID '(' ')'
-                           {
-                                checkMethod($1);
-                           } 
+call_method               : ID '.' ID '(' call_list ')' 
+                            {
+                                setCurrentClassName($1);
+                                checkMethod($3);
+                            }
+                          | ID '.' ID '(' ')'
+                            {
+                                setCurrentClassName($1);
+                                checkMethod($3);
+                            } 
                            ;
 
 /*Parametrii de apel al unei functii*/
@@ -439,6 +464,9 @@ bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     bool_expr OR bool_expr
                           |     '(' NOT bool_expr ')'
                           |     BVAL
+                          {
+                                currentVariable.type.typeName = 3;
+                          }
                           |     NOT bool_expr
                           |     expr
                           ;
@@ -461,18 +489,41 @@ expr                      :     arithm_expr
                           |     logical_expr
                           |    '(' expr ')'
                           |     '-' expr
-                          |     ID
+                          |     ID 
+                          {
+                                setCurrentVariableType($1);
+                          }
                           |     IVAL
                           {
                                 currentVariable.type.typeName = 0;
                           }
                           |     FVAL
-                          |     CVAL
-                          |     SVAL
+                          {
+                                currentVariable.type.typeName = 1;
+                          }
+                          |     CVAL 
+                          {
+                                currentVariable.type.typeName = 2;
+                          }
+                          |     SVAL 
+                          {
+                                currentVariable.type.typeName = 4;
+                          }
                           |     ID '[' list_array ']'
-                          |     ID '.' ID
-                          |     ID '.' call_func
-                          |     call_func
+                          {
+                                setCurrentVariableType($1);
+                          }
+                          |     ID '.' ID {
+                                setObjectMemberReturnType($1, $3);
+                                currentVariable.type.typeName = objectMemberReturnType;
+
+                          }
+                          |     call_method {
+                                currentVariable.type.typeName = functionReturnType;
+                          }
+                          |     call_func {
+                                currentVariable.type.typeName = functionReturnType;
+                          }
                           ;
 
 /*Expresii aritmetice*/
