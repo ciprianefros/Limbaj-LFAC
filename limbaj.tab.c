@@ -733,14 +733,14 @@ static const short yyrline[] = { 0,
    170,   171,   175,   181,   182,   187,   200,   211,   212,   216,
    217,   221,   231,   235,   243,   249,   254,   257,   260,   265,
    271,   280,   281,   286,   287,   292,   296,   303,   304,   309,
-   310,   311,   312,   318,   325,   330,   336,   340,   346,   351,
-   357,   362,   368,   373,   379,   384,   385,   386,   389,   390,
-   395,   396,   399,   400,   403,   404,   420,   421,   425,   429,
-   433,   434,   437,   442,   450,   454,   461,   462,   463,   464,
-   465,   466,   470,   471,   474,   475,   476,   477,   478,   479,
-   480,   481,   482,   483,   484,   485,   488,   489,   490,   491,
-   492,   496,   500,   504,   508,   512,   516,   521,   524,   530,
-   531,   532,   533,   534
+   310,   311,   312,   319,   326,   331,   337,   341,   347,   352,
+   358,   363,   369,   374,   380,   385,   386,   387,   390,   391,
+   396,   397,   400,   401,   404,   405,   421,   422,   426,   430,
+   434,   435,   438,   443,   451,   455,   462,   463,   464,   465,
+   466,   467,   471,   472,   475,   476,   477,   478,   479,   480,
+   481,   482,   483,   484,   485,   486,   489,   490,   491,   492,
+   493,   497,   501,   505,   509,   513,   517,   522,   525,   531,
+   532,   533,   534,   535
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","BGIN","END",
@@ -1749,12 +1749,13 @@ case 63:
 {
         currentVariable.name = yyvsp[-1].string;
         currentVariable.type.typeName = 5;
+        currentVariable.value.setType(5);
         currentVariable.type.className = yyvsp[-2].string;
         currentTable->addVar(currentVariable);
     ;
     break;}
 case 64:
-#line 318 "limbaj.y"
+#line 319 "limbaj.y"
 {
         currentVariable.name = yyvsp[-4].string;
         currentVariable.type.typeName = 5;
@@ -1764,28 +1765,28 @@ case 64:
     ;
     break;}
 case 65:
-#line 326 "limbaj.y"
+#line 327 "limbaj.y"
 {
         currentTable = new SymTable("if", currentTable);
         tables.push_back(currentTable);
     ;
     break;}
 case 66:
-#line 331 "limbaj.y"
+#line 332 "limbaj.y"
 {
         currentTable = new SymTable("else", currentTable->prev);
         tables.push_back(currentTable);
     ;
     break;}
 case 67:
-#line 336 "limbaj.y"
+#line 337 "limbaj.y"
 {  
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 68:
-#line 341 "limbaj.y"
+#line 342 "limbaj.y"
 {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("while", currentTable);
@@ -1793,14 +1794,14 @@ case 68:
     ;
     break;}
 case 69:
-#line 347 "limbaj.y"
+#line 348 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 70:
-#line 352 "limbaj.y"
+#line 353 "limbaj.y"
 {
         // Creează o tabelă pentru scopul WHILE
         currentTable = new SymTable("do-while", currentTable);
@@ -1808,14 +1809,14 @@ case 70:
     ;
     break;}
 case 71:
-#line 358 "limbaj.y"
+#line 359 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 72:
-#line 363 "limbaj.y"
+#line 364 "limbaj.y"
 {
         // Creează o tabelă pentru scopul LOOP
         currentTable = new SymTable("loop", currentTable);
@@ -1823,14 +1824,14 @@ case 72:
     ;
     break;}
 case 73:
-#line 369 "limbaj.y"
+#line 370 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
 case 74:
-#line 374 "limbaj.y"
+#line 375 "limbaj.y"
 {
         // Creează o tabelă pentru scopul FOR
         currentTable = new SymTable("for", currentTable);
@@ -1838,18 +1839,29 @@ case 74:
     ;
     break;}
 case 75:
-#line 380 "limbaj.y"
+#line 381 "limbaj.y"
 {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     ;
     break;}
+case 83:
+#line 400 "limbaj.y"
+{;
+    break;}
+case 84:
+#line 401 "limbaj.y"
+{/*exists_or_add($1, 1);*/;
+    break;}
+case 85:
+#line 404 "limbaj.y"
+{ checkObject(yyvsp[-2].string, yyvsp[0].string); ;
+    break;}
 case 86:
-#line 405 "limbaj.y"
+#line 406 "limbaj.y"
 {
-                                currentVariable.name = yyvsp[0].string;
-                                currentVariable.type.isArray = 0;
-                                
+                                variableToAssign.varName = yyvsp[0].string;
+                                variableToAssign.varType = 0;
                                 p = currentTable;
 
                                 while(p->prev!=nullptr)
@@ -1860,90 +1872,99 @@ case 86:
                                     }
                                     p = p->prev;
                                 }
+
                           ;
     break;}
+case 87:
+#line 421 "limbaj.y"
+{exists_or_add(yyvsp[0].string, 0);;
+    break;}
+case 88:
+#line 422 "limbaj.y"
+{;
+    break;}
 case 89:
-#line 426 "limbaj.y"
+#line 427 "limbaj.y"
 {
                                 checkFunction(yyvsp[-3].string);
                             ;
     break;}
 case 90:
-#line 430 "limbaj.y"
+#line 431 "limbaj.y"
 {
                                 checkFunction(yyvsp[-2].string);
                            ;
     break;}
 case 93:
-#line 438 "limbaj.y"
+#line 439 "limbaj.y"
 {
                                 setCurrentClassName(yyvsp[-5].string);
                                 checkMethod(yyvsp[-3].string);
                             ;
     break;}
 case 94:
-#line 443 "limbaj.y"
+#line 444 "limbaj.y"
 {
                                 setCurrentClassName(yyvsp[-4].string);
                                 checkMethod(yyvsp[-2].string);
                             ;
     break;}
 case 95:
-#line 451 "limbaj.y"
+#line 452 "limbaj.y"
 { 
                                 currentParams.push_back(currentVariable);
                           ;
     break;}
 case 96:
-#line 455 "limbaj.y"
+#line 456 "limbaj.y"
 {                                
                                 currentParams.push_back(currentVariable);
                           ;
     break;}
 case 102:
-#line 467 "limbaj.y"
+#line 468 "limbaj.y"
 {
                                 currentVariable.type.typeName = 3;
                           ;
     break;}
 case 121:
-#line 493 "limbaj.y"
+#line 494 "limbaj.y"
 {
                                 setCurrentVariableType(yyvsp[0].string);
                           ;
     break;}
 case 122:
-#line 497 "limbaj.y"
+#line 498 "limbaj.y"
 {
                                 currentVariable.type.typeName = 0;
                           ;
     break;}
 case 123:
-#line 501 "limbaj.y"
+#line 502 "limbaj.y"
 {
                                 currentVariable.type.typeName = 1;
                           ;
     break;}
 case 124:
-#line 505 "limbaj.y"
+#line 506 "limbaj.y"
 {
                                 currentVariable.type.typeName = 2;
                           ;
     break;}
 case 125:
-#line 509 "limbaj.y"
+#line 510 "limbaj.y"
 {
                                 currentVariable.type.typeName = 4;
                           ;
     break;}
 case 126:
-#line 513 "limbaj.y"
+#line 514 "limbaj.y"
 {
                                 setCurrentVariableType(yyvsp[-3].string);
                           ;
     break;}
 case 127:
-#line 516 "limbaj.y"
+#line 517 "limbaj.y"
 {
                                 setObjectMemberReturnType(yyvsp[-2].string, yyvsp[0].string);
                                 currentVariable.type.typeName = objectMemberReturnType;
@@ -1951,13 +1972,13 @@ case 127:
                           ;
     break;}
 case 128:
-#line 521 "limbaj.y"
+#line 522 "limbaj.y"
 {
                                 currentVariable.type.typeName = functionReturnType;
                           ;
     break;}
 case 129:
-#line 524 "limbaj.y"
+#line 525 "limbaj.y"
 {
                                 currentVariable.type.typeName = functionReturnType;
                           ;

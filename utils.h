@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <stdlib.h>
+#include <stdio.h>
 #include "SymTable.h"
 #include "AST.h"
 
@@ -10,6 +12,8 @@ void yyerror(const char * s);
 
 FuncInfo currentFunction;
 VarInfo currentVariable;
+VarSign variableToAssign;
+VarSign variableFromExpr;
 ClassInfo currentClass;
 vector<VarInfo> currentParams;
 vector<short> currentArraySizes;
@@ -29,6 +33,7 @@ using namespace std;
 extern int yylineno;
 extern int errorCount;
 
+void SetDefaultValue(VarInfo &var); 
 
 bool exists_or_add(const string& name, bool is_array) {
 
@@ -47,6 +52,7 @@ bool exists_or_add(const string& name, bool is_array) {
     }
     currentVariable.name = name;
     currentVariable.value.setType(currentVariable.type.typeName);
+    SetDefaultValue(currentVariable);
     currentTable->addVar(currentVariable);
     currentArraySizes.clear();
     currentVariable = VarInfo();
@@ -222,6 +228,56 @@ bool setCurrentVariableType(const string& varName) {
     }
 
     return false;
+}
+
+bool checkObject(const string& objectName, const string& memberName) {
+    if(!setCurrentClassName(objectName)) {
+        errorCount++;
+        yyerror(("Object " + objectName + " was not previously declared." + std::to_string(yylineno)).c_str());
+        return false;
+    }
+    bool memberFound = false;
+    for(int i = 0; i < tables.size(); i++) {
+        if(tables[i]->ScopeName == currentClassName) {
+            for(const auto& [name, var] : tables[i]->ids) {
+                if(name == memberName) {
+                    memberFound = true;
+                    break;
+                }
+            }
+        }
+    }
+    if(!memberFound) {
+        errorCount++;
+        yyerror(("Object " + objectName + " does not have member" + memberName + ". Error " + std::to_string(yylineno)).c_str());
+        return false;
+    }
+    return true;
+}
+
+void SetDefaultValue(VarInfo &var) {
+     int type = var.type.typeName;
+     float value = 0.0;
+     string str = "0";
+     switch(type) {
+          case TYPE_INT:
+               var.value = Value(0);
+               break;
+          case TYPE_FLOAT:
+               var.value = Value(value);
+               break;
+          case TYPE_CHAR:
+               var.value = Value('0');
+               break;
+          case TYPE_STRING:
+               var.value = Value(str);
+               break;
+          case TYPE_BOOL:
+               var.value = Value(false);
+               break;
+          default: var.value = Value(0);
+               
+     }
 }
 
 

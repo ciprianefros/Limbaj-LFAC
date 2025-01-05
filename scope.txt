@@ -1,11 +1,11 @@
 Scope: global
 Variabile:
   intreg arr[10,9]
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
+  caracter c = 0
+  sir s = 0
+  intreg x = 0
+  intreg y = 0
+  caracter z = 0
 Functions:
   real foo (intreg sdfs,intreg sgsg,)
   intreg functie (real w,intreg m,)
@@ -14,17 +14,17 @@ Classes:
 
 Scope: B2
 Variabile:
-  intreg 
-  caracter chh
-  intreg x
+  intreg  = Not a type
+  caracter chh = 0
+  intreg x = 0
 Functions:
   intreg foc (sir wx,real ww,)
 Classes:
 
 Scope: foc
 Variabile:
-  real wy
-  intreg x
+  real wy = 0.000000
+  intreg x = 0
 Functions:
 Classes:
 
@@ -35,22 +35,23 @@ Classes:
 
 Scope: functie
 Variabile:
-  caracter B3
-  intreg yy
+  caracter B3 = 0
+  intreg yy = 0
 Functions:
 Classes:
 
 Scope: main
 Variabile:
-  B2 A
-  caracter bibi
+  B2 A = Not a type
+  B2 B = Not a type
+  caracter bibi = 0
 Functions:
 Classes:
 
 Scope: if
 Variabile:
-  caracter charact
-  intreg lmnop
+  caracter charact = 0
+  intreg lmnop = 0
 Functions:
 Classes:
 
@@ -62,7 +63,7 @@ Classes:
 
 Scope: while
 Variabile:
-  caracter yolo
+  caracter yolo = 0
 Functions:
 Classes:
 
@@ -73,239 +74,7 @@ Classes:
 
 Scope: if
 Variabile:
-  intreg x
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: do-while
-Variabile:
-  sir ccc
-Functions:
-Classes:
-
-Scope: for
-Variabile:
-  intreg lol
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  intreg arr[10,9]
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
-Functions:
-  real foo (intreg sdfs,intreg sgsg,)
-  intreg functie (real w,intreg m,)
-Classes:
-  Class B2
-
-Scope: B2
-Variabile:
-  intreg 
-  caracter chh
-  intreg x
-Functions:
-  intreg foc (sir wx,real ww,)
-Classes:
-
-Scope: foc
-Variabile:
-  real wy
-  intreg x
-Functions:
-Classes:
-
-Scope: foo
-Variabile:
-Functions:
-Classes:
-
-Scope: functie
-Variabile:
-  caracter B3
-  intreg yy
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  B2 A
-  caracter bibi
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  caracter charact
-  intreg lmnop
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-  intreg salutari[20,10,3]
-Functions:
-Classes:
-
-Scope: while
-Variabile:
-  caracter yolo
-Functions:
-Classes:
-
-Scope: loop
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  intreg x
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: do-while
-Variabile:
-  sir ccc
-Functions:
-Classes:
-
-Scope: for
-Variabile:
-  intreg lol
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  intreg arr[10,9]
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
-Functions:
-  real foo (intreg sdfs,intreg sgsg,)
-  intreg functie (real w,intreg m,)
-Classes:
-  Class B2
-
-Scope: B2
-Variabile:
-  intreg 
-  caracter chh
-  intreg x
-Functions:
-  intreg foc (sir wx,real ww,)
-Classes:
-
-Scope: foc
-Variabile:
-  real wy
-  intreg x
-Functions:
-Classes:
-
-Scope: foo
-Variabile:
-Functions:
-Classes:
-
-Scope: functie
-Variabile:
-  caracter B3
-  intreg yy
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  B2 A
-  caracter bibi
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  caracter charact
-  intreg lmnop
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-  intreg salutari[20,10,3]
-Functions:
-Classes:
-
-Scope: while
-Variabile:
-  caracter yolo
-Functions:
-Classes:
-
-Scope: loop
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  intreg x
+  intreg x = 0
   intreg z[10]
 Functions:
 Classes:
@@ -337,130 +106,15 @@ Classes:
 
 Scope: do-while
 Variabile:
-  sir ccc
+  sir ccc = 0
+  caracter chhhhh = 0
 Functions:
 Classes:
 
 Scope: for
 Variabile:
-  intreg lol
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  intreg arr[10,9]
-  caracter c
-  sir s
-  intreg x
-  intreg y
-  caracter z
-Functions:
-  real foo (intreg sdfs,intreg sgsg,)
-  intreg functie (real w,intreg m,)
-Classes:
-  Class B2
-
-Scope: B2
-Variabile:
-  intreg 
-  caracter chh
-  intreg x
-Functions:
-  intreg foc (sir wx,real ww,)
-Classes:
-
-Scope: foc
-Variabile:
-  real wy
-  intreg x
-Functions:
-Classes:
-
-Scope: foo
-Variabile:
-Functions:
-Classes:
-
-Scope: functie
-Variabile:
-  caracter B3
-  intreg yy
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  B2 A
-  caracter bibi
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  caracter charact
-  intreg lmnop
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-  intreg salutari[20,10,3]
-Functions:
-Classes:
-
-Scope: while
-Variabile:
-  caracter yolo
-Functions:
-Classes:
-
-Scope: loop
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-  intreg x
-  intreg z[10]
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: if
-Variabile:
-Functions:
-Classes:
-
-Scope: else
-Variabile:
-Functions:
-Classes:
-
-Scope: do-while
-Variabile:
-  sir ccc
-Functions:
-Classes:
-
-Scope: for
-Variabile:
-  intreg lol
+  intreg i32 = 0
+  intreg lol = 0
 Functions:
 Classes:
 

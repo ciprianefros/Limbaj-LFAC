@@ -312,6 +312,7 @@ statement
     | ID ID ';' {
         currentVariable.name = $2;
         currentVariable.type.typeName = 5;
+        currentVariable.value.setType(5);
         currentVariable.type.className = $1;
         currentTable->addVar(currentVariable);
     }
@@ -396,16 +397,15 @@ init_instante             :     ID ASSIGN expr ';'
                           |     init_instante ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
-assignment_stmt           :     left_hand_side ASSIGN expr
-                          |     V_TYPE ID '[' list_array ']' ASSIGN '{' init_list '}'
+assignment_stmt           :     left_hand_side ASSIGN expr {}
+                          |     V_TYPE ID '[' list_array ']' ASSIGN '{' init_list '}' {/*exists_or_add($1, 1);*/}
                           ;
 
-left_hand_side            :     ID '.' ID
+left_hand_side            :     ID '.' ID { checkObject($1, $3); }
                           |     ID
                           {
-                                currentVariable.name = $1;
-                                currentVariable.type.isArray = 0;
-                                
+                                variableToAssign.varName = $1;
+                                variableToAssign.varType = 0;
                                 p = currentTable;
 
                                 while(p->prev!=nullptr)
@@ -416,9 +416,10 @@ left_hand_side            :     ID '.' ID
                                     }
                                     p = p->prev;
                                 }
+
                           }
-                          |     V_TYPE ID
-                          |     ID '[' list_array ']'
+                          |     V_TYPE ID {exists_or_add($2, 0);}
+                          |     ID '[' list_array ']' {}
                           ;
 
 /*Apeluri de functii*/
@@ -534,7 +535,6 @@ arithm_expr               :     expr '+' expr
                           |     expr '%' expr
                           ;
                           
-
 
 %%
 void yyerror(const char * s){

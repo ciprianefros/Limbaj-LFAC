@@ -40,7 +40,7 @@ w <- 345 + y + 56 + 7;
 
 
 B2 A { chh <- 'c' ; } ; 
-B2.chh <- 'm';
+A.chh <- 'm';
 
 arr[2] <- foo(2,3);
 
@@ -93,6 +93,7 @@ functie(foo(2, 2), A.x);
 
 foo(A.foc("1", 2.2), 3);
 A.foc("1", 2.1);
-
+B2 B;
+B.x <- 2;
 
 sfarsit_programel

@@ -17,13 +17,13 @@ ASTNode::ASTNode(int valoare, short type)
     operation = -1;
     this->type = type;
     if(type == TYPE_INT)
-        this->valoare.number = 0;
+        this->valoare.number = valoare;
     else if(type == TYPE_BOOL)
-        this->valoare.true_or_false = false;
+        this->valoare.true_or_false = valoare != 0;
     else if(type == TYPE_CHAR)
-        this->valoare.caracter = 'n';
+        this->valoare.caracter = valoare;
     else if(type == TYPE_FLOAT)
-        this->valoare.real_number = 0;
+        this->valoare.real_number = valoare;
     else if(type == TYPE_STRING)
         this->valoare.string = strdup("null");
 }

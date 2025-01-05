@@ -3,6 +3,8 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <stdlib.h>
+#include <stdio.h>
 #include "SymTable.h"
 
 using namespace std;

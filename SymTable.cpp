@@ -220,7 +220,7 @@ void SymTable::printTable(const string& filename) {
 
     outFile << "Scope: " << ScopeName << "\n";
     outFile << "Variabile:\n";
-    for (const auto& [name, var] : ids) {
+    for (auto& [name, var] : ids) {
         string type;
 
         switch(var.type.typeName) {
@@ -232,7 +232,7 @@ void SymTable::printTable(const string& filename) {
             case 5 : {type = var.type.className; break;}
             default : {type = "customType";}
         } if (!var.type.isArray) {
-            outFile << "  " << type << " " << var.name << "\n";
+            outFile << "  " << type << " " << var.name << " = " << var.value.toString() << "\n";
         } else {
             outFile << "  " << type << " " << var.name << "[";
             int i;

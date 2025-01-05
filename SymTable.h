@@ -68,6 +68,13 @@ class VarInfo {
         VarInfo(short type, const string& name, Value valoare);
 };
 
+struct VarSign{
+    string varName;
+    int varIndex[2];
+    string varField;
+    int varType; // 0 simple, 1 arrayElement, 2 objectField
+};
+
 class FuncInfo {
     public:
         string name;
