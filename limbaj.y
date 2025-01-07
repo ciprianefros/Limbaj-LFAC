@@ -7,10 +7,6 @@ extern char* yytext;
 extern int yylineno;
 extern int yylex();
 
-
-
-
-
 int errorCount = 0;
 %}
 %union 
@@ -151,7 +147,7 @@ decl_classes              :    decl_class
 decl_class
     : CLASS ID '{' {
         // Creează tabelă pentru clasa curentă
-        if (currentTable->existsId($2)) { // Verifică dacă clasa există deja
+        if (currentTable->existsClass($2)) { // Verifică dacă clasa există deja
             errorCount++;
             yyerror(("Class already defined at line: " + std::to_string(yylineno)).c_str());
         } else {
@@ -173,7 +169,7 @@ membs_list                :    class_memb
 
 /*Definirea membrilor unei clase: A.x*/
 class_memb                :    ID ':' V_TYPE ';'
-                                {
+                               {
                                    exists_or_add($1, false);
                                }
 
@@ -310,85 +306,84 @@ statement
     | call_method ';'
     | decl_var ';'
     | ID ID ';' {
-        currentVariable.name = $2;
-        currentVariable.type.typeName = 5;
-        currentVariable.value.setType(5);
-        currentVariable.type.className = $1;
-        currentTable->addVar(currentVariable);
+            currentVariable.name = $2;
+            currentVariable.type.typeName = 5;
+            currentVariable.value.setType(5);
+            currentVariable.type.className = $1;
+            currentTable->addVar(currentVariable);
     }
     | ID ID '{' init_instante '}' ';' {
-        currentVariable.name = $2;
-        currentVariable.type.typeName = 5;
-        currentVariable.value.setType(5);
-        currentVariable.type.className = $1;
-        currentTable->addVar(currentVariable);
-    }
+            currentVariable.name = $2;
+            currentVariable.type.typeName = 5;
+            currentVariable.value.setType(5);
+            currentVariable.type.className = $1;
+            currentTable->addVar(currentVariable);
+        }
     | IF 
-    {
-        currentTable = new SymTable("if", currentTable);
-        tables.push_back(currentTable);
-    } 
-    '(' bool_expr ')' '{' list '}'
-    {
-        currentTable = new SymTable("else", currentTable->prev);
-        tables.push_back(currentTable);
-    } 
-    else_statement   
-    {  
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
+        {
+            addScopeName("if");
+        } 
+        '(' bool_expr ')' '{' list '}'
+        {
+            scopeStack.pop();
+            tables.push_back(currentTable);
+        } 
+        else_statement   
+        {  
+            // Revenire la scopul părinte
+            currentTable = currentTable->prev;
+        }
     | WHILE 
-    {
-        // Creează o tabelă pentru scopul WHILE
-        currentTable = new SymTable("while", currentTable);
-        tables.push_back(currentTable);
-    }
-    '(' bool_expr ')' '{' list '}'   
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
+        {
+            addScopeName("while");
+        }
+        '(' bool_expr ')' '{' list '}'   
+        {
+            scopeStack.pop();
+            currentTable = currentTable->prev;
+        }
     | DO 
-    {
-        // Creează o tabelă pentru scopul WHILE
-        currentTable = new SymTable("do-while", currentTable);
-        tables.push_back(currentTable);
-    } 
-    '{' list '}' WHILE '(' bool_expr ')' 
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
+        {
+            addScopeName("do-while");
+        } 
+        '{' list '}' WHILE '(' bool_expr ')' 
+        {
+            scopeStack.pop();
+            currentTable = currentTable->prev;
+        }
     | LOOP 
-    {
-        // Creează o tabelă pentru scopul LOOP
-        currentTable = new SymTable("loop", currentTable);
-        tables.push_back(currentTable);
-    }
-    '{' list '}' 
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
+        {
+            addScopeName("loop");
+        }
+        '{' list '}' 
+        {
+            scopeStack.pop();
+            currentTable = currentTable->prev;
+        }
     | FOR 
-    {
-        // Creează o tabelă pentru scopul FOR
-        currentTable = new SymTable("for", currentTable);
-        tables.push_back(currentTable);
-    } 
-    '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}'  
-    {
-        // Revenire la scopul părinte
-        currentTable = currentTable->prev;
-    }
+        {
+            addScopeName("for");
+        } 
+        '(' assignment_stmt ';' bool_expr ';' assignment_stmt ')' '{' list '}'  
+        {
+            scopeStack.pop();
+            currentTable = currentTable->prev;
+        }
     | CONTINUE ';'
     | BREAK ';'
     | RETURN bool_expr ';'
     ;
 
 else_statement  : 
-                | ELSE '{' list '}'
+                | ELSE 
+                {
+                    addScopeName("else");
+                } 
+                '{' list '}'
+                {
+                    scopeStack.pop();
+                    currentTable = currentTable->prev;
+                }
                 ;
 
 

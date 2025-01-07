@@ -12,6 +12,7 @@ void yyerror(const char * s);
 
 FuncInfo currentFunction;
 VarInfo currentVariable;
+VarInfo *modifiedVariable;
 VarSign variableToAssign;
 VarSign variableFromExpr;
 ClassInfo currentClass;
@@ -28,12 +29,27 @@ short functionReturnType;
 short objectMemberReturnType;
 string currentClassName;
 
+stack<string> scopeStack;
+unordered_map<string, int> scopeCounters;
+
 using namespace std;
 
 extern int yylineno;
 extern int errorCount;
 
 void SetDefaultValue(VarInfo &var); 
+
+void addScopeName(const string& scopeType) {
+    string ScopeName = scopeType;
+    if (!scopeStack.empty()) {
+        ScopeName += to_string(scopeCounters[scopeType]++) + "_" + scopeStack.top();
+    } else {
+        ScopeName += to_string(scopeCounters[scopeType]++);
+    }
+    scopeStack.push(ScopeName);
+    currentTable = new SymTable(ScopeName, currentTable);
+    tables.push_back(currentTable);
+}
 
 bool exists_or_add(const string& name, bool is_array) {
 
@@ -88,8 +104,8 @@ bool checkParams(const string& name, SymTable functionScope)
     int contor = 0;
 
     // Debug: Afișăm numărul de parametri așteptat și numărul de parametri actuali
-    std::cout << "Checking parameters for function: " << name << std::endl;
-    std::cout << "Expected params: " << functionScope.funcids[name].params.size() << ", Given params: " << currentParams.size() << std::endl;
+    //std::cout << "Checking parameters for function: " << name << std::endl;
+    //std::cout << "Expected params: " << functionScope.funcids[name].params.size() << ", Given params: " << currentParams.size() << std::endl;
 
     if(functionScope.funcids[name].params.size() != currentParams.size())
     {
@@ -102,10 +118,10 @@ bool checkParams(const string& name, SymTable functionScope)
     for(auto param : functionScope.funcids[name].params)
     {
         //pentru debug
-        std::cout << "Expected param type: " << param.type.typeName << ", Given param type: " << currentParams[contor].type.typeName << std::endl;
+        //std::cout << "Expected param type: " << param.type.typeName << ", Given param type: " << currentParams[contor].type.typeName << std::endl;
         if(param.type.typeName != currentParams[contor].type.typeName)
         {
-            std::cout << "Type mismatch at parameter " << contor + 1 << std::endl;
+            //std::cout << "Type mismatch at parameter " << contor + 1 << std::endl;
             return false;
         }
         contor++;
@@ -118,7 +134,7 @@ bool checkFunction(const string& name)
 {
     SymTable* temp = currentTable;
     // Debug: Afișăm ce funcție căutăm
-    std::cout << "Checking function: " << name << std::endl;
+    //std::cout << "Checking function: " << name << std::endl;
 
     while(temp != nullptr) 
     {
@@ -126,14 +142,14 @@ bool checkFunction(const string& name)
         if (!temp->existsFunc(name)) 
         {
             //pentru debug
-            std::cout << "Function not found in current scope. Checking previous scope..." << std::endl;
+            //std::cout << "Function not found in current scope. Checking previous scope..." << std::endl;
             temp = temp->prev; 
             continue;
         }
         else
         {
             //pentru debug
-            std::cout << "Function found in current scope." << std::endl;
+            //std::cout << "Function found in current scope." << std::endl;
 
             //salvam return type-ul functiei!
             functionReturnType = temp->funcids[name].returnType;
@@ -141,7 +157,7 @@ bool checkFunction(const string& name)
             if(checkParams(name, *temp))
             {
                 //debug
-                std::cout << "Function and parameters match." << std::endl;
+                //std::cout << "Function and parameters match." << std::endl;
                 currentParams.clear();
                 return true;
             }
@@ -280,5 +296,52 @@ void SetDefaultValue(VarInfo &var) {
      }
 }
 
+/*ASTNode*/
+
+vector<ASTNode*> ArrayInitialization;
+vector<ASTNode*> stiva;
+ASTNode *expr1, *expr2; 
+
+void Operation_on_stack(Binary_Operation op) 
+{
+    //retinem si eliminam primul nod
+     expr2 = stiva.back(); 
+     stiva.pop_back();
+
+    //retinem si eliminam al doilea nod
+     expr1 = stiva.back(); 
+     stiva.pop_back(); 
+
+    // adaugam operatia pe stiva
+     stiva.push_back(new AST(op, expr1, expr2));
+}
+
+void PushVariableToStack() {
+     
+     if(!findVaribileToModify(variableToAssign)) {
+          stiva.push_back(new ASTNode(0));
+          return;
+     }
+     
+     switch(modifiedVariable->type.typeName) {
+          case TYPE_INT:
+               stiva.push_back(new ASTNode(modifiedVariable->value.intValue));
+               break;
+          case TYPE_FLOAT:
+               stiva.push_back(new ASTNode(modifiedVariable->value.floatValue));
+               break;
+          case TYPE_CHAR:
+               stiva.push_back(new ASTNode(modifiedVariable->value.charValue));
+               break;
+          case TYPE_STRING:
+               stiva.push_back(new ASTNode(modifiedVariable->value.stringValue));
+               break;
+          case TYPE_BOOL:
+               stiva.push_back(new ASTNode(modifiedVariable->value.boolValue));
+               break;
+          default: 
+               stiva.push_back(new ASTNode(0, modifiedVariable->type.typeName));
+     }
+}
 
 #endif
