@@ -5,7 +5,7 @@ intreg x;
 intreg y;
 caracter z;
 caracter c;
-sir s;
+sir s <- "hello world";
 intreg arr[10,9];
 sfarsit_vars
 
@@ -17,7 +17,7 @@ clasa B2 {
     {
         intreg x;
         real wy;
-        wy <- 2;
+        wy <- 2.0;
     }
 };
 sfarsit_clasa
@@ -34,30 +34,31 @@ sfarsit_global
 
 start_programel
 caracter bibi;
-x <- 2; y <- 4; z <- x;
-z <- 4;
-w <- 345 + y + 56 + 7;
+x <- 2; y <- 4; z <- 'x';
+z <- 'z';
+y <- 345 + y + 56 + 7;
 
 
 B2 A { chh <- 'c' ; } ; 
 A.chh <- 'm';
+A.x <- (20 * 5 + 4 + 3 % 2 + 22);
 
-arr[2] <- foo(2,3);
+arr[2] <- functie(2.2, 1);
 
 
-daca(c % 4 == 2) {
+daca(8 % 4 == 2) {
     intreg lmnop;
     caracter charact;
     rupe;
 }
 altfel {
     intreg salutari[20,10,3];
-    c <- c + (5 % 2);
+    c <- 'a';
 }
 
-catTimp (c != 12) {
-    c <- c + 1;
-    caracter yolo;
+catTimp (12 != 12) {
+    c <- 'y';
+    caracter yolo <- 'h';
 }
 
 bucla {
@@ -67,14 +68,14 @@ bucla {
         foo(x, z[1]);
         rupe;
     } altfel {
-        x <- x + 1.5 + 3;
+        x <- x + 1 + 3;
     }
 }
 
-daca(c % 4 == 2) {
+daca(10 % 4 == 2) {
     rupe;
 }
-daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + arr[3] + A.b2 + A.foc("hello world", 3.5))) {
+daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + A.x + A.foc("2", 2.2) )) {
     rupe;
 }
 
@@ -82,7 +83,7 @@ lucreaza {
     caracter chhhhh <- 'a';
     sir ccc;
 
-} catTimp (chhhhh != 'z')
+} catTimp (12 != 1)
 
 pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
     i32 <- i32;
@@ -90,9 +91,10 @@ pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
 }
 
 functie(foo(2, 2), A.x);
-
-foo(A.foc("1", 2.2), 3);
-A.foc("1", 2.1);
+Print(x);
+TypeOf(12);
+foo(A.foc("hellp", 2.2), 3);
+A.foc("1", 2.2);
 B2 B;
 B.x <- 2;
 

@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "SymTable.h"
@@ -63,18 +64,40 @@ bool exists_or_add(const string& name, bool is_array) {
     if(is_array == true) {
         currentVariable.type.isArray = true;
         currentVariable.type.arraySizes = currentArraySizes;
+        for(int i = 0; i < currentArraySizes[0]; i++) {
+            currentVariable.fields.push_back(VarInfo());
+        }
     } else {
         currentVariable.type.isArray = false;
     }
     currentVariable.name = name;
     currentVariable.value.setType(currentVariable.type.typeName);
+    
     SetDefaultValue(currentVariable);
     currentTable->addVar(currentVariable);
     currentArraySizes.clear();
     currentVariable = VarInfo();
     return true;
 }
-
+bool exists_or_add_for_custom_type(const string& objectName, const string& className) {
+    if (currentTable->existsId(objectName)) {
+        errorCount++; 
+        yyerror(("Variable already defined in this scope at line: " + std::to_string(yylineno)).c_str());
+        return false;
+    } 
+    
+    currentVariable.type.isArray = false;
+    currentVariable.name = objectName;
+    currentVariable.type.typeName = 5;
+    currentVariable.value.setType(currentVariable.type.typeName);
+    currentVariable.type.className = className;
+    
+    SetDefaultValue(currentVariable);
+    currentTable->addVar(currentVariable);
+    currentArraySizes.clear();
+    currentVariable = VarInfo();
+    return true;
+}
 bool exists_or_add_2(const string& name, bool is_array) {
     SymTable* temp = currentTable;
     while(temp != nullptr) {
@@ -198,6 +221,7 @@ bool checkMethod(const string& methodName)
             } else {
                 errorCount++;
                 yyerror(("Method not declared for class " + currentClassName + " . Error at line: " + std::to_string(yylineno)).c_str());
+                return false;
             }
         }
     }
@@ -246,6 +270,36 @@ bool setCurrentVariableType(const string& varName) {
     return false;
 }
 
+string getReturnType(int returnType)
+{
+     if(returnType == 0)
+     {
+          return "int";
+     }
+     else if(returnType == 1)
+     {
+          return "float";
+     }
+     else if(returnType == 2)
+     {
+          return "char";
+     }
+     else if(returnType == 3)
+     {
+          return "bool";
+     }
+     else if(returnType == 4)
+     {
+          return "string";
+     }
+     else if(returnType == 5)
+     {
+        return "Custom Class";
+     }
+
+     return "";     
+}
+
 bool checkObject(const string& objectName, const string& memberName) {
     if(!setCurrentClassName(objectName)) {
         errorCount++;
@@ -271,26 +325,74 @@ bool checkObject(const string& objectName, const string& memberName) {
     return true;
 }
 
+void SetNewValue(VarInfo *var, ASTNode* value) {
+     int type = value->GetType();
+
+     if(var->type.typeName != type) {
+          printf("ERROR LINE:%d - %s right and left are not the same type %s - %s\n", yylineno, var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str());
+          errorCount++;
+     }
+
+     // de verificat sa nu fie const dar doar in instructiuni nu si la initializare
+     switch(type) {
+          case TYPE_BOOL:
+               var->value = Value(value->GetBoolValue());
+               break;
+          case TYPE_INT:
+               var->value = Value(value->GetIntValue());
+               break;
+          case TYPE_FLOAT:
+               var->value = Value(value->GetFloatValue());
+               break;
+          case TYPE_CHAR:
+               var->value = Value(value->GetCharValue());
+               break;
+          case TYPE_STRING:
+               var->value = Value(value->GetStringValue());
+               break;
+          case CUSTOM_TYPE:
+               printf("Cannot assign expr to a class");
+               errorCount++;
+               break;
+          default:
+               if(type >= 6 || type < 0) {
+                    printf("EROARE LINE:%d\tUnknown type\n", yylineno);
+                    errorCount++;
+                    return;
+               }
+     }
+}
+
 void SetDefaultValue(VarInfo &var) {
      int type = var.type.typeName;
      float value = 0.0;
-     string str = "0";
      switch(type) {
-          case TYPE_INT:
-               var.value = Value(0);
-               break;
-          case TYPE_FLOAT:
-               var.value = Value(value);
-               break;
-          case TYPE_CHAR:
-               var.value = Value('0');
-               break;
-          case TYPE_STRING:
-               var.value = Value(str);
-               break;
-          case TYPE_BOOL:
-               var.value = Value(false);
-               break;
+            case TYPE_INT:
+                var.value = Value(0);
+                break;
+            case TYPE_FLOAT:
+                var.value = Value(value);
+                break;
+            case TYPE_CHAR:
+                var.value = Value('0');
+                break;
+            case TYPE_STRING:
+                var.value = Value(strdup("0"));
+                break;
+            case TYPE_BOOL:
+                var.value = Value(false);
+                break;
+            case CUSTOM_TYPE:
+                for(auto &table : tables) {
+                    if(table->ScopeName == var.type.className) {
+                        //cout << "Current class name: " << table->ScopeName << endl;
+                        for(auto &[name, field] : table->ids) {
+                            SetDefaultValue(field);
+                            var.fields.push_back(VarInfo(field));
+                        }
+                    }
+                }
+                break;
           default: var.value = Value(0);
                
      }
@@ -302,7 +404,7 @@ vector<ASTNode*> ArrayInitialization;
 vector<ASTNode*> stiva;
 ASTNode *expr1, *expr2; 
 
-void Operation_on_stack(Binary_Operation op) 
+void Operation_on_stack(B_operation op) 
 {
     //retinem si eliminam primul nod
      expr2 = stiva.back(); 
@@ -313,31 +415,82 @@ void Operation_on_stack(Binary_Operation op)
      stiva.pop_back(); 
 
     // adaugam operatia pe stiva
-     stiva.push_back(new AST(op, expr1, expr2));
+     stiva.push_back(new ASTNode(op, expr1, expr2));
 }
 
+bool FindToBeModifiedVar(VarSign variable) {
+    SymTable* temp = currentTable;
+    while(temp != nullptr) {
+        if (temp->existsId(variable.varName)) {
+            break;
+        } 
+        temp = temp->prev;
+    }
+    if(temp == nullptr) {
+        yyerror(("Variabila " + variable.varName + " nu a fost declarata \t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+        errorCount++;
+        return false;
+    }
+
+    if(variable.varType == 0) {
+        modifiedVariable = &temp->ids[variable.varName];
+        return true;
+    }
+
+    if(variable.varType == 1) {
+        if(!temp->ids[variable.varName].type.isArray) {
+            yyerror(("Variable is not an array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+            errorCount++;
+            return false;
+        }
+
+        if(variable.varIndex[0] >= temp->ids[variable.varName].type.arraySizes[0] || variable.varIndex[0] < 0) {
+            yyerror(("Index is out of bounds\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+            errorCount++;
+            return false;
+        }
+
+        modifiedVariable = &temp->ids[variable.varName].fields[variable.varIndex[0]];
+        return true;
+    }
+
+    if(variable.varType == 2) {
+        //printf("Size of fields for class: %ld", temp->ids[variable.varName].fields.size());
+        for(int j = 0; j < temp->ids[variable.varName].fields.size(); j++) {
+            if(variable.varField == temp->ids[variable.varName].fields[j].name) {
+                modifiedVariable = &temp->ids[variable.varName].fields[j];
+                return true;
+            }
+        }
+    }
+
+    yyerror(("Field not defined in class\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+    errorCount++;
+    return false;
+
+}
 void PushVariableToStack() {
      
-     if(!findVaribileToModify(variableToAssign)) {
+     if(!FindToBeModifiedVar(variableFromExpr)) {
           stiva.push_back(new ASTNode(0));
           return;
      }
      
      switch(modifiedVariable->type.typeName) {
           case TYPE_INT:
-               stiva.push_back(new ASTNode(modifiedVariable->value.intValue));
+               stiva.push_back(new ASTNode(modifiedVariable->value.getIntValue()));
                break;
           case TYPE_FLOAT:
-               stiva.push_back(new ASTNode(modifiedVariable->value.floatValue));
+               stiva.push_back(new ASTNode(modifiedVariable->value.getFloatValue()));
                break;
           case TYPE_CHAR:
-               stiva.push_back(new ASTNode(modifiedVariable->value.charValue));
+               stiva.push_back(new ASTNode(modifiedVariable->value.getCharValue()));
                break;
           case TYPE_STRING:
-               stiva.push_back(new ASTNode(modifiedVariable->value.stringValue));
+               stiva.push_back(new ASTNode(modifiedVariable->value.getStringValue()));
                break;
           case TYPE_BOOL:
-               stiva.push_back(new ASTNode(modifiedVariable->value.boolValue));
+               stiva.push_back(new ASTNode(modifiedVariable->value.getBoolValue()));
                break;
           default: 
                stiva.push_back(new ASTNode(0, modifiedVariable->type.typeName));

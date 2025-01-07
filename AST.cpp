@@ -2,6 +2,8 @@
 #include <string.h>
 
 extern int yylineno;
+extern int errorCount;
+
 bool exists_error = false;
 
 ASTNode::ASTNode()
@@ -84,31 +86,31 @@ ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
     this->operation = operation;
     if(left->type != right->type){
         printf("ERROR LINE:%d\tOperanzii nu au acelasi tip!\n", yylineno);
-        exists_error = true;
+        errorCount++;
     }
     if(left->type == TYPE_CHAR) {
         printf("ERROR LINE:%d\tChar nu suporta operatii efectuate asupra sa!\n", yylineno);
-        exists_error = true;
+        errorCount++;
     }
     if(left->type == TYPE_STRING) {
         printf("ERROR LINE:%d\tString nu suporta operatii efectuate asupra sa!\n", yylineno);
-        exists_error = true;
+        errorCount++;
     }
     if(operation > MOD) {
         type = TYPE_BOOL;
         if(left->type == TYPE_INT && operation > BAND) {
             printf("ERROR LINE:%d\tInt nu suporta urmatoarele operatii efectuate asupra sa: AND si OR!\n", yylineno);
-            exists_error = true;
+            errorCount++;
         }
         if(left->type == TYPE_FLOAT && operation > BAND) {
             printf("ERROR LINE:%d\tFloat nu suporta urmatoarele operatii efectuate asupra sa: AND si OR!\n", yylineno);
-            exists_error = true;
+            errorCount++;
         }
     }
     else {
         if(left->type == TYPE_BOOL) {
             printf("ERROR LINE:%d\tBool nu suporta urmatoarele operatii efectuate asupra sa: ADD, SUB, DIV, MUL si MOD!\n", yylineno);
-            exists_error = true;
+            errorCount++;
         }
         type = left->type;
     }

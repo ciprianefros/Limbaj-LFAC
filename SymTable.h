@@ -7,6 +7,8 @@
 #include <vector>
 #include <utility>
 #include <fstream>
+#include <stack>
+#include <unordered_map>
 
 using namespace std;
 
@@ -18,7 +20,8 @@ enum Types {
     TYPE_FLOAT, 
     TYPE_CHAR, 
     TYPE_BOOL,
-    TYPE_STRING
+    TYPE_STRING,
+    CUSTOM_TYPE
 };
 
 struct Type {
@@ -34,7 +37,7 @@ class Value {
         float floatValue;
         char charValue;
         bool boolValue;
-        string stringValue;
+        char* stringValue;
         short type;
 
     public:
@@ -43,13 +46,13 @@ class Value {
         Value(float x);
         Value(char x);
         Value(bool x);
-        Value(string x);
+        Value(char* x);
 
         int getIntValue();
         float getFloatValue();
         char getCharValue();
         bool getBoolValue();
-        string getStringValue();
+        char* getStringValue();
         int getType() const;
         void setType(short type);
         string toString();
@@ -70,7 +73,7 @@ class VarInfo {
 
 struct VarSign{
     string varName;
-    int varIndex[2];
+    short varIndex[2];
     string varField;
     int varType; // 0 simple, 1 arrayElement, 2 objectField
 };

@@ -12,7 +12,7 @@ Value::Value(char x) : charValue(x), type(2) {}
 
 Value::Value(bool x) : boolValue(x), type(3) {}
 
-Value::Value(string x) : stringValue(x), type(4) {}
+Value::Value(char* x) : stringValue(x), type(4) {}
 
 string Value::toString() {
     if (type == 0) return to_string(intValue);
@@ -29,7 +29,7 @@ string Value::toString() {
         }
     }
     if (type == 4) return stringValue;
-    return "Not a type";
+    return "Custom Type";
 }
 
 int Value::getIntValue() {
@@ -60,7 +60,7 @@ bool Value::getBoolValue() {
     return NULL;
 }
 
-string Value::getStringValue() {
+char* Value::getStringValue() {
     if(type == 4) {
         return stringValue;
     }
@@ -180,6 +180,7 @@ bool SymTable::addVar(const VarInfo& v) {
         ids[v.name] = VarInfo(v);
         return true;
     } else {
+        //printf("TypeName = %d, Value.getType() = %d", v.type.typeName, v.value.getType());
         printf("ERROR LINE:%d\tTipul variabilei nu coincide cu tipul de date asignat!\n", yylineno);
         return false;
     }
@@ -224,15 +225,33 @@ void SymTable::printTable(const string& filename) {
         string type;
 
         switch(var.type.typeName) {
-            case 0 : {type = "intreg"; break;}
-            case 1 : {type = "real"; break;}
-            case 2 : {type = "caracter"; break;}
-            case 3 : {type = "bool"; break;}
-            case 4 : {type = "sir"; break;}
-            case 5 : {type = var.type.className; break;}
-            default : {type = "customType";}
+            case 0 :    {type = "intreg"; break;}
+            case 1 :    {type = "real"; break;}
+            case 2 :    {type = "caracter"; break;}
+            case 3 :    {type = "bool"; break;}
+            case 4 :    {type = "sir"; break;}
+            case 5 :    {type = var.type.className; break;}
+            default :   {type = "customType";}
         } if (!var.type.isArray) {
-            outFile << "  " << type << " " << var.name << " = " << var.value.toString() << "\n";
+            if(var.type.typeName == 5) {
+                outFile << "  " << type << " " << var.name << " {" << endl;
+                for(auto field : var.fields) {
+                    string membType;
+                    switch(field.type.typeName) {
+                        case 0 :    {membType = "intreg"; break;}
+                        case 1 :    {membType = "real"; break;}
+                        case 2 :    {membType = "caracter"; break;}
+                        case 3 :    {membType = "bool"; break;}
+                        case 4 :    {membType = "sir"; break;}
+                        case 5 :    {membType = var.type.className; break;}
+                        default :   {membType = "customType";}
+                    }
+                    outFile << "\t\t" << membType << " " << field.name << " = " << field.value.toString() << ";\n";
+                }
+                outFile << "\t}\n";
+            } else {
+                outFile << "  " << type << " " << var.name << " = " << var.value.toString() << "\n";
+            }
         } else {
             outFile << "  " << type << " " << var.name << "[";
             int i;

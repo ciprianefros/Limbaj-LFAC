@@ -306,31 +306,20 @@ statement
     | call_method ';'
     | decl_var ';'
     | ID ID ';' {
-            currentVariable.name = $2;
-            currentVariable.type.typeName = 5;
-            currentVariable.value.setType(5);
-            currentVariable.type.className = $1;
-            currentTable->addVar(currentVariable);
+            exists_or_add_for_custom_type($2, $1);
     }
     | ID ID '{' init_instante '}' ';' {
-            currentVariable.name = $2;
-            currentVariable.type.typeName = 5;
-            currentVariable.value.setType(5);
-            currentVariable.type.className = $1;
-            currentTable->addVar(currentVariable);
+            exists_or_add_for_custom_type($2, $1);
         }
     | IF 
         {
             addScopeName("if");
         } 
         '(' bool_expr ')' '{' list '}'
-        {
-            scopeStack.pop();
-            tables.push_back(currentTable);
-        } 
         else_statement   
         {  
             // Revenire la scopul părinte
+            scopeStack.pop();
             currentTable = currentTable->prev;
         }
     | WHILE 
@@ -392,29 +381,45 @@ init_instante             :     ID ASSIGN expr ';'
                           |     init_instante ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
-assignment_stmt           :     left_hand_side ASSIGN expr {}
-                          |     V_TYPE ID '[' list_array ']' ASSIGN '{' init_list '}' {/*exists_or_add($1, 1);*/}
+assignment_stmt           :     left_hand_side ASSIGN expr 
+                                {
+                                    if(FindToBeModifiedVar(variableToAssign)) {
+                                        expr1 = stiva.back();
+                                        SetNewValue(modifiedVariable, expr1);
+                                    }
+
+                                    stiva.pop_back();
+                                }
+                          |     V_TYPE ID '[' list_array ']' 
+                                {
+                                    variableToAssign.varName = $2;
+                                    variableToAssign.varType = 1;
+                                } ASSIGN '{' init_list '}' {/*exists_or_add($1, 1);*/}
                           ;
 
-left_hand_side            :     ID '.' ID { checkObject($1, $3); }
+left_hand_side            :     ID '.' ID 
+                                { 
+                                    checkObject($1, $3);
+                                    variableToAssign.varName = $1;
+                                    variableToAssign.varType = 2;
+                                    variableToAssign.varField = $3;
+                                }
                           |     ID
                           {
                                 variableToAssign.varName = $1;
                                 variableToAssign.varType = 0;
-                                p = currentTable;
-
-                                while(p->prev!=nullptr)
-                                {
-                                    if(p->existsId($1))
-                                    {
-                                        break;
-                                    }
-                                    p = p->prev;
-                                }
-
                           }
-                          |     V_TYPE ID {exists_or_add($2, 0);}
-                          |     ID '[' list_array ']' {}
+                          |     V_TYPE ID 
+                                {
+                                exists_or_add($2, 0);
+                                variableToAssign.varName = $2;
+                                variableToAssign.varType = 0;
+                                }
+                          |     ID '[' list_array ']' 
+                                {
+                                    variableToAssign.varName = $1;
+                                    variableToAssign.varType = 1;
+                                }
                           ;
 
 /*Apeluri de functii*/
@@ -459,26 +464,22 @@ bool_expr                 :     '(' bool_expr AND bool_expr ')'
                           |     '(' bool_expr OR bool_expr ')'
                           |     bool_expr OR bool_expr
                           |     '(' NOT bool_expr ')'
-                          |     BVAL
-                          {
-                                currentVariable.type.typeName = 3;
-                          }
                           |     NOT bool_expr
                           |     expr
                           ;
 
-logical_expr              :     expr EQ expr
-                          |     '(' expr EQ expr ')'
-                          |     expr NEQ expr
-                          |     '(' expr NEQ expr ')'
-                          |     expr GT expr
-                          |     '(' expr GT expr ')'
-                          |     expr GTE expr
-                          |     '(' expr GTE expr ')'
-                          |     expr LT expr
-                          |     '(' expr LT expr ')'
-                          |     expr LTE expr
-                          |     '(' expr LTE expr ')'
+logical_expr              :     expr EQ expr            {Operation_on_stack(BEQ);}
+                          |     '(' expr EQ expr ')'    {Operation_on_stack(BEQ);}
+                          |     expr NEQ expr           {Operation_on_stack(BNEQ);}
+                          |     '(' expr NEQ expr ')'   {Operation_on_stack(BNEQ);}
+                          |     expr GT expr            {Operation_on_stack(BGT);}
+                          |     '(' expr GT expr ')'    {Operation_on_stack(BGT);}
+                          |     expr GTE expr           {Operation_on_stack(BGTE);}
+                          |     '(' expr GTE expr ')'   {Operation_on_stack(BGTE);}
+                          |     expr LT expr            {Operation_on_stack(BLT);}
+                          |     '(' expr LT expr ')'    {Operation_on_stack(BLT);}
+                          |     expr LTE expr           {Operation_on_stack(BLTE);}
+                          |     '(' expr LTE expr ')'   {Operation_on_stack(BLTE);}
                           ;
                           
 expr                      :     arithm_expr
@@ -488,46 +489,68 @@ expr                      :     arithm_expr
                           |     ID 
                           {
                                 setCurrentVariableType($1);
+                                variableFromExpr.varName = $1;
+                                variableFromExpr.varType = 0;
+                                PushVariableToStack();
                           }
                           |     IVAL
                           {
                                 currentVariable.type.typeName = 0;
+                                stiva.push_back(new ASTNode($1));
                           }
                           |     FVAL
                           {
                                 currentVariable.type.typeName = 1;
+                                stiva.push_back(new ASTNode($1));
                           }
                           |     CVAL 
                           {
                                 currentVariable.type.typeName = 2;
+                                stiva.push_back(new ASTNode($1))
+                          }
+                          |     BVAL
+                          {
+                                currentVariable.type.typeName = 3;
+                                stiva.push_back(new ASTNode($1));
                           }
                           |     SVAL 
                           {
                                 currentVariable.type.typeName = 4;
+                                stiva.push_back(new ASTNode($1))
                           }
                           |     ID '[' list_array ']'
                           {
                                 setCurrentVariableType($1);
+                                variableFromExpr.varName = $1;
+                                variableFromExpr.varType = 1;
+                                variableFromExpr.varIndex[0] = currentArraySizes[0];
+                                PushVariableToStack();
                           }
                           |     ID '.' ID {
                                 setObjectMemberReturnType($1, $3);
                                 currentVariable.type.typeName = objectMemberReturnType;
+                                variableFromExpr.varName = $1;
+                                variableFromExpr.varType = 2;
+                                variableFromExpr.varField = $3;
+                                PushVariableToStack();
 
                           }
                           |     call_method {
                                 currentVariable.type.typeName = functionReturnType;
+                                stiva.push_back(new ASTNode(0, functionReturnType));
                           }
                           |     call_func {
                                 currentVariable.type.typeName = functionReturnType;
+                                stiva.push_back(new ASTNode(0, functionReturnType));
                           }
                           ;
 
 /*Expresii aritmetice*/
-arithm_expr               :     expr '+' expr  
-                          |     expr '*' expr    
-                          |     expr '/' expr
-                          |     expr '-' expr
-                          |     expr '%' expr
+arithm_expr               :     expr '+' expr  {Operation_on_stack(ADD);}
+                          |     expr '*' expr  {Operation_on_stack(MUL);} 
+                          |     expr '/' expr  {Operation_on_stack(DIV);}
+                          |     expr '-' expr  {Operation_on_stack(SUB);}
+                          |     expr '%' expr  {Operation_on_stack(MOD);}
                           ;
                           
 

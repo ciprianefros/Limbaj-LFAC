@@ -18,3 +18,9 @@ DE LA 4):
     -> Functia Print
     -> Functia TypeOf
     -> De verificat toata clasa AST
+
+
+
+ERORI: 
+    -> Parametrii functiei sa poata fi accesati in interiorul functiei;
+    -> De modificat textul pentru erori
