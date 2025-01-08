@@ -13,6 +13,7 @@ start_clasa
 clasa B2 {
     chh : caracter;
     x   : intreg;
+    zz[10] : caracter;
     intreg foc(sir wx, real ww)
     {
         intreg x;

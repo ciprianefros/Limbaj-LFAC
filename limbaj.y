@@ -172,7 +172,11 @@ class_memb                :    ID ':' V_TYPE ';'
                                {
                                    exists_or_add($1, false);
                                }
-
+                          |    ID '[' list_array ']' ':'  V_TYPE ';'
+                               {
+                                   exists_or_add($1, true);
+                               }
+                          ;
 /*Permite definirea oricator metode la o clasa*/
 methods_list              :    methods_list method
                           |    

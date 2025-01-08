@@ -8,7 +8,7 @@
 TODO:
 
 DE LA 2):
-    -> Faza cu Value pentru variabile, array-uri! (a)
+    -> Faza cu Value pentru variabile, array-uri!!! (a)
     ->
 
 DE LA 3): 
@@ -24,3 +24,8 @@ DE LA 4):
 ERORI: 
     -> Parametrii functiei sa poata fi accesati in interiorul functiei;
     -> De modificat textul pentru erori
+
+Pentru, functii, mai intai verificam daca variabilele se regasesc in lista de parametri, si apoi daca se gaseste in scope.
+
+Varianta finala, fara printf pentru debug: 
+pentru proiect final, de adaptat fisierele

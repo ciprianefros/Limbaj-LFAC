@@ -21,7 +21,7 @@ vector<VarInfo> currentParams;
 vector<short> currentArraySizes;
 SymTable* current_p;
 
-class SymTable* current;
+//class SymTable* current;
 vector<SymTable*> tables;
 SymTable* globalTable = new SymTable("global");
 SymTable* currentTable = globalTable;
