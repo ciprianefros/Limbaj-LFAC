@@ -54,7 +54,7 @@
 \"([a-zA-Z0-9 .,!?;:_\t\n\r\\\"']|\\.)*\" { yylval.string = strdup(yytext); return SVAL; }
 ['][0-9a-zA-Z]['] { yylval.caracter = yytext[1]; return CVAL; }
 [0].[0-9]+[0-9]*|[1-9]+[0-9]*[.][0-9]+[0-9]* {    yylval.real_number = atof(yytext);return FVAL;}
-[_a-zA-Z][a-zA-Z0-9]* {yylval.string = strdup(yytext); return ID;}
+[_a-zA-Z][a-zA-Z0-9_]* {yylval.string = strdup(yytext); return ID;}
 "<-" {return ASSIGN;}
 0|[1-9]+[0-9]* {yylval.number = atoi(yytext); return IVAL;}
 [ \t] ;

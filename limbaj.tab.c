@@ -734,10 +734,10 @@ static const short yyrline[] = { 0,
    343,   347,   352,   356,   361,   362,   363,   366,   367,   371,
    380,   381,   384,   393,   397,   400,   407,   412,   418,   426,
    430,   434,   435,   438,   443,   451,   455,   462,   463,   464,
-   465,   466,   467,   468,   471,   472,   473,   474,   475,   476,
-   477,   478,   479,   480,   481,   482,   485,   486,   487,   488,
-   489,   496,   501,   506,   511,   516,   521,   529,   538,   542,
-   549,   550,   551,   552,   553
+   465,   466,   471,   476,   479,   480,   481,   482,   483,   484,
+   485,   486,   487,   488,   489,   490,   493,   494,   495,   496,
+   497,   504,   509,   514,   519,   524,   529,   537,   546,   550,
+   557,   558,   559,   560,   561
 };
 
 static const char * const yytname[] = {   "$","error","$illegal.","BGIN","END",
@@ -1516,8 +1516,8 @@ case 1:
 #line 44 "limbaj.y"
 { 
                                    if (errorCount == 0) 
-                                       std::cout << "The program is correct!" << std::endl; 
-                               ;
+                                       //std::cout << "The program is correct!" << std::endl; 
+                                ;
     break;}
 case 2:
 #line 51 "limbaj.y"
@@ -1924,56 +1924,88 @@ case 97:
                                 currentParams.push_back(currentVariable);
                           ;
     break;}
-case 105:
+case 98:
+#line 462 "limbaj.y"
+{Operation_on_stack(BAND);;
+    break;}
+case 99:
+#line 463 "limbaj.y"
+{Operation_on_stack(BAND);;
+    break;}
+case 100:
+#line 464 "limbaj.y"
+{Operation_on_stack(BOR);;
+    break;}
+case 101:
+#line 465 "limbaj.y"
+{Operation_on_stack(BOR);;
+    break;}
+case 102:
+#line 466 "limbaj.y"
+{
+                                                                    expr1 = stiva.back();
+                                                                    stiva.pop_back();
+                                                                    stiva.push_back(new ASTNode(BNOT, expr1));
+                                                                ;
+    break;}
+case 103:
 #line 471 "limbaj.y"
+{
+                                                                    expr1 = stiva.back();
+                                                                    stiva.pop_back();
+                                                                    stiva.push_back(new ASTNode(BNOT, expr1));
+                                                                ;
+    break;}
+case 105:
+#line 479 "limbaj.y"
 {Operation_on_stack(BEQ);;
     break;}
 case 106:
-#line 472 "limbaj.y"
+#line 480 "limbaj.y"
 {Operation_on_stack(BEQ);;
     break;}
 case 107:
-#line 473 "limbaj.y"
+#line 481 "limbaj.y"
 {Operation_on_stack(BNEQ);;
     break;}
 case 108:
-#line 474 "limbaj.y"
+#line 482 "limbaj.y"
 {Operation_on_stack(BNEQ);;
     break;}
 case 109:
-#line 475 "limbaj.y"
+#line 483 "limbaj.y"
 {Operation_on_stack(BGT);;
     break;}
 case 110:
-#line 476 "limbaj.y"
+#line 484 "limbaj.y"
 {Operation_on_stack(BGT);;
     break;}
 case 111:
-#line 477 "limbaj.y"
+#line 485 "limbaj.y"
 {Operation_on_stack(BGTE);;
     break;}
 case 112:
-#line 478 "limbaj.y"
+#line 486 "limbaj.y"
 {Operation_on_stack(BGTE);;
     break;}
 case 113:
-#line 479 "limbaj.y"
+#line 487 "limbaj.y"
 {Operation_on_stack(BLT);;
     break;}
 case 114:
-#line 480 "limbaj.y"
+#line 488 "limbaj.y"
 {Operation_on_stack(BLT);;
     break;}
 case 115:
-#line 481 "limbaj.y"
+#line 489 "limbaj.y"
 {Operation_on_stack(BLTE);;
     break;}
 case 116:
-#line 482 "limbaj.y"
+#line 490 "limbaj.y"
 {Operation_on_stack(BLTE);;
     break;}
 case 121:
-#line 490 "limbaj.y"
+#line 498 "limbaj.y"
 {
                                 setCurrentVariableType(yyvsp[0].string);
                                 variableFromExpr.varName = yyvsp[0].string;
@@ -1982,42 +2014,42 @@ case 121:
                           ;
     break;}
 case 122:
-#line 497 "limbaj.y"
+#line 505 "limbaj.y"
 {
                                 currentVariable.type.typeName = 0;
                                 stiva.push_back(new ASTNode(yyvsp[0].number));
                           ;
     break;}
 case 123:
-#line 502 "limbaj.y"
+#line 510 "limbaj.y"
 {
                                 currentVariable.type.typeName = 1;
                                 stiva.push_back(new ASTNode(yyvsp[0].real_number));
                           ;
     break;}
 case 124:
-#line 507 "limbaj.y"
+#line 515 "limbaj.y"
 {
                                 currentVariable.type.typeName = 2;
                                 stiva.push_back(new ASTNode(yyvsp[0].caracter))
                           ;
     break;}
 case 125:
-#line 512 "limbaj.y"
+#line 520 "limbaj.y"
 {
                                 currentVariable.type.typeName = 3;
                                 stiva.push_back(new ASTNode(yyvsp[0].true_or_false));
                           ;
     break;}
 case 126:
-#line 517 "limbaj.y"
+#line 525 "limbaj.y"
 {
                                 currentVariable.type.typeName = 4;
                                 stiva.push_back(new ASTNode(yyvsp[0].string))
                           ;
     break;}
 case 127:
-#line 522 "limbaj.y"
+#line 530 "limbaj.y"
 {
                                 setCurrentVariableType(yyvsp[-3].string);
                                 variableFromExpr.varName = yyvsp[-3].string;
@@ -2027,7 +2059,7 @@ case 127:
                           ;
     break;}
 case 128:
-#line 529 "limbaj.y"
+#line 537 "limbaj.y"
 {
                                 setObjectMemberReturnType(yyvsp[-2].string, yyvsp[0].string);
                                 currentVariable.type.typeName = objectMemberReturnType;
@@ -2039,37 +2071,37 @@ case 128:
                           ;
     break;}
 case 129:
-#line 538 "limbaj.y"
+#line 546 "limbaj.y"
 {
                                 currentVariable.type.typeName = functionReturnType;
                                 stiva.push_back(new ASTNode(0, functionReturnType));
                           ;
     break;}
 case 130:
-#line 542 "limbaj.y"
+#line 550 "limbaj.y"
 {
                                 currentVariable.type.typeName = functionReturnType;
                                 stiva.push_back(new ASTNode(0, functionReturnType));
                           ;
     break;}
 case 131:
-#line 549 "limbaj.y"
+#line 557 "limbaj.y"
 {Operation_on_stack(ADD);;
     break;}
 case 132:
-#line 550 "limbaj.y"
+#line 558 "limbaj.y"
 {Operation_on_stack(MUL);;
     break;}
 case 133:
-#line 551 "limbaj.y"
+#line 559 "limbaj.y"
 {Operation_on_stack(DIV);;
     break;}
 case 134:
-#line 552 "limbaj.y"
+#line 560 "limbaj.y"
 {Operation_on_stack(SUB);;
     break;}
 case 135:
-#line 553 "limbaj.y"
+#line 561 "limbaj.y"
 {Operation_on_stack(MOD);;
     break;}
 }
@@ -2276,7 +2308,7 @@ YYLABEL(yyerrhandle)
 /* END */
 
  #line 1038 "/usr/share/bison++/bison.cc"
-#line 557 "limbaj.y"
+#line 565 "limbaj.y"
 
 void yyerror(const char * s){
      cout << "error: " << s << " at line: " << yylineno << endl;

@@ -3,6 +3,7 @@
 
 extern int yylineno;
 extern int errorCount;
+void yyerror(const char * s);
 
 bool exists_error = false;
 
@@ -77,6 +78,8 @@ ASTNode::ASTNode(char* valoare)
 
 ASTNode::~ASTNode()
 {
+    delete left;
+    delete right;
 }
 
 ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
@@ -85,31 +88,31 @@ ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
     this->right = right;
     this->operation = operation;
     if(left->type != right->type){
-        printf("ERROR LINE:%d\tOperanzii nu au acelasi tip!\n", yylineno);
+        yyerror("Operanzii nu au acelasi tip! ERROR");
         errorCount++;
     }
     if(left->type == TYPE_CHAR) {
-        printf("ERROR LINE:%d\tChar nu suporta operatii efectuate asupra sa!\n", yylineno);
+        yyerror("Char nu suporta operatii efectuate asupra sa! ERROR");
         errorCount++;
     }
     if(left->type == TYPE_STRING) {
-        printf("ERROR LINE:%d\tString nu suporta operatii efectuate asupra sa!\n", yylineno);
+        yyerror("String nu suporta operatii efectuate asupra sa! ERROR");
         errorCount++;
     }
     if(operation > MOD) {
         type = TYPE_BOOL;
         if(left->type == TYPE_INT && operation > BAND) {
-            printf("ERROR LINE:%d\tInt nu suporta urmatoarele operatii efectuate asupra sa: AND si OR!\n", yylineno);
+            yyerror("Int nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ERROR");
             errorCount++;
         }
         if(left->type == TYPE_FLOAT && operation > BAND) {
-            printf("ERROR LINE:%d\tFloat nu suporta urmatoarele operatii efectuate asupra sa: AND si OR!\n", yylineno);
+            yyerror("Float nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ERROR");
             errorCount++;
         }
     }
     else {
         if(left->type == TYPE_BOOL) {
-            printf("ERROR LINE:%d\tBool nu suporta urmatoarele operatii efectuate asupra sa: ADD, SUB, DIV, MUL si MOD!\n", yylineno);
+            yyerror("Bool nu suporta urmatoarele operatii efectuate asupra sa: ADD, SUB, DIV, MUL si MOD! ERROR");
             errorCount++;
         }
         type = left->type;
@@ -123,7 +126,7 @@ ASTNode::ASTNode(U_operation operation, ASTNode *nod)
     this->operation = operation;
     if(nod->type != TYPE_BOOL) 
     {
-        printf("ERROR LINE:%d\tNu poti folosi operatia NOT decat pe tipul boolean!\n", yylineno);
+        yyerror("Nu poti folosi operatia NOT decat pe tipul boolean! ERROR");
             exists_error = true;
     }
     type = TYPE_BOOL;
@@ -180,14 +183,14 @@ void ASTNode::ReduceToOneNode()
     case DIV:
         if(left->type == TYPE_INT) {
             if(right->valoare.number == 0) {
-                printf("ERROR LINE:%d\tDivision by 0 is imposible\n", yylineno);
+                yyerror("Împărțirea la 0 este imposibilă ERROR");
                 exists_error = true;
             }
             else valoare.number = left->valoare.number / right->valoare.number;
         }
         else {
             if(right->valoare.real_number == 0) {
-                printf("ERROR LINE:%d\tDivision by 0 is imposible\n", yylineno);
+                yyerror("Împărțirea la 0 este imposibilă ERROR");
                 valoare.real_number = 0;
                 exit(1);
             }
@@ -200,7 +203,7 @@ void ASTNode::ReduceToOneNode()
         break;
     case MOD:
         if(right->valoare.number == 0) {
-            printf("ERROR LINE:%d\tMOD by 0 is imposible\n", yylineno);
+            yyerror("Împărțirea MOD 0 nu este posibilă! ERROR");
             exists_error = true;
         }
         else valoare.number = left->valoare.number % right->valoare.number;
@@ -245,6 +248,6 @@ void ASTNode::ReduceToOneNode()
         valoare.true_or_false = !left->valoare.true_or_false;
         break;
     default:
-        printf("Default\n");
+        yyerror("Default ERROR");
     }
 }

@@ -427,7 +427,7 @@ bool FindToBeModifiedVar(VarSign variable) {
         temp = temp->prev;
     }
     if(temp == nullptr) {
-        yyerror(("Variabila " + variable.varName + " nu a fost declarata \t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+        yyerror(("Variabila " + variable.varName + " nu a fost declarata ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
         errorCount++;
         return false;
     }
@@ -439,7 +439,7 @@ bool FindToBeModifiedVar(VarSign variable) {
 
     if(variable.varType == 1) {
         if(!temp->ids[variable.varName].type.isArray) {
-            yyerror(("Variable is not an array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+            yyerror(("Variabla nu este de tip array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
             errorCount++;
             return false;
         }
@@ -464,7 +464,7 @@ bool FindToBeModifiedVar(VarSign variable) {
         }
     }
 
-    yyerror(("Field not defined in class\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+    yyerror(("Variabila nedefinită in interiorul clasei\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
     errorCount++;
     return false;
 

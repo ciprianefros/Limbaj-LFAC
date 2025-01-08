@@ -43,8 +43,8 @@ int errorCount = 0;
 /*Programelul nostru*/
 progr                     :    global_declarations main { 
                                    if (errorCount == 0) 
-                                       std::cout << "The program is correct!" << std::endl; 
-                               }
+                                       //std::cout << "The program is correct!" << std::endl; 
+                                }
                           ;
 
 /*Global scope*/
@@ -459,12 +459,20 @@ call_list                 :     call_list ',' expr
                           ;
 
 /*Expresii boolene (true sau false)*/
-bool_expr                 :     '(' bool_expr AND bool_expr ')'
-                          |     bool_expr AND bool_expr
-                          |     '(' bool_expr OR bool_expr ')'
-                          |     bool_expr OR bool_expr
-                          |     '(' NOT bool_expr ')'
-                          |     NOT bool_expr
+bool_expr                 :     '(' bool_expr AND bool_expr ')' {Operation_on_stack(BAND);}
+                          |     bool_expr AND bool_expr         {Operation_on_stack(BAND);}
+                          |     '(' bool_expr OR bool_expr ')'  {Operation_on_stack(BOR);}
+                          |     bool_expr OR bool_expr          {Operation_on_stack(BOR);}
+                          |     '(' NOT bool_expr ')'           {
+                                                                    expr1 = stiva.back();
+                                                                    stiva.pop_back();
+                                                                    stiva.push_back(new ASTNode(BNOT, expr1));
+                                                                }
+                          |     NOT bool_expr                   {
+                                                                    expr1 = stiva.back();
+                                                                    stiva.pop_back();
+                                                                    stiva.push_back(new ASTNode(BNOT, expr1));
+                                                                }
                           |     expr
                           ;
 

@@ -75,7 +75,8 @@ bucla {
 daca(10 % 4 == 2) {
     rupe;
 }
-daca ((!(3 + 4) - (-20)) && (20 + 4 * 6 || 4 + 5 + A.x + A.foc("2", 2.2) )) {
+bool is_true <- fals;
+daca (((is_true) || (adevarat)) && (fals)) {
     rupe;
 }
 
