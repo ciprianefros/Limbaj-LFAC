@@ -93,11 +93,21 @@ pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
 }
 
 functie(foo(2, 2), A.x);
-Print(x);
+Print(x + y);
+Print("hello");
+arr[1] <- 10;
+Print(adevarat || fals);
 TypeOf(12);
+TypeOf('c');
+TypeOf("string");
+Print(A.x);
+Print(A.chh);
+TypeOf(A.x);
+
 foo(A.foc("hellp", 2.2), 3);
 A.foc("1", 2.2);
 B2 B;
 B.x <- 2;
+TypeOf(B);
 
 sfarsit_programel

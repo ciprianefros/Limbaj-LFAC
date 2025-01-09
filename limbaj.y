@@ -435,8 +435,8 @@ call_func                 : ID '(' call_list ')'
                            {
                                 checkFunction($1);
                            }
-                           | PRINT '(' expr ')'
-                           | TYPEOF '(' expr ')'
+                           | PRINT '(' bool_expr ')' {runPrint()}
+                           | TYPEOF '(' bool_expr ')' {runTypeOf()}
                            ;
 
 call_method               : ID '.' ID '(' call_list ')' 
@@ -593,6 +593,7 @@ int main(int argc, char** argv) {
     if (errorCount > 0) {
         std::cout << "There were " << errorCount << " errors." << std::endl;
     } else {
+        std::cout << printToScreen << endl;
         std::cout << "The program is correct!" << std::endl;
     }
 

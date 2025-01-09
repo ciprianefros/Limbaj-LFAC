@@ -32,6 +32,7 @@ string currentClassName;
 
 stack<string> scopeStack;
 unordered_map<string, int> scopeCounters;
+string printToScreen;
 
 using namespace std;
 
@@ -494,6 +495,69 @@ void PushVariableToStack() {
                break;
           default: 
                stiva.push_back(new ASTNode(0, modifiedVariable->type.typeName));
+     }
+}
+
+void runPrint() {
+    expr1 = stiva.back();
+    stiva.pop_back();
+
+    int type = expr1->GetType();
+    char buffer[64];
+    sprintf(buffer, "Linia: %d\t", yylineno); 
+
+    printToScreen += buffer;
+    switch(type) {
+        case TYPE_BOOL:
+            sprintf(buffer, "%s\n", expr1->GetBoolValue() ? "true" : "false");
+            printToScreen += buffer;
+            break;
+        case TYPE_INT:
+            sprintf(buffer, "%d\n", expr1->GetIntValue());
+            printToScreen += buffer;
+            break;
+        case TYPE_FLOAT:
+            sprintf(buffer, "%f\n", expr1->GetFloatValue());
+            printToScreen += buffer;
+            break;
+        case TYPE_CHAR:
+            sprintf(buffer, "%c\n", expr1->GetCharValue());
+            printToScreen += buffer;
+            break;
+        case TYPE_STRING:
+            sprintf(buffer, "%s\n", expr1->GetStringValue());
+            printToScreen += buffer;
+            break;
+    }
+}
+
+void runTypeOf() {
+     expr1 = stiva.back();
+     stiva.pop_back();
+
+     int type = expr1->GetType();
+     char buffer[64];
+     sprintf(buffer, "Linia: %d\t", yylineno);
+     printToScreen += buffer;
+     switch(type) {
+          case TYPE_BOOL:
+               printToScreen += "bool\n";
+               break;
+          case TYPE_INT:
+               printToScreen += "int\n";
+               break;
+          case TYPE_FLOAT:
+               printToScreen += "float\n";
+               break;
+          case TYPE_CHAR:
+               printToScreen += "char\n";
+               break;
+          case TYPE_STRING:
+               printToScreen += "string\n";
+               break;
+          default: 
+               sprintf(buffer, "%s\n", currentClassName.c_str());
+               printToScreen += buffer;
      }
 }
 
