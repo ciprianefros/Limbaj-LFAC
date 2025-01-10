@@ -122,6 +122,7 @@ class SymTable {
         bool addFunc(short type, const string& name, vector<VarInfo> params);
         bool addFunc(short type, const string& name, vector<VarInfo> params, const string& className);
         bool addClass(const string& name);
+        void printArrayValues(VarInfo& var, std::ofstream& outFile, size_t level);
         void printTable(const std::string& filename);
         void setValue(const string& name, const Value& value);
         ~SymTable();

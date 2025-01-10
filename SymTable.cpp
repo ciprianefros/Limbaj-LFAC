@@ -211,6 +211,20 @@ bool SymTable::addClass(const string& name) {
     return true;
 }
 
+void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t level = 0) {
+    if (level >= var.type.arraySizes.size()) {
+        outFile << var.value.toString(); // Afișăm valoarea elementului final
+        return;
+    }
+
+    outFile << "{";
+    for (size_t i = 0; i < var.type.arraySizes[level]; i++) {
+        if (i > 0) outFile << ", ";
+        printArrayValues(var.fields[i], outFile, level + 1);
+    }
+    outFile << "}";
+}
+
 void SymTable::printTable(const string& filename) {
     std::ofstream outFile(filename, ios::app); // Deschide fișierul în modul append
 
@@ -232,7 +246,9 @@ void SymTable::printTable(const string& filename) {
             case 4 :    {type = "sir"; break;}
             case 5 :    {type = var.type.className; break;}
             default :   {type = "customType";}
-        } if (!var.type.isArray) {
+        }
+
+        if (!var.type.isArray) {
             if(var.type.typeName == 5) {
                 outFile << "  " << type << " " << var.name << " {" << endl;
                 for(auto field : var.fields) {
@@ -246,7 +262,18 @@ void SymTable::printTable(const string& filename) {
                         case 5 :    {membType = var.type.className; break;}
                         default :   {membType = "customType";}
                     }
-                    outFile << "\t\t" << membType << " " << field.name << " = " << field.value.toString() << ";\n";
+                    if(!field.type.isArray) {
+                        outFile << "\t\t" << membType << " " << field.name << " = " << field.value.toString() << ";\n";
+                    } else {
+                        outFile << "\t\t" << membType << " " << field.name << "[";
+                        for (size_t i = 0; i < field.type.arraySizes.size(); i++) {
+                            if (i > 0) outFile << ",";
+                            outFile << field.type.arraySizes[i];
+                        }
+                        outFile << "] = ";
+                        printArrayValues(field, outFile);
+                        outFile << "\n";
+                    }
                 }
                 outFile << "\t}\n";
             } else {
@@ -254,13 +281,14 @@ void SymTable::printTable(const string& filename) {
             }
         } else {
             outFile << "  " << type << " " << var.name << "[";
-            int i;
-            for(i = 0; i < var.type.arraySizes.size() - 1;i++) {
-                outFile << var.type.arraySizes[i] << ",";
+            for (size_t i = 0; i < var.type.arraySizes.size(); i++) {
+                if (i > 0) outFile << ",";
+                outFile << var.type.arraySizes[i];
             }
-            outFile << var.type.arraySizes[i] << "]" << "\n";
+            outFile << "] = ";
+            printArrayValues(var, outFile);
+            outFile << "\n";
         }
-        
     }
 
     outFile << "Functions:\n";
@@ -297,8 +325,8 @@ void SymTable::printTable(const string& filename) {
         outFile << "  Class " << cls.name << "\n";
     }
 
-    outFile << "\n"; // Linie separatoare pentru claritate
-    outFile.close(); // Închide fișierul
+    outFile << "\n"; 
+    outFile.close(); 
 }
 
 

@@ -8,8 +8,8 @@
 TODO:
 
 DE LA 2):
-    -> Faza cu Value pentru variabile, array-uri!!! (a)
-    ->
+    -> Faza cu Value pentru variabile, array-uri!!! (a) ++++
+    -> Pentru Array-uri, SetDefaultValue, de implementat DefaultValue pentru Array-uri!!
 
 DE LA 3): 
     -> punctul c, d, e de verificat, punctul a de completat!

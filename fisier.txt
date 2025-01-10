@@ -6,14 +6,15 @@ intreg y;
 caracter z;
 caracter c;
 sir s <- "hello world";
-intreg arr[10,9];
+intreg hello[10];
+intreg arr[10] <- {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 sfarsit_vars
 
 start_clasa
 clasa B2 {
     chh : caracter;
     x   : intreg;
-    zz[10] : caracter;
+    zz[8] : caracter;
     intreg foc(sir wx, real ww)
     {
         intreg x;
@@ -38,13 +39,12 @@ caracter bibi;
 x <- 2; y <- 4; z <- 'x';
 z <- 'z';
 y <- 345 + y + 56 + 7;
-
-
+hello <- {20,20,20,20,20,20,20,20};
 B2 A { chh <- 'c' ; } ; 
 A.chh <- 'm';
 A.x <- (20 * 5 + 4 + 3 % 2 + 22);
-
-arr[2] <- functie(2.2, 1);
+A.zz <- {'a','b','c','d','e','f','g','h'};
+A.zz[1] <- 'z';
 
 
 daca(8 % 4 == 2) {
@@ -53,7 +53,7 @@ daca(8 % 4 == 2) {
     rupe;
 }
 altfel {
-    intreg salutari[20,10,3];
+    intreg salutari[10,3];
     c <- 'a';
 }
 
@@ -95,7 +95,9 @@ pentru (intreg i32 <- 0; i32 < 10; i32 <- i32 + 1) {
 functie(foo(2, 2), A.x);
 Print(x + y);
 Print("hello");
-arr[1] <- 10;
+arr[1] <- 12;
+arr[2] <- 13;
+
 Print(adevarat || fals);
 TypeOf(12);
 TypeOf('c');

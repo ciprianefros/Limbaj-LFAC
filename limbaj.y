@@ -130,8 +130,8 @@ decl_var                  :    V_TYPE ID
                           | assignment_stmt
                           ;
 
-init_list                 : init_list ',' expr
-                          | expr 
+init_list                 : init_list ',' expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
+                          | expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
                           ;
 
 /*Partea in program de declarare a claselor*/
@@ -277,7 +277,7 @@ param                     :     V_TYPE ID
 
 
 /*Definirea unui array: uni, multi dimensional*/
-list_array                :    list_array ',' IVAL {currentArraySizes.push_back($3)}
+list_array                :    IVAL ',' IVAL {currentArraySizes.push_back($3);currentArraySizes.push_back($1)}
                           |    IVAL { currentArraySizes.push_back($1)}
                           ;
 
@@ -397,8 +397,22 @@ assignment_stmt           :     left_hand_side ASSIGN expr
                           |     V_TYPE ID '[' list_array ']' 
                                 {
                                     variableToAssign.varName = $2;
-                                    variableToAssign.varType = 1;
-                                } ASSIGN '{' init_list '}' {/*exists_or_add($1, 1);*/}
+                                    variableToAssign.varType = 0;
+                                    exists_or_add($2, 1);
+                                } ASSIGN '{' init_list '}' 
+                                    {   
+                                        //cout << variableToAssign.varName << " type: "<< variableToAssign.varType << endl;
+                                        if(FindToBeModifiedVar(variableToAssign)) {
+                                            UpdateArray(modifiedVariable);
+                                        }
+                                    }
+                          |    left_hand_side ASSIGN '{' init_list '}' 
+                                {
+                                    //cout << variableToAssign.varName << " type: "<< variableToAssign.varType << endl;
+                                    if(FindToBeModifiedVar(variableToAssign)) {
+                                        UpdateArray(modifiedVariable);
+                                    }
+                                }
                           ;
 
 left_hand_side            :     ID '.' ID 
@@ -407,6 +421,14 @@ left_hand_side            :     ID '.' ID
                                     variableToAssign.varName = $1;
                                     variableToAssign.varType = 2;
                                     variableToAssign.varField = $3;
+                                }
+                          |     ID '.' ID '[' list_array ']'
+                                { 
+                                    checkObject($1, $3);
+                                    variableToAssign.varName = $1;
+                                    variableToAssign.varType = 2;
+                                    variableToAssign.varField = $3;
+                                    variableToAssign.varIndex[0] = currentArraySizes[0];
                                 }
                           |     ID
                           {
@@ -423,6 +445,7 @@ left_hand_side            :     ID '.' ID
                                 {
                                     variableToAssign.varName = $1;
                                     variableToAssign.varType = 1;
+                                    variableToAssign.varIndex[0] = currentArraySizes[0];
                                 }
                           ;
 

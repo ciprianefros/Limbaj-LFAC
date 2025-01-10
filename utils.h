@@ -65,9 +65,6 @@ bool exists_or_add(const string& name, bool is_array) {
     if(is_array == true) {
         currentVariable.type.isArray = true;
         currentVariable.type.arraySizes = currentArraySizes;
-        for(int i = 0; i < currentArraySizes[0]; i++) {
-            currentVariable.fields.push_back(VarInfo());
-        }
     } else {
         currentVariable.type.isArray = false;
     }
@@ -80,6 +77,7 @@ bool exists_or_add(const string& name, bool is_array) {
     currentVariable = VarInfo();
     return true;
 }
+
 bool exists_or_add_for_custom_type(const string& objectName, const string& className) {
     if (currentTable->existsId(objectName)) {
         errorCount++; 
@@ -92,7 +90,6 @@ bool exists_or_add_for_custom_type(const string& objectName, const string& class
     currentVariable.type.typeName = 5;
     currentVariable.value.setType(currentVariable.type.typeName);
     currentVariable.type.className = className;
-    
     SetDefaultValue(currentVariable);
     currentTable->addVar(currentVariable);
     currentArraySizes.clear();
@@ -327,76 +324,105 @@ bool checkObject(const string& objectName, const string& memberName) {
 }
 
 void SetNewValue(VarInfo *var, ASTNode* value) {
-     int type = value->GetType();
+    int type = value->GetType();
 
-     if(var->type.typeName != type) {
-          printf("ERROR LINE:%d - %s right and left are not the same type %s - %s\n", yylineno, var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str());
-          errorCount++;
-     }
+    if(var->type.typeName != type) {
+        printf("ERROR LINE:%d - %s right and left are not the same type %s - %s\n", yylineno, var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str());
+        errorCount++;
+    }
 
-     // de verificat sa nu fie const dar doar in instructiuni nu si la initializare
-     switch(type) {
-          case TYPE_BOOL:
-               var->value = Value(value->GetBoolValue());
-               break;
-          case TYPE_INT:
-               var->value = Value(value->GetIntValue());
-               break;
-          case TYPE_FLOAT:
-               var->value = Value(value->GetFloatValue());
-               break;
-          case TYPE_CHAR:
-               var->value = Value(value->GetCharValue());
-               break;
-          case TYPE_STRING:
-               var->value = Value(value->GetStringValue());
-               break;
-          case CUSTOM_TYPE:
-               printf("Cannot assign expr to a class");
-               errorCount++;
-               break;
-          default:
-               if(type >= 6 || type < 0) {
-                    printf("EROARE LINE:%d\tUnknown type\n", yylineno);
-                    errorCount++;
-                    return;
-               }
-     }
+    
+    switch(type) {
+        case TYPE_BOOL:
+            var->value = Value(value->GetBoolValue());
+            break;
+        case TYPE_INT:
+            var->value = Value(value->GetIntValue());
+            break;
+        case TYPE_FLOAT:
+            var->value = Value(value->GetFloatValue());
+            break;
+        case TYPE_CHAR:
+            var->value = Value(value->GetCharValue());
+            break;
+        case TYPE_STRING:
+            var->value = Value(value->GetStringValue());
+            break;
+        case CUSTOM_TYPE:
+            printf("Cannot assign expr to a class");
+            errorCount++;
+            break;
+        default:
+            if(type >= 6 || type < 0) {
+                printf("EROARE LINE:%d\tUnknown type\n", yylineno);
+                errorCount++;
+                return;
+            }
+    }
+    currentArraySizes.clear();
+    variableToAssign = VarSign();
+}
+
+void SetArrayDefaultValue(VarInfo& var, size_t level = 0) {
+    if (level >= var.type.arraySizes.size()) return;
+
+    int size = var.type.arraySizes[level];
+    for (int i = 0; i < size; i++) {
+        VarInfo element;
+        element.type.typeName = var.type.typeName;
+        element.type.isArray = (level + 1 < var.type.arraySizes.size());
+        element.type.arraySizes = vector<short>(var.type.arraySizes.begin() + level, var.type.arraySizes.end());
+
+        if (element.type.isArray) {
+            SetArrayDefaultValue(element, level + 1);
+        } else {
+            SetDefaultValue(element);
+        }
+
+        var.fields.push_back(element);
+    }
 }
 
 void SetDefaultValue(VarInfo &var) {
-     int type = var.type.typeName;
-     float value = 0.0;
-     switch(type) {
-            case TYPE_INT:
-                var.value = Value(0);
-                break;
-            case TYPE_FLOAT:
-                var.value = Value(value);
-                break;
-            case TYPE_CHAR:
-                var.value = Value('0');
-                break;
-            case TYPE_STRING:
-                var.value = Value(strdup("0"));
-                break;
-            case TYPE_BOOL:
-                var.value = Value(false);
-                break;
-            case CUSTOM_TYPE:
-                for(auto &table : tables) {
-                    if(table->ScopeName == var.type.className) {
-                        //cout << "Current class name: " << table->ScopeName << endl;
-                        for(auto &[name, field] : table->ids) {
-                            SetDefaultValue(field);
-                            var.fields.push_back(VarInfo(field));
+    int type = var.type.typeName;
+    if(var.type.isArray == 1) {
+        SetArrayDefaultValue(var);
+        return;
+    }
+    float value = 0.0;
+    switch(type) {
+        case TYPE_INT:
+            var.value = Value(0);
+            break;
+        case TYPE_FLOAT:
+            var.value = Value(value);
+            break;
+        case TYPE_CHAR:
+            var.value = Value('0');
+            break;
+        case TYPE_STRING:
+            var.value = Value(strdup("0"));
+            break;
+        case TYPE_BOOL:
+            var.value = Value(false);
+            break;
+        case CUSTOM_TYPE:
+            for(auto &table : tables) {
+                if(table->ScopeName == var.type.className) {
+                    //cout << "Current class name: " << table->ScopeName << endl;
+                    for(auto &[name, field] : table->ids) {
+                        SetDefaultValue(field);
+                        var.fields.push_back(VarInfo(field));
+                        if(field.type.isArray == 1) {
+                            SetArrayDefaultValue(field);
                         }
                     }
                 }
-                break;
-          default: var.value = Value(0);
-               
-     }
+            }
+            break;
+        default: var.value = Value(0);
+            
+    }
 }
 
 /*ASTNode*/
@@ -450,17 +476,33 @@ bool FindToBeModifiedVar(VarSign variable) {
             errorCount++;
             return false;
         }
-
         modifiedVariable = &temp->ids[variable.varName].fields[variable.varIndex[0]];
         return true;
     }
 
     if(variable.varType == 2) {
-        //printf("Size of fields for class: %ld", temp->ids[variable.varName].fields.size());
+    // Parcurgem câmpurile clasei pentru a găsi membrul necesar
         for(int j = 0; j < temp->ids[variable.varName].fields.size(); j++) {
             if(variable.varField == temp->ids[variable.varName].fields[j].name) {
-                modifiedVariable = &temp->ids[variable.varName].fields[j];
-                return true;
+                VarInfo* field = &temp->ids[variable.varName].fields[j];
+
+                // Verificăm dacă membrul este un array
+                if(field->type.isArray && variable.varIndex[0] != 0) {
+                    // Verificăm indexul și dimensiunea array-ului
+                    if(variable.varIndex[0] >= field->type.arraySizes[0] || variable.varIndex[0] < 0) {
+                        yyerror(("Index out of bounds pentru membrul array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+                        errorCount++;
+                        return false;
+                    }
+
+                    // Accesăm elementul specificat de variable.varIndex[0]
+                    modifiedVariable = &field->fields[variable.varIndex[0]];
+                    return true;
+                } else {
+                    // Dacă nu este array, returnăm direct membrul
+                    modifiedVariable = field;
+                    return true;
+                }
             }
         }
     }
@@ -470,6 +512,33 @@ bool FindToBeModifiedVar(VarSign variable) {
     return false;
 
 }
+
+void UpdateArray(VarInfo *var) {
+    if(ArrayInitialization.size() > var->type.arraySizes[0]) {
+        yyerror("Prea multe elemente in lista de initializare!");
+        errorCount++;
+        SetArrayDefaultValue(*var);
+        ArrayInitialization.clear();
+        return;
+    }
+    //cout << "Marimea array-ului: " << var->type.arraySizes[0] << endl;
+    //cout << "Numele array-ului:" << var->name << endl;
+    VarInfo v;
+    v.type.typeName = var->type.typeName;
+    v.type.isArray = false;
+    int i = 0;
+    var->fields.clear();
+    for(int i = 0; i < ArrayInitialization.size(); i++) {
+        SetNewValue(&v, ArrayInitialization[i]);
+        var->fields.push_back(v);
+    }
+    SetDefaultValue(v);
+    for(i; i < var->type.arraySizes[0]; i++) {
+        var->fields.push_back(v);
+    }
+    ArrayInitialization.clear();
+}
+
 void PushVariableToStack() {
      
      if(!FindToBeModifiedVar(variableFromExpr)) {
