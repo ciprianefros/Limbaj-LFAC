@@ -17,6 +17,7 @@ clasa B2 {
     zz[8] : caracter;
     intreg foc(sir wx, real ww)
     {
+        wx <- "hello there sunshine";
         intreg x;
         real wy;
         wy <- 2.0;
@@ -27,6 +28,7 @@ sfarsit_clasa
 start_functions
 real foo(intreg sdfs, intreg sgsg);
 intreg functie(real w, intreg m) {
+    w <- 2.0;
     intreg yy;
     caracter B3;
 }
@@ -108,6 +110,7 @@ TypeOf(A.x);
 
 foo(A.foc("hellp", 2.2), 3);
 A.foc("1", 2.2);
+functie(2.2, 1);
 B2 B;
 B.x <- 2;
 TypeOf(B);

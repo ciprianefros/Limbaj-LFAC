@@ -118,7 +118,7 @@ V_TYPE : INT
 decl_var                  :    V_TYPE ID  
                                 {
                                     if(!exists_or_add($2, false)) {
-
+                                        
                                     }
                                 }
                           |    V_TYPE ID '[' list_array ']' 

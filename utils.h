@@ -53,12 +53,25 @@ void addScopeName(const string& scopeType) {
     tables.push_back(currentTable);
 }
 
+bool existsParam(const string& name) {
+    if(currentParams.size() == 0) {
+        return false;
+    }
+    for(auto param : currentParams) {
+        if(param.name == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 bool exists_or_add(const string& name, bool is_array) {
 
     //cout << "Current table name: " << currentTable->ScopeName << endl;
-    if (currentTable->existsId(name)) {
+    bool existsVarInParams = existsParam(name);
+    if (currentTable->existsId(name) || existsVarInParams) {
         errorCount++; 
-        yyerror(("Variable already defined in this scope at line: " + std::to_string(yylineno)).c_str());
+        yyerror(("Variable " + name + " already defined in this scope").c_str());
         return false;
     } 
     
@@ -91,29 +104,6 @@ bool exists_or_add_for_custom_type(const string& objectName, const string& class
     currentVariable.value.setType(currentVariable.type.typeName);
     currentVariable.type.className = className;
     SetDefaultValue(currentVariable);
-    currentTable->addVar(currentVariable);
-    currentArraySizes.clear();
-    currentVariable = VarInfo();
-    return true;
-}
-bool exists_or_add_2(const string& name, bool is_array) {
-    SymTable* temp = currentTable;
-    while(temp != nullptr) {
-        if (temp->existsId(name)) {
-            errorCount++; 
-            yyerror(("Variable already defined at line: " + std::to_string(yylineno)).c_str());
-            return false;
-        } 
-        temp = temp->prev;
-    }
-    if(is_array == true) {
-        currentVariable.type.isArray = true;
-        currentVariable.type.arraySizes = currentArraySizes;
-    } else {
-        currentVariable.type.isArray = false;
-    }
-    currentVariable.name = name;
-    currentVariable.value.setType(currentVariable.type.typeName);
     currentTable->addVar(currentVariable);
     currentArraySizes.clear();
     currentVariable = VarInfo();
@@ -446,6 +436,7 @@ void Operation_on_stack(B_operation op)
 }
 
 bool FindToBeModifiedVar(VarSign variable) {
+    bool varExistsInParams = existsParam(variable.varName);
     SymTable* temp = currentTable;
     while(temp != nullptr) {
         if (temp->existsId(variable.varName)) {
@@ -453,12 +444,14 @@ bool FindToBeModifiedVar(VarSign variable) {
         } 
         temp = temp->prev;
     }
-    if(temp == nullptr) {
-        yyerror(("Variabila " + variable.varName + " nu a fost declarata ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+    if(temp == nullptr && !varExistsInParams) {
+        yyerror(("Variabila " + variable.varName + " nu a fost declarata " ).c_str());
         errorCount++;
         return false;
     }
-
+    if(varExistsInParams) {
+        return false;
+    }
     if(variable.varType == 0) {
         modifiedVariable = &temp->ids[variable.varName];
         return true;
