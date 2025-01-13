@@ -120,7 +120,7 @@ bool checkParams(const string& name, SymTable functionScope)
 
     if(functionScope.funcids[name].params.size() != currentParams.size())
     {
-        yyerror(("Not having the same number of params. Error at line: " + std::to_string(yylineno)).c_str());
+        yyerror("Not having the same number of params.");
         currentParams.clear();
         return false;
     }
@@ -164,6 +164,7 @@ bool checkFunction(const string& name)
 
             //salvam return type-ul functiei!
             functionReturnType = temp->funcids[name].returnType;
+            //cout << "Tipul functiei: " << functionReturnType << endl;
             // Verificăm parametrii funcției
             if(checkParams(name, *temp))
             {
@@ -175,7 +176,7 @@ bool checkFunction(const string& name)
             else
             {
                 errorCount++;
-                yyerror(("Function's params are not the same type. Error at line: " + std::to_string(yylineno)).c_str());
+                yyerror("Function's params are not the same type. ");
                 currentParams.clear();
                 return false;
             }
@@ -184,7 +185,7 @@ bool checkFunction(const string& name)
 
     // Dacă am ajuns aici, funcția nu a fost găsită în niciun tabel de simboluri
     errorCount++;
-    yyerror(("Function was not declared. Error at line: " + std::to_string(yylineno)).c_str());
+    yyerror("Function was not declared. ");
 
     currentParams.clear();
     return false;
@@ -202,13 +203,13 @@ bool checkMethod(const string& methodName)
                     return true;
                 } else {
                     errorCount++;
-                    yyerror(("Function's params are not the same type. Error at line: " + std::to_string(yylineno)).c_str());
+                    yyerror("Function's params are not the same type. ");
                     currentParams.clear();
                     return false;
                 }
             } else {
                 errorCount++;
-                yyerror(("Method not declared for class " + currentClassName + " . Error at line: " + std::to_string(yylineno)).c_str());
+                yyerror(("Method not declared for class " + currentClassName + ". ").c_str());
                 return false;
             }
         }
@@ -217,7 +218,7 @@ bool checkMethod(const string& methodName)
     currentParams.clear();
     errorCount++;
     //std::cout << "" << std::endl;
-    yyerror(("Class " + currentClassName + " does not exist . Error at line: " + std::to_string(yylineno)).c_str());
+    yyerror(("Class " + currentClassName + " does not exist. ").c_str());
     return false;
 }
 
@@ -317,7 +318,7 @@ void SetNewValue(VarInfo *var, ASTNode* value) {
     int type = value->GetType();
 
     if(var->type.typeName != type) {
-        printf("ERROR LINE:%d - %s right and left are not the same type %s - %s\n", yylineno, var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str());
+        printf("error: Variable: %s - right and left are not the same type %s - %s at line %d\n", var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str(), yylineno);
         errorCount++;
     }
 

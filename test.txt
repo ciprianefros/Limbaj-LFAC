@@ -1,0 +1,82 @@
+start_global
+start_clasa
+clasa MyType {
+    x : intreg;
+    y : intreg;
+    intreg f(intreg y) {
+        float z;
+    }
+    intreg init() {
+        x <- 0;
+        y <- 0;
+    }
+};
+sfarsit_clasa
+start_vars
+
+intreg ix;
+intreg gix1;
+intreg gix2;
+real gf <- 10.4;
+sir gs;
+caracter gc;
+bool gb;
+intreg gtab[100];
+MyType mObj;
+
+sfarsit_vars
+
+start_functions
+
+intreg f(intreg z, real f, sir s) {
+    intreg ix;
+}
+
+real ff(intreg x) {
+
+}
+
+bool check() {
+    returneaza fals;
+}
+
+sfarsit_functions
+
+sfarsit_global
+
+start_programel
+
+gc <- 'c';
+gs <- "A string";
+TypeOf(gc);
+gb <- fals;
+gix1 <- 2;
+gix2 <- 100 + gix1;
+Print(gc);
+Print(f(10, 10.5, gs));
+Print(check());
+Print(gs);
+gb <- f(10, 10.5, gs) > gix2;
+gb <- gb == adevarat || gix1 + f(10, 10.5, gs) > gix2;
+Print(gb);
+Print(gb || gix1 == 2);
+mObj.x <- 100;
+gtab[5] <- 10;
+Print(gix2);
+Print(gix1);
+gix1 <- gix1 + f(10, 10.5, gs) + mObj.x - gtab[10];
+TypeOf(gix1 + 5);
+TypeOf(gs);
+
+/*intreg mix;
+mix <- gb + mix;
+mix <- mix + ff(10.5);
+mix <- gf + mix;
+gb <- gb + gb;
+gs <- gs + gs;
+bool mb <- check() + check();
+f(10, 10, 10);
+gs <- f(10, 10.5, gs);
+TypeOf(mix + ff(10.5));*/
+sfarsit_programel
+

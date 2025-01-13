@@ -87,32 +87,32 @@ ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
     this->left = left;
     this->right = right;
     this->operation = operation;
-    if(left->type != right->type){
-        yyerror("Operanzii nu au acelasi tip! ERROR");
+    if(left->type != right->type ){
+        yyerror("Operanzii nu au acelasi tip!");
         errorCount++;
     }
     if(left->type == TYPE_CHAR) {
-        yyerror("Char nu suporta operatii efectuate asupra sa! ERROR");
+        yyerror("Char nu suporta operatii efectuate asupra sa! ");
         errorCount++;
     }
     if(left->type == TYPE_STRING) {
-        yyerror("String nu suporta operatii efectuate asupra sa! ERROR");
+        yyerror("String nu suporta operatii efectuate asupra sa! ");
         errorCount++;
     }
     if(operation > MOD) {
         type = TYPE_BOOL;
         if(left->type == TYPE_INT && operation > BAND) {
-            yyerror("Int nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ERROR");
+            yyerror("Int nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ");
             errorCount++;
         }
         if(left->type == TYPE_FLOAT && operation > BAND) {
-            yyerror("Float nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ERROR");
+            yyerror("Float nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ");
             errorCount++;
         }
     }
     else {
         if(left->type == TYPE_BOOL) {
-            yyerror("Bool nu suporta urmatoarele operatii efectuate asupra sa: ADD, SUB, DIV, MUL si MOD! ERROR");
+            yyerror("Bool nu suporta urmatoarele operatii efectuate asupra sa: ADD, SUB, DIV, MUL si MOD! ");
             errorCount++;
         }
         type = left->type;
@@ -126,7 +126,7 @@ ASTNode::ASTNode(U_operation operation, ASTNode *nod)
     this->operation = operation;
     if(nod->type != TYPE_BOOL) 
     {
-        yyerror("Nu poti folosi operatia NOT decat pe tipul boolean! ERROR");
+        yyerror("Poti folosi operatia NOT decat pe tipul boolean! ");
             exists_error = true;
     }
     type = TYPE_BOOL;
@@ -183,15 +183,16 @@ void ASTNode::ReduceToOneNode()
     case DIV:
         if(left->type == TYPE_INT) {
             if(right->valoare.number == 0) {
-                yyerror("Împărțirea la 0 este imposibilă ERROR");
-                exists_error = true;
+                yyerror("Împărțirea la 0 este imposibilă. ");
+                errorCount++;
             }
             else valoare.number = left->valoare.number / right->valoare.number;
         }
         else {
             if(right->valoare.real_number == 0) {
-                yyerror("Împărțirea la 0 este imposibilă ERROR");
+                yyerror("Împărțirea la 0 este imposibilă. ");
                 valoare.real_number = 0;
+                errorCount++;
                 exit(1);
             }
             else valoare.real_number = left->valoare.real_number / right->valoare.real_number;
@@ -203,8 +204,8 @@ void ASTNode::ReduceToOneNode()
         break;
     case MOD:
         if(right->valoare.number == 0) {
-            yyerror("Împărțirea MOD 0 nu este posibilă! ERROR");
-            exists_error = true;
+            yyerror("Împărțirea MOD 0 nu este posibilă! ");
+            errorCount++;
         }
         else valoare.number = left->valoare.number % right->valoare.number;
         break;

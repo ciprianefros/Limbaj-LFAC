@@ -57,7 +57,7 @@ global_declarations       :     BGINGLOBAL   {
                           ;
 
 /*Partea de global scope ( variabile, clase, functii) */
-declarations              :    vars_declarations class_declarations func_declarations
+declarations              :    class_declarations vars_declarations  func_declarations
                           ;
 
 /*Sectiunea de declarare a variabilelor globale*/
@@ -127,6 +127,12 @@ decl_var                  :    V_TYPE ID
 
                                    }
                                 }
+                          | ID ID {
+                                exists_or_add_for_custom_type($2, $1);
+                          }
+                          | ID ID '{' init_instante '}' {
+                                exists_or_add_for_custom_type($2, $1);
+                          }
                           | assignment_stmt
                           ;
 
@@ -309,12 +315,6 @@ statement
     : call_func ';'
     | call_method ';'
     | decl_var ';'
-    | ID ID ';' {
-            exists_or_add_for_custom_type($2, $1);
-    }
-    | ID ID '{' init_instante '}' ';' {
-            exists_or_add_for_custom_type($2, $1);
-        }
     | IF 
         {
             addScopeName("if");
@@ -385,7 +385,7 @@ init_instante             :     ID ASSIGN expr ';'
                           |     init_instante ID ASSIGN expr ';'
                           ;
 /*Expresii de asignare pentru variabile, clase si array-uri*/
-assignment_stmt           :     left_hand_side ASSIGN expr 
+assignment_stmt           :     left_hand_side ASSIGN bool_expr 
                                 {
                                     if(FindToBeModifiedVar(variableToAssign)) {
                                         expr1 = stiva.back();
@@ -478,10 +478,12 @@ call_method               : ID '.' ID '(' call_list ')'
 call_list                 :     call_list ',' expr
                           { 
                                 currentParams.push_back(currentVariable);
+                                stiva.pop_back();
                           }
                           |     expr
                           {                                
                                 currentParams.push_back(currentVariable);
+                                stiva.pop_back();
                           }
                           ;
 

@@ -57,6 +57,7 @@
 [_a-zA-Z][a-zA-Z0-9_]* {yylval.string = strdup(yytext); return ID;}
 "<-" {return ASSIGN;}
 0|[1-9]+[0-9]* {yylval.number = atoi(yytext); return IVAL;}
+\/\*([^*]|\*+[^\/])*\*+\/ { /* Ignorăm comentariile */ }
 [ \t] ;
 \n {yylineno++;}
 . {return yytext[0];}
