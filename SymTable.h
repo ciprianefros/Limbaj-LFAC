@@ -81,7 +81,7 @@ struct VarSign{
 class FuncInfo {
     public:
         string name;
-        short returnType;
+        short returnType; //0 int 1 float 2 char 3 bool 4 string 5 customClass
         string className;
         vector<VarInfo> params; 
 

@@ -16,7 +16,7 @@ enum B_operation
 
 enum U_operation 
 {
-    BNOT = 100
+    BNOT = 15
 };
 
 class ASTNode 

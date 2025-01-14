@@ -20,13 +20,11 @@ ClassInfo currentClass;
 vector<VarInfo> currentParams;
 vector<VarInfo> currentCallList;
 vector<short> currentArraySizes;
-SymTable* current_p;
 
 //class SymTable* current;
 vector<SymTable*> tables;
 SymTable* globalTable = new SymTable("global");
 SymTable* currentTable = globalTable;
-SymTable* p;
 short functionReturnType;
 short objectMemberReturnType;
 string currentClassName;
@@ -66,20 +64,24 @@ bool existsParam(const string& name) {
     return false;
 }
 
-bool exists_or_add(const string& name, bool is_array) {
-
+bool exists_or_add(const string& name, bool is_array) 
+{
     //cout << "Current table name: " << currentTable->ScopeName << endl;
     bool existsVarInParams = existsParam(name);
-    if (currentTable->existsId(name) || existsVarInParams) {
+    if (currentTable->existsId(name) || existsVarInParams) 
+    {
         errorCount++; 
-        yyerror(("Variable " + name + " already defined in this scope").c_str());
+        yyerror(("Variabila " + name + " a fost deja definită în cadrul acestui scope!").c_str());
         return false;
     } 
     
-    if(is_array == true) {
+    if(is_array == true) 
+    {
         currentVariable.type.isArray = true;
         currentVariable.type.arraySizes = currentArraySizes;
-    } else {
+    } 
+    else 
+    {
         currentVariable.type.isArray = false;
     }
     currentVariable.name = name;
@@ -92,10 +94,12 @@ bool exists_or_add(const string& name, bool is_array) {
     return true;
 }
 
-bool exists_or_add_for_custom_type(const string& objectName, const string& className) {
-    if (currentTable->existsId(objectName)) {
+bool exists_or_add_for_custom_type(const string& objectName, const string& className) 
+{
+    if (currentTable->existsId(objectName)) 
+    {
         errorCount++; 
-        yyerror(("Variable already defined in this scope at line: " + std::to_string(yylineno)).c_str());
+        yyerror(("Variabilă deja definită în acest scop la linia: " + std::to_string(yylineno)).c_str());
         return false;
     } 
     
@@ -316,16 +320,18 @@ bool checkObject(const string& objectName, const string& memberName) {
     return true;
 }
 
-void SetNewValue(VarInfo *var, ASTNode* value) {
+void SetNewValue(VarInfo *var, ASTNode* value) 
+{
     int type = value->GetType();
 
-    if(var->type.typeName != type) {
-        printf("error: Variable: %s - right and left are not the same type %s - %s at line %d\n", var->name.c_str(),getReturnType(var->type.typeName).c_str(), getReturnType(type).c_str(), yylineno);
+    if(var->type.typeName != type) 
+    {
+        yyerror(("Variabila " + var->name + " - partea dreaptă și cea stângă nu au același tip: " + getReturnType(var->type.typeName) + " - " + getReturnType(type)).c_str());
         errorCount++;
     }
-
     
-    switch(type) {
+    switch(type) 
+    {
         case TYPE_BOOL:
             var->value = Value(value->GetBoolValue());
             break;
@@ -342,12 +348,12 @@ void SetNewValue(VarInfo *var, ASTNode* value) {
             var->value = Value(value->GetStringValue());
             break;
         case CUSTOM_TYPE:
-            printf("Cannot assign expr to a class");
+            yyerror("Nu putem asigna o expresie unei clase!");
             errorCount++;
             break;
         default:
             if(type >= 6 || type < 0) {
-                printf("EROARE LINE:%d\tUnknown type\n", yylineno);
+                yyerror("Tip de date necunoscut!");
                 errorCount++;
                 return;
             }
@@ -356,7 +362,8 @@ void SetNewValue(VarInfo *var, ASTNode* value) {
     variableToAssign = VarSign();
 }
 
-void SetArrayDefaultValue(VarInfo& var, size_t level = 0) {
+void SetArrayDefaultValue(VarInfo& var, size_t level = 0) 
+{
     if (level >= var.type.arraySizes.size()) return;
 
     int size = var.type.arraySizes[level];
@@ -376,14 +383,17 @@ void SetArrayDefaultValue(VarInfo& var, size_t level = 0) {
     }
 }
 
-void SetDefaultValue(VarInfo &var) {
+void SetDefaultValue(VarInfo &var) 
+{
     int type = var.type.typeName;
-    if(var.type.isArray == 1) {
+    if(var.type.isArray == 1) 
+    {
         SetArrayDefaultValue(var);
         return;
     }
     float value = 0.0;
-    switch(type) {
+    switch(type) 
+    {
         case TYPE_INT:
             var.value = Value(0);
             break;
@@ -401,12 +411,15 @@ void SetDefaultValue(VarInfo &var) {
             break;
         case CUSTOM_TYPE:
             for(auto &table : tables) {
-                if(table->ScopeName == var.type.className) {
+                if(table->ScopeName == var.type.className) 
+                {
                     //cout << "Current class name: " << table->ScopeName << endl;
-                    for(auto &[name, field] : table->ids) {
+                    for(auto &[name, field] : table->ids) 
+                    {
                         //SetDefaultValue(field);
                         var.fields.push_back(VarInfo(field));
-                        if(field.type.isArray == 1) {
+                        if(field.type.isArray == 1) 
+                        {
                             SetArrayDefaultValue(field);
                         }
                     }

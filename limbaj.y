@@ -41,15 +41,13 @@ int errorCount = 0;
 
 %%
 /*Programelul nostru*/
-progr                     :    global_declarations main { 
-                                   if (errorCount == 0) 
-                                       //std::cout << "The program is correct!" << std::endl; 
-                                }
+progr                     :    global_declarations main
                           ;
 
 /*Global scope*/
-global_declarations       :     BGINGLOBAL   {
-                                    currentTable = globalTable;
+global_declarations       :     BGINGLOBAL   
+                                {
+                                    currentTable = globalTable; //avem tabelul currentTable pe care îl punem în lista de tabele
                                     tables.push_back(globalTable);
                                 }
                                 declarations ENDGLOBAL
@@ -71,73 +69,59 @@ decl_vars                 :    decl_var ';'
                           ;
 
 F_TYPE : INT 
-     {
-          currentFunction.returnType = TYPE_INT;
-     }
-     | FLOAT 
-     {
-          currentFunction.returnType = TYPE_FLOAT;
-     }
-     | STRING 
-     {
-          currentFunction.returnType = TYPE_STRING;
-     }
-     | BOOL 
-     {
-          currentFunction.returnType = TYPE_BOOL;
-     }
-     | CHAR  
-     {
-          currentFunction.returnType = TYPE_CHAR;
-     }
-     ;
+        {
+            currentFunction.returnType = TYPE_INT;
+        }
+        | FLOAT 
+        {
+            currentFunction.returnType = TYPE_FLOAT;
+        }
+        | STRING 
+        {
+            currentFunction.returnType = TYPE_STRING;
+        }
+        | BOOL 
+        {
+            currentFunction.returnType = TYPE_BOOL;
+        }
+        | CHAR  
+        {
+            currentFunction.returnType = TYPE_CHAR;
+        }
+        ;
 
 V_TYPE : INT 
-     {
-          currentVariable.type.typeName = TYPE_INT;
-     }
-     | FLOAT 
-     {
-          currentVariable.type.typeName = TYPE_FLOAT;
-     }
-     | STRING 
-     {
-          currentVariable.type.typeName = TYPE_STRING;
-     }
-     | BOOL 
-     {
-          currentVariable.type.typeName = TYPE_BOOL;
-     }
-     | CHAR  
-     {
-          currentVariable.type.typeName = TYPE_CHAR;
-     }
-     ;
+        {
+            currentVariable.type.typeName = TYPE_INT;
+        }
+        | FLOAT 
+        {
+            currentVariable.type.typeName = TYPE_FLOAT;
+        }
+        | STRING 
+        {
+            currentVariable.type.typeName = TYPE_STRING;
+        }
+        | BOOL 
+        {
+            currentVariable.type.typeName = TYPE_BOOL;
+        }
+        | CHAR  
+        {
+            currentVariable.type.typeName = TYPE_CHAR;
+        }
+        ;
 
 /*Declararea de variabile sau array-uri*/
-decl_var                  :    V_TYPE ID  
-                                {
-                                    if(!exists_or_add($2, false)) {
-                                        
-                                    }
-                                }
-                          |    V_TYPE ID '[' list_array ']' 
-                                {
-                                   if(!exists_or_add($2, true)) {
-
-                                   }
-                                }
-                          | ID ID {
-                                exists_or_add_for_custom_type($2, $1);
-                          }
-                          | ID ID '{' init_instante '}' {
-                                exists_or_add_for_custom_type($2, $1);
-                          }
-                          | assignment_stmt
+decl_var                  :    V_TYPE ID    { exists_or_add($2, false); }
+                          |    V_TYPE ID '[' list_array ']' { exists_or_add($2, true); }
+                          |    ID ID   { exists_or_add_for_custom_type($2, $1); }
+                          |    ID ID '{' init_instante '}'  { exists_or_add_for_custom_type($2, $1); }
+                          |    assignment_stmt
                           ;
 
-init_list                 : init_list ',' expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
-                          | expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
+init_list                 :    init_list ',' expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
+                          |    expr {ArrayInitialization.push_back(stiva.back()); stiva.pop_back();}
                           ;
 
 /*Partea in program de declarare a claselor*/
@@ -151,18 +135,23 @@ decl_classes              :    decl_class
 
 /*Declararea unei clase*/
 decl_class
-    : CLASS ID '{' {
+    : CLASS ID '{' 
+    {
         // Creează tabelă pentru clasa curentă
-        if (currentTable->existsClass($2)) { // Verifică dacă clasa există deja
+        if (currentTable->existsClass($2)) 
+        { // Verifică dacă clasa există deja
             errorCount++;
-            yyerror(("Class already defined at line: " + std::to_string(yylineno)).c_str());
-        } else {
+            yyerror(("Clasa a fost deja definită la linia: " + std::to_string(yylineno)).c_str());
+        } 
+        else 
+        {
             currentClass.name = $2;
             currentTable->addClass($2);
             currentTable = new SymTable($2, currentTable);// Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable); // Adaugă în lista globală de tabele
         }
-    } membs_list methods_list '}' ';' {
+    } membs_list methods_list '}' ';' 
+    {
         // Revenire la scopul părinte
         currentTable = currentTable->prev;
     }
@@ -176,13 +165,14 @@ membs_list                :    class_memb
 /*Definirea membrilor unei clase: A.x*/
 class_memb                :    ID ':' V_TYPE ';'
                                {
-                                   exists_or_add($1, false);
+                                    exists_or_add($1, false);
                                }
                           |    ID '[' list_array ']' ':'  V_TYPE ';'
                                {
-                                   exists_or_add($1, true);
+                                    exists_or_add($1, true);
                                }
-                          |    ID ':' V_TYPE ASSIGN expr ';' {
+                          |    ID ':' V_TYPE ASSIGN expr ';' 
+                               {
                                     exists_or_add($1, false);
                                     modifiedVariable = &currentTable->ids[$1];
                                     expr1 = stiva.back();
@@ -190,7 +180,7 @@ class_memb                :    ID ':' V_TYPE ';'
                                     //cout << modifiedVariable->value.toString() << endl;
                                     //cout << currentTable->ids[$1].value.toString() << endl;
                                     stiva.pop_back();
-                                }
+                               }
                           ;
 /*Permite definirea oricator metode la o clasa*/
 methods_list              :    methods_list method
@@ -199,14 +189,17 @@ methods_list              :    methods_list method
 
 /*Definirea unei metode într-o clasă*/
 method
-    : F_TYPE ID '(' list_param ')' '{'  {
+    : F_TYPE ID '(' list_param ')' '{'  
+    {
         // Verifică dacă funcția este deja definită
         if (currentTable->existsFunc($2)) 
         { 
             errorCount++;
-            yyerror(("Function " + std::string($2) + " already defined at line: " + std::to_string(yylineno)).c_str());
-        } else {
-            // Adaugă funcția în tabela simbolurilor a clasei
+            yyerror(("Metoda " + std::string($2) + " a fost deja definită la linia: " + std::to_string(yylineno)).c_str());
+        } 
+        else 
+        {
+            // Adaugă funcția în tabela de simboluri a clasei
             currentTable->addFunc(currentFunction.returnType, $2, currentParams, currentClass.name);
             currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable);
@@ -217,9 +210,9 @@ method
     {
         // Revenire la tabelul simbolurilor al clasei
         currentTable = currentTable->prev;
-        //current = current->prev;
         //stergerea parametrilor
         currentParams.clear();
+        ///pentru a nu se adăuga toți param. declarați vreodată în currentParams.
     }
     ;
 
@@ -234,51 +227,51 @@ decl_funcs                :    def_func
                           ;
 
 /*Definirea unei functii*/
-def_func  : F_TYPE ID '(' list_param ')'
-                    {   
-                        if(!currentTable->existsFunc($2)) {
-                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
-                        }
-                        /*for(auto param : currentParams) {
-                            cout << param.name << " " << param.type.typeName << endl;
-                        }*/
-                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
-                        tables.push_back(currentTable);  // Adaugă tabelul global
-                        currentFunction.name = $2; 
-                    }  
-                    function_definition
-                    {
-                        currentParams.clear();
-                        currentTable = currentTable->prev; // Revenire la scopul părinte
-                    }
-                    | F_TYPE ID '(' list_param ')' ';' {
-                        if(!currentTable->existsFunc($2)) {
-                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
-                        }
-                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
-                        tables.push_back(currentTable);  // Adaugă tabelul global
+def_func                  :         F_TYPE ID '(' list_param ')'
+                                    {   
+                                        if(!currentTable->existsFunc($2)) 
+                                        {
+                                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+                                        }
 
-                    }
-                    {
-                        currentParams.clear();
-                        currentTable = currentTable->prev; // Revenire la scopul părinte
-                    }
-                    ;
+                                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
+                                        tables.push_back(currentTable);  // Adaugă tabelul global
+                                        currentFunction.name = $2; 
+                                    }  
+                                    function_definition
+                                    {
+                                        currentParams.clear();
+                                        currentTable = currentTable->prev; // Revenire la scopul părinte
+                                    }
+                                    | F_TYPE ID '(' list_param ')' ';' 
+                                    {
+                                        if(!currentTable->existsFunc($2)) 
+                                        {
+                                            currentTable->addFunc(currentFunction.returnType, $2, currentParams);
+                                        }
+                                        currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
+                                        tables.push_back(currentTable);  // Adaugă tabelul global
+                                    }
+
+                                    {
+                                        currentParams.clear();
+                                        currentTable = currentTable->prev; // Revenire la scopul părinte
+                                    }
+                                    ;
 
 function_definition : '{' fblock '}' 
                     ;
 
-
-list_param 
-    : param {
-        currentParams.push_back(currentVariable);
-    }
-    | list_param ',' param {
-        currentParams.push_back(currentVariable);
-    }
-    |
-    ;
-
+list_param      : param 
+                {
+                    currentParams.push_back(currentVariable);
+                }
+                | list_param ',' param 
+                {
+                    currentParams.push_back(currentVariable);
+                }
+                |
+                ;
 
 /*Parametrii pentru functii*/
 param                     :     V_TYPE ID  
@@ -295,33 +288,33 @@ param                     :     V_TYPE ID
                           ;
 
 
-/*Definirea unui array: uni, multi dimensional*/
+/*Definirea unui array: uni, bi - dimensional*/
 list_array                :    IVAL ',' IVAL {currentArraySizes.push_back($3);currentArraySizes.push_back($1)}
                           |    IVAL { currentArraySizes.push_back($1)}
                           ;
 
 /*Blocul unei functii*/
-fblock
-    :  fblock statement 
-    | 
-    ;
+fblock  :  fblock statement 
+        | 
+        ;
 
 /*main function*/
-main
-    : BGIN { 
-        // Creare tabelă pentru scopul main
-        currentTable = new SymTable("main", currentTable);
-        tables.push_back(currentTable);
-    } list END {
-        // Revenire la scopul global
-        currentTable = currentTable->prev;
-    }
-    ;
+main    : BGIN 
+        { 
+            // Creare tabelă pentru scopul main
+            currentTable = new SymTable("main", currentTable);
+            tables.push_back(currentTable);
+        } list END 
+        {
+            // Revenire la scopul global
+            currentTable = currentTable->prev;
+        }
+        ;
 
 /*Expresiile acceptate in main, pentru a fi recursive!*/
-list                      :     statement 
-                          |     list statement 
-                          ;
+list    :     statement 
+        |     list statement 
+        ;
 
 /*Tot felul de expresii din interiorul programului*/
 statement
@@ -391,7 +384,6 @@ else_statement  :
                     currentTable = currentTable->prev;
                 }
                 ;
-
 
 /*Asignari ale membrilor unei clase*/
 init_instante             :     ID ASSIGN expr ';'
@@ -632,10 +624,10 @@ int main(int argc, char** argv) {
     }
 
     if (errorCount > 0) {
-        std::cout << "There were " << errorCount << " errors." << std::endl;
+        std::cout << "Aveți " << errorCount << " erori." << std::endl;
     } else {
         std::cout << printToScreen << endl;
-        std::cout << "The program is correct!" << std::endl;
+        std::cout << "Progrămelul este corect! Bravo!!!" << std::endl;
     }
 
     return 0;
