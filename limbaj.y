@@ -184,14 +184,11 @@ class_memb                :    ID ':' V_TYPE ';'
                                }
                           |    ID ':' V_TYPE ASSIGN expr ';' {
                                     exists_or_add($1, false);
-                                    variableToAssign.varName = $1;
-                                    variableToAssign.varType = 0;
-                                    if(FindToBeModifiedVar(variableToAssign)) {
-                                        expr1 = stiva.back();
-                                        cout << modifiedVariable->name << " = " << expr1 << endl;
-                                        SetNewValue(modifiedVariable, expr1);
-                                    }
-
+                                    modifiedVariable = &currentTable->ids[$1];
+                                    expr1 = stiva.back();
+                                    SetNewValue(modifiedVariable, expr1);
+                                    //cout << modifiedVariable->value.toString() << endl;
+                                    //cout << currentTable->ids[$1].value.toString() << endl;
                                     stiva.pop_back();
                                 }
                           ;

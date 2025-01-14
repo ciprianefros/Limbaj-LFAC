@@ -404,7 +404,7 @@ void SetDefaultValue(VarInfo &var) {
                 if(table->ScopeName == var.type.className) {
                     //cout << "Current class name: " << table->ScopeName << endl;
                     for(auto &[name, field] : table->ids) {
-                        SetDefaultValue(field);
+                        //SetDefaultValue(field);
                         var.fields.push_back(VarInfo(field));
                         if(field.type.isArray == 1) {
                             SetArrayDefaultValue(field);

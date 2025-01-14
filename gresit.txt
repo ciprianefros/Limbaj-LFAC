@@ -1,0 +1,57 @@
+start_global
+start_clasa
+clasa A  {
+    x : intreg <- 111;
+    y : intreg <- 222;
+    intreg g(intreg z) {
+        z <- z + 3;
+        xx <- 2;
+        x <- f(3);
+    }
+};
+
+clasa B {
+    x : real;
+};
+
+sfarsit_clasa
+
+start_vars
+
+A oba;
+B obb;
+intreg x <- 60;
+intreg ix <- 10;
+intreg iy <- 900;
+intreg iz <- 30;
+bool b1 <- adevarat;
+real fx <- 6.5;
+sir s <- "string";
+caracter c <- 'x';
+intreg v[10];
+
+sfarsit_vars
+
+start_functions
+real g(intreg z);
+
+intreg f(intreg z);
+
+intreg bfunc(bool b, sir s, real f) {
+    returneaza 100;
+}
+
+sfarsit_functions
+sfarsit_global
+
+start_programel
+    bfunc(b1, i);
+    fx <- bfunc(b1, "ceva", 3);
+    fx <- b1 + fx + ix;
+    ix <- bfunc(b1, "ceva");
+    ix <- bfunc(ix, 10, "ceva");
+    Print(s + ix);
+    Print(f(ix) + g(ix));
+    TypeOf(oba.x + obb.x);
+
+sfarsit_programel
