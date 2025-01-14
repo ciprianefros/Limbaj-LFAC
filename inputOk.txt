@@ -1,0 +1,99 @@
+start_global
+start_clasa
+clasa A {
+    x : intreg <- 100;
+    y : intreg <- 200;
+    intreg g(intreg z) {
+        Print(x);
+        Print(y);
+        daca(x + 2 > y + 5 && x+3 > g(45 * 3) - 10) {
+            x <- x + y; Print(x);
+            catTimp(x > 10) {
+                intreg x;
+                x <- 3000;
+                Print(x);
+            }
+        }
+        returneaza z + y;
+    }
+
+    intreg f(intreg z) {
+        daca(x + 2 > y + 5) {
+            x <- x + 4;
+        }
+        returneaza x * z * y;
+    }
+};
+sfarsit_clasa
+start_vars
+
+A oba;
+A ob;
+intreg x <- 60;
+intreg ix <- 10;
+intreg iy <- 900;
+intreg iz <- 30;
+bool b1 <- adevarat;
+bool b2 <- fals;
+real fx <- 6.5;
+sir s <- "string";
+caracter c <- 'x';
+intreg v[10];
+
+sfarsit_vars
+
+start_functions
+intreg f(intreg z) {
+    intreg x; intreg y;
+    x <- 5; y <- 10;
+    Print(x*y*10);
+    daca(x > 2) {
+        intreg x <- 100;
+        Print(x * 6);
+        bool flag;
+        catTimp(flag == adevarat) {
+                intreg x;
+                x <- 8;
+                Print(ix * 70);
+                Print(x * 100);
+                flag <- fals;
+        }
+        y <- 1000;
+        Print(iy);
+    }
+    Print(y);
+    returneaza z * 10;
+}
+
+intreg bfunc(bool b, sir s) {
+    daca(b == adevarat) {
+        returneaza 10;
+    } altfel {
+        returneaza 100;
+    }
+}
+
+sfarsit_functions
+
+sfarsit_global
+
+start_programel
+
+    fx <- fx + 10.0 * fx - 65.0;
+    Print(fx);
+    Print(s);
+    s <- "otherstr";
+    Print(s);
+    Print(c);
+    oba.x <- 100;
+    v[9] <- 100;
+    ix <- ix + (ix + f(ix*4))*2 + oba.x + v[5] + oba.f(10)   ;
+    Print(ix);
+    Print(f(ix) + 1000 > 100 && oba.x + 2 > 100 || b1 == adevarat);
+    b1 <- b2;
+    bfunc(b1, "s");
+    TypeOf(ix + 5 > iy + 6);
+    TypeOf(ix + 5 > iy + 6 && b1 == fals || f(ix) > 5);
+
+sfarsit_programel
+

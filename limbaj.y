@@ -182,6 +182,18 @@ class_memb                :    ID ':' V_TYPE ';'
                                {
                                    exists_or_add($1, true);
                                }
+                          |    ID ':' V_TYPE ASSIGN expr ';' {
+                                    exists_or_add($1, false);
+                                    variableToAssign.varName = $1;
+                                    variableToAssign.varType = 0;
+                                    if(FindToBeModifiedVar(variableToAssign)) {
+                                        expr1 = stiva.back();
+                                        cout << modifiedVariable->name << " = " << expr1 << endl;
+                                        SetNewValue(modifiedVariable, expr1);
+                                    }
+
+                                    stiva.pop_back();
+                                }
                           ;
 /*Permite definirea oricator metode la o clasa*/
 methods_list              :    methods_list method
@@ -201,6 +213,7 @@ method
             currentTable->addFunc(currentFunction.returnType, $2, currentParams, currentClass.name);
             currentTable = new SymTable($2, currentTable);  // Creează un nou tabel de simboluri pentru clasă
             tables.push_back(currentTable);
+            //currentParams.clear();
         }
     } 
     fblock '}'
@@ -229,6 +242,9 @@ def_func  : F_TYPE ID '(' list_param ')'
                         if(!currentTable->existsFunc($2)) {
                             currentTable->addFunc(currentFunction.returnType, $2, currentParams);
                         }
+                        /*for(auto param : currentParams) {
+                            cout << param.name << " " << param.type.typeName << endl;
+                        }*/
                         currentTable = new SymTable($2, currentTable); // Crează un tabel de simboluri pentru funcția curentă
                         tables.push_back(currentTable);  // Adaugă tabelul global
                         currentFunction.name = $2; 
@@ -453,10 +469,12 @@ left_hand_side            :     ID '.' ID
 call_func                 : ID '(' call_list ')' 
                             {
                                 checkFunction($1);
+                                currentCallList.clear();
                             }
                            | ID '(' ')'
                            {
                                 checkFunction($1);
+                                currentCallList.clear();
                            }
                            | PRINT '(' bool_expr ')' {runPrint()}
                            | TYPEOF '(' bool_expr ')' {runTypeOf()}
@@ -466,6 +484,7 @@ call_method               : ID '.' ID '(' call_list ')'
                             {
                                 setCurrentClassName($1);
                                 checkMethod($3);
+                                currentCallList.clear();
                             }
                           | ID '.' ID '(' ')'
                             {
@@ -477,12 +496,12 @@ call_method               : ID '.' ID '(' call_list ')'
 /*Parametrii de apel al unei functii*/
 call_list                 :     call_list ',' expr
                           { 
-                                currentParams.push_back(currentVariable);
+                                currentCallList.push_back(currentVariable);
                                 stiva.pop_back();
                           }
                           |     expr
                           {                                
-                                currentParams.push_back(currentVariable);
+                                currentCallList.push_back(currentVariable);
                                 stiva.pop_back();
                           }
                           ;

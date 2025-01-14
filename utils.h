@@ -18,6 +18,7 @@ VarSign variableToAssign;
 VarSign variableFromExpr;
 ClassInfo currentClass;
 vector<VarInfo> currentParams;
+vector<VarInfo> currentCallList;
 vector<short> currentArraySizes;
 SymTable* current_p;
 
@@ -116,9 +117,9 @@ bool checkParams(const string& name, SymTable functionScope)
 
     // Debug: Afișăm numărul de parametri așteptat și numărul de parametri actuali
     //std::cout << "Checking parameters for function: " << name << std::endl;
-    //std::cout << "Expected params: " << functionScope.funcids[name].params.size() << ", Given params: " << currentParams.size() << std::endl;
+    //std::cout << "Expected params: " << functionScope.funcids[name].params.size() << ", Given params: " << currentCallList.size() << std::endl;
 
-    if(functionScope.funcids[name].params.size() != currentParams.size())
+    if(functionScope.funcids[name].params.size() != currentCallList.size())
     {
         yyerror("Not having the same number of params.");
         currentParams.clear();
@@ -130,7 +131,7 @@ bool checkParams(const string& name, SymTable functionScope)
     {
         //pentru debug
         //std::cout << "Expected param type: " << param.type.typeName << ", Given param type: " << currentParams[contor].type.typeName << std::endl;
-        if(param.type.typeName != currentParams[contor].type.typeName)
+        if(param.type.typeName != currentCallList[contor].type.typeName)
         {
             //std::cout << "Type mismatch at parameter " << contor + 1 << std::endl;
             return false;
@@ -170,7 +171,7 @@ bool checkFunction(const string& name)
             {
                 //debug
                 //std::cout << "Function and parameters match." << std::endl;
-                currentParams.clear();
+                //currentParams.clear();
                 return true;
             }
             else
@@ -247,6 +248,7 @@ bool setObjectMemberReturnType(const string& objectName, const string& memberNam
 }
 
 bool setCurrentVariableType(const string& varName) {
+
     SymTable* temp = currentTable;
     while(temp != nullptr) {
         if (temp->existsId(varName)) {
@@ -451,6 +453,15 @@ bool FindToBeModifiedVar(VarSign variable) {
         return false;
     }
     if(varExistsInParams) {
+        //cout << "Am gasit variabila in parametri" << endl;
+        //cout << currentParams.size() << endl;
+        for(auto &param : currentParams) {
+            if(variable.varName == param.name) {
+                //cout << "Am gasit variabila " << param.name << endl;
+                modifiedVariable = &param;
+                return true;
+            }
+        }
         return false;
     }
     if(variable.varType == 0) {

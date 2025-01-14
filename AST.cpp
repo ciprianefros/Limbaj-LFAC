@@ -87,6 +87,7 @@ ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
     this->left = left;
     this->right = right;
     this->operation = operation;
+    //cout << left->type << " " << operation << " " << right->type << endl;
     if(left->type != right->type ){
         yyerror("Operanzii nu au acelasi tip!");
         errorCount++;

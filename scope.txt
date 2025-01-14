@@ -1,57 +1,95 @@
 Scope: global
 Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 0;
+		intreg y = 0;
+	}
+  A oba {
 		intreg x = 100;
 		intreg y = 0;
 	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
 Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
 Classes:
-  Class MyType
+  Class A
 
-Scope: MyType
+Scope: A
 Variabile:
   intreg x = 0
   intreg y = 0
 Functions:
-  intreg f (intreg y,)
-  intreg init ()
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
 Classes:
 
 Scope: f
 Variabile:
-  float z {
-	}
 Functions:
 Classes:
 
-Scope: init
+Scope: if1
 Variabile:
 Functions:
 Classes:
 
 Scope: f
 Variabile:
-  intreg ix = 0
+  intreg x = 5
+  intreg y = 1000
 Functions:
 Classes:
 
-Scope: ff
+Scope: if2
+Variabile:
+  bool flag = false
+  intreg x = 100
+Functions:
+Classes:
+
+Scope: while1_if2
+Variabile:
+  intreg x = 8
+Functions:
+Classes:
+
+Scope: bfunc
 Variabile:
 Functions:
 Classes:
 
-Scope: check
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: else0_if3
 Variabile:
 Functions:
 Classes:
@@ -63,58 +101,96 @@ Classes:
 
 Scope: global
 Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 0;
+		intreg y = 0;
+	}
+  A oba {
 		intreg x = 100;
 		intreg y = 0;
 	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
 Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
 Classes:
-  Class MyType
+  Class A
 
-Scope: MyType
+Scope: A
 Variabile:
   intreg x = 0
   intreg y = 0
 Functions:
-  intreg f (intreg y,)
-  intreg init ()
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
 Classes:
 
 Scope: f
 Variabile:
-  float z {
-	}
 Functions:
 Classes:
 
-Scope: init
+Scope: if1
 Variabile:
 Functions:
 Classes:
 
 Scope: f
 Variabile:
-  intreg ix = 0
+  intreg x = 5
+  intreg y = 1000
 Functions:
 Classes:
 
-Scope: ff
+Scope: if2
+Variabile:
+  bool flag = false
+  intreg x = 100
+Functions:
+Classes:
+
+Scope: while1_if2
+Variabile:
+  intreg x = 8
+Functions:
+Classes:
+
+Scope: bfunc
 Variabile:
 Functions:
 Classes:
 
-Scope: check
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: else0_if3
 Variabile:
 Functions:
 Classes:
@@ -126,1202 +202,96 @@ Classes:
 
 Scope: global
 Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 0;
+		intreg y = 0;
+	}
+  A oba {
 		intreg x = 100;
 		intreg y = 0;
 	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
 Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
 Classes:
-  Class MyType
+  Class A
 
-Scope: MyType
+Scope: A
 Variabile:
   intreg x = 0
   intreg y = 0
 Functions:
-  intreg f (intreg y,)
-  intreg init ()
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
 Classes:
 
 Scope: f
 Variabile:
-  float z {
-	}
 Functions:
 Classes:
 
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
+Scope: if1
 Variabile:
 Functions:
 Classes:
 
 Scope: f
 Variabile:
-  intreg ix = 0
+  intreg x = 5
+  intreg y = 1000
 Functions:
 Classes:
 
-Scope: ff
+Scope: if2
 Variabile:
+  bool flag = false
+  intreg x = 100
 Functions:
 Classes:
 
-Scope: check
+Scope: while1_if2
 Variabile:
+  intreg x = 8
 Functions:
 Classes:
 
-Scope: main
+Scope: bfunc
 Variabile:
 Functions:
 Classes:
 
-Scope: global
+Scope: if3
 Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
 Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
 Classes:
-  Class MyType
 
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = true
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 2
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = 0
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  bool mb = false
-  intreg mix = 10.400000
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = 0
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  bool mb = false
-  intreg mix = 10.400000
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = 0
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  bool mb = false
-  intreg mix = 10.400000
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = 0
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  bool mb = false
-  intreg mix = 10.400000
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = 0
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-  bool mb = false
-  intreg mix = 10.400000
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
-Variabile:
-Functions:
-Classes:
-
-Scope: main
-Variabile:
-Functions:
-Classes:
-
-Scope: global
-Variabile:
-  bool gb = false
-  caracter gc = c
-  real gf = 10.400000
-  intreg gix1 = 102
-  intreg gix2 = 102
-  sir gs = "A string"
-  intreg gtab[100] = {0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-  intreg ix = 0
-  MyType mObj {
-		intreg x = 100;
-		intreg y = 0;
-	}
-Functions:
-  bool check ()
-  intreg f (intreg z,real f,sir s,)
-  real ff (intreg x,)
-Classes:
-  Class MyType
-
-Scope: MyType
-Variabile:
-  intreg x = 0
-  intreg y = 0
-Functions:
-  intreg f (intreg y,)
-  intreg init ()
-Classes:
-
-Scope: f
-Variabile:
-  float z {
-	}
-Functions:
-Classes:
-
-Scope: init
-Variabile:
-Functions:
-Classes:
-
-Scope: f
-Variabile:
-  intreg ix = 0
-Functions:
-Classes:
-
-Scope: ff
-Variabile:
-Functions:
-Classes:
-
-Scope: check
+Scope: else0_if3
 Variabile:
 Functions:
 Classes:
