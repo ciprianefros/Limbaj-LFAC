@@ -14,17 +14,23 @@ Value::Value(bool x) : boolValue(x), type(3) {}
 
 Value::Value(char* x) : stringValue(x), type(4) {}
 
-string Value::toString() {
+string Value::toString() 
+{
     if (type == 0) return to_string(intValue);
     if (type == 1) return to_string(floatValue);
-    if (type == 2) {
+    if (type == 2) 
+    {
         string str(1, charValue);
         return str;
     };
-    if (type == 3) {
-        if(boolValue == true) {
+    if (type == 3) 
+    {
+        if(boolValue == true) 
+        {
             return "true";
-        } else {
+        } 
+        else 
+        {
             return "false";
         }
     }
@@ -32,45 +38,57 @@ string Value::toString() {
     return "Custom Type";
 }
 
-int Value::getIntValue() {
-    if(type == 0) {
+int Value::getIntValue() 
+{
+    if(type == 0) 
+    {
         return intValue;
     }
     return 0;
 }
 
-float Value::getFloatValue() {
-    if(type == 1) {
+float Value::getFloatValue()
+{
+    if(type == 1) 
+    {
         return floatValue;
     }
     return 0.0;
 }
 
-char Value::getCharValue() {
-    if(type == 2) {
+char Value::getCharValue() 
+{
+    if(type == 2) 
+    {
         return charValue;
     }
     return '\0';
 }
 
-bool Value::getBoolValue() {
-    if(type == 3) {
+bool Value::getBoolValue() 
+{
+    if(type == 3) 
+    {
         return boolValue;
     }
     return NULL;
 }
 
-char* Value::getStringValue() {
-    if(type == 4) {
+char* Value::getStringValue() 
+{
+    if(type == 4) 
+    {
         return stringValue;
     }
     return NULL;
 }
 
-int Value::getType() const {
+int Value::getType() const 
+{
     return type;
 }
-void Value::setType(short type) {
+void Value::setType(short type) 
+{
     this->type = type;
 }
 
@@ -121,7 +139,8 @@ FuncInfo::FuncInfo(short type, const string& name, vector<VarInfo> params, const
 //Definitia clasei ClassInfo
 ClassInfo::ClassInfo(const string& name) : name(name) {}
 
-ClassInfo::~ClassInfo() {
+ClassInfo::~ClassInfo() 
+{
     // Curățare sau alte operațiuni dacă este necesar
 }
 
@@ -131,55 +150,75 @@ SymTable::SymTable(const string& name, SymTable* parent)
 
 
 
-bool SymTable::existsId(const string& name) {
-    if(ids.find(name) != ids.end()) {
+bool SymTable::existsId(const string& name) 
+{
+    if(ids.find(name) != ids.end()) 
+    {
         return true;
     }
     return false;
 }
-bool SymTable::existsFunc(const string& name) {
-    if(funcids.find(name) != funcids.end()) {
-        return true;
-    }
-    return prev ? prev->existsId(name) : false;
-}
-bool SymTable::existsClass(const string& name) {
-    if(classids.find(name) != classids.end()) {
+
+bool SymTable::existsFunc(const string& name) 
+{
+    if(funcids.find(name) != funcids.end()) 
+    {
         return true;
     }
     return prev ? prev->existsId(name) : false;
 }
 
-bool SymTable::addVar(short type, const string& name) {
-    if(ids.find(name) != ids.end()) {
+bool SymTable::existsClass(const string& name) 
+{
+    if(classids.find(name) != classids.end()) 
+    {
+        return true;
+    }
+    return prev ? prev->existsId(name) : false;
+}
+
+bool SymTable::addVar(short type, const string& name) 
+{
+    if(ids.find(name) != ids.end()) 
+    {
         return false;
     }
     ids[name] = VarInfo(type, name);
     return true;
 }
 
-bool SymTable::addVar(short type, const string& name, Value valoare) {
-    if(ids.find(name) != ids.end()) {
+bool SymTable::addVar(short type, const string& name, Value valoare) 
+{
+    if(ids.find(name) != ids.end()) 
+    {
         return false;
     }
-    if(type == valoare.getType()) {
+    if(type == valoare.getType()) 
+    {
         ids[name] = VarInfo(type, name, valoare);
         return true;
-    } else {
+    } 
+    else 
+    {
         printf("ERROR LINE:%d\tTipul variabilei nu coincide cu tipul de date asignat!\n", yylineno);
         return false;
     }
     
 }
 
-bool SymTable::addVar(const VarInfo& v) {
-    if(ids.find(v.name) != ids.end()) {
+bool SymTable::addVar(const VarInfo& v) 
+{
+    if(ids.find(v.name) != ids.end()) 
+    {
         return false;
     }
-    if(v.type.typeName == v.value.getType()) {
+    if(v.type.typeName == v.value.getType()) 
+    {
         ids[v.name] = VarInfo(v);
         return true;
-    } else {
+    } 
+    else 
+    {
         //printf("TypeName = %d, Value.getType() = %d", v.type.typeName, v.value.getType());
         printf("ERROR LINE:%d\tTipul variabilei nu coincide cu tipul de date asignat!\n", yylineno);
         return false;
@@ -187,32 +226,40 @@ bool SymTable::addVar(const VarInfo& v) {
     
 }
 
-bool SymTable::addFunc(short type, const string& name, vector<VarInfo> params) {
-    if(funcids.find(name) != funcids.end()) {
+bool SymTable::addFunc(short type, const string& name, vector<VarInfo> params) 
+{
+    if(funcids.find(name) != funcids.end()) 
+    {
         return false;
     }
     funcids[name] = FuncInfo(type, name, params);
     return true;
 }
 
-bool SymTable::addFunc(short type, const string& name, vector<VarInfo> params, const string& className) {
-    if(funcids.find(name) != funcids.end()) {
+bool SymTable::addFunc(short type, const string& name, vector<VarInfo> params, const string& className) 
+{
+    if(funcids.find(name) != funcids.end()) 
+    {
         return false;
     }
     funcids[name] = FuncInfo(type, name, params, className);
     return true;
 }
 
-bool SymTable::addClass(const string& name) {
-    if(classids.find(name) != classids.end()) {
+bool SymTable::addClass(const string& name) 
+{
+    if(classids.find(name) != classids.end()) 
+    {
         return false;
     }
     classids[name] = ClassInfo(name);
     return true;
 }
 
-void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t level = 0) {
-    if (level >= var.type.arraySizes.size()) {
+void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t level = 0)
+ {
+    if (level >= var.type.arraySizes.size()) 
+    {
         outFile << var.value.toString(); // Afișăm valoarea elementului final
         return;
     }
@@ -225,20 +272,24 @@ void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t lev
     outFile << "}";
 }
 
-void SymTable::printTable(const string& filename) {
+void SymTable::printTable(const string& filename) 
+{
     std::ofstream outFile(filename, ios::app); // Deschide fișierul în modul append
 
-    if (!outFile) {
+    if (!outFile) 
+    {
         std::cerr << "Error: Unable to open file " << filename << " for writing." << std::endl;
         return;
     }
 
     outFile << "Scope: " << ScopeName << "\n";
     outFile << "Variabile:\n";
-    for (auto& [name, var] : ids) {
+    for (auto& [name, var] : ids) 
+    {
         string type;
 
-        switch(var.type.typeName) {
+        switch(var.type.typeName) 
+        {
             case 0 :    {type = "intreg"; break;}
             case 1 :    {type = "real"; break;}
             case 2 :    {type = "caracter"; break;}
@@ -248,12 +299,16 @@ void SymTable::printTable(const string& filename) {
             default :   {type = "customType";}
         }
 
-        if (!var.type.isArray) {
-            if(var.type.typeName == 5) {
+        if (!var.type.isArray) 
+        {
+            if(var.type.typeName == 5) 
+            {
                 outFile << "  " << type << " " << var.name << " {" << endl;
-                for(auto field : var.fields) {
+                for(auto field : var.fields) 
+                {
                     string membType;
-                    switch(field.type.typeName) {
+                    switch(field.type.typeName) 
+                    {
                         case 0 :    {membType = "intreg"; break;}
                         case 1 :    {membType = "real"; break;}
                         case 2 :    {membType = "caracter"; break;}
@@ -262,11 +317,15 @@ void SymTable::printTable(const string& filename) {
                         case 5 :    {membType = var.type.className; break;}
                         default :   {membType = "customType";}
                     }
-                    if(!field.type.isArray) {
+                    if(!field.type.isArray) 
+                    {
                         outFile << "\t\t" << membType << " " << field.name << " = " << field.value.toString() << ";\n";
-                    } else {
+                    } 
+                    else 
+                    {
                         outFile << "\t\t" << membType << " " << field.name << "[";
-                        for (size_t i = 0; i < field.type.arraySizes.size(); i++) {
+                        for (size_t i = 0; i < field.type.arraySizes.size(); i++) 
+                        {
                             if (i > 0) outFile << ",";
                             outFile << field.type.arraySizes[i];
                         }
@@ -276,12 +335,17 @@ void SymTable::printTable(const string& filename) {
                     }
                 }
                 outFile << "\t}\n";
-            } else {
+            } 
+            else 
+            {
                 outFile << "  " << type << " " << var.name << " = " << var.value.toString() << "\n";
             }
-        } else {
+        } 
+        else 
+        {
             outFile << "  " << type << " " << var.name << "[";
-            for (size_t i = 0; i < var.type.arraySizes.size(); i++) {
+            for (size_t i = 0; i < var.type.arraySizes.size(); i++) 
+            {
                 if (i > 0) outFile << ",";
                 outFile << var.type.arraySizes[i];
             }
@@ -292,9 +356,11 @@ void SymTable::printTable(const string& filename) {
     }
 
     outFile << "Functions:\n";
-    for (const auto& [name, func] : funcids) {
+    for (const auto& [name, func] : funcids)
+    {
         string type1;
-        switch(func.returnType) {
+        switch(func.returnType) 
+        {
             case 0 : {type1 = "intreg"; break;}
             case 1 : {type1 = "real"; break;}
             case 2 : {type1 = "caracter"; break;}
@@ -304,9 +370,11 @@ void SymTable::printTable(const string& filename) {
         }
         outFile << "  " << type1 << " " << func.name << " (";
 
-        for(auto param : func.params) {
+        for(auto param : func.params) 
+        {
             string type2;
-            switch(param.type.typeName) {
+            switch(param.type.typeName) 
+            {
                 case 0 : {type2 = "intreg"; break;}
                 case 1 : {type2 = "real"; break;}
                 case 2 : {type2 = "caracter"; break;}
@@ -321,7 +389,8 @@ void SymTable::printTable(const string& filename) {
     }
 
     outFile << "Classes:\n";
-    for (const auto& [name, cls] : classids) {
+    for (const auto& [name, cls] : classids) 
+    {
         outFile << "  Class " << cls.name << "\n";
     }
 
@@ -330,12 +399,15 @@ void SymTable::printTable(const string& filename) {
 }
 
 
-void SymTable::setValue(const string& name, const Value& value) {
-    if (ids.find(name) != ids.end()) {
+void SymTable::setValue(const string& name, const Value& value) 
+{
+    if (ids.find(name) != ids.end()) 
+    {
         ids[name].value = value;
     } 
 }
 
-SymTable::~SymTable() {
+SymTable::~SymTable() 
+{
     // Curățarea memoriei poate fi realizată aici dacă este necesar
 }

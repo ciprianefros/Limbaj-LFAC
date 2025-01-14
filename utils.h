@@ -133,7 +133,7 @@ bool checkParams(const string& name, SymTable functionScope)
 
     if(functionScope.funcids[name].params.size() != currentCallList.size())
     {
-        yyerror("Not having the same number of params.");
+        yyerror("Nu avem același număr de parametri! ");
         currentParams.clear();
         return false;
     }
@@ -189,7 +189,7 @@ bool checkFunction(const string& name)
             else
             {
                 errorCount++;
-                yyerror("Function's params are not the same type. ");
+                yyerror("Parametrii funcției nu au același tip! ");
                 currentParams.clear();
                 return false;
             }
@@ -198,7 +198,7 @@ bool checkFunction(const string& name)
 
     // Dacă am ajuns aici, funcția nu a fost găsită în niciun tabel de simboluri
     errorCount++;
-    yyerror("Function was not declared. ");
+    yyerror("Funcția nu a fost declarată! ");
 
     currentParams.clear();
     return false;
@@ -222,7 +222,7 @@ bool checkMethod(const string& methodName)
                 else 
                 {
                     errorCount++;
-                    yyerror("Function's params are not the same type. ");
+                    yyerror("Parametrii funcției nu au același tip! ");
                     currentParams.clear();
                     return false;
                 }
@@ -230,7 +230,7 @@ bool checkMethod(const string& methodName)
             else 
             {
                 errorCount++;
-                yyerror(("Method not declared for class " + currentClassName + ". ").c_str());
+                yyerror(("Metoda nu a fost declarată pentru clasa " + currentClassName + "! ").c_str());
                 return false;
             }
         }
@@ -239,7 +239,7 @@ bool checkMethod(const string& methodName)
     currentParams.clear();
     errorCount++;
     //std::cout << "" << std::endl;
-    yyerror(("Class " + currentClassName + " does not exist. ").c_str());
+    yyerror(("Clasa " + currentClassName + " nici măcar nu există! ").c_str());
     return false;
 }
 
@@ -325,7 +325,7 @@ bool checkObject(const string& objectName, const string& memberName)
     if(!setCurrentClassName(objectName)) 
     {
         errorCount++;
-        yyerror(("Object " + objectName + " was not previously declared." + std::to_string(yylineno)).c_str());
+        yyerror(("Instanța " + objectName + " nu a fost declarată înainte! " + std::to_string(yylineno)).c_str());
         return false;
     }
     bool memberFound = false;
@@ -346,7 +346,7 @@ bool checkObject(const string& objectName, const string& memberName)
     if(!memberFound) 
     {
         errorCount++;
-        yyerror(("Obiectul " + objectName + " nu are membrul " + memberName + ". Eroare " + std::to_string(yylineno)).c_str());
+        yyerror(("Obiectul " + objectName + " nu are membrul " + memberName + "! " + std::to_string(yylineno)).c_str());
         return false;
     }
     return true;
@@ -358,7 +358,7 @@ void SetNewValue(VarInfo *var, ASTNode* value)
 
     if(var->type.typeName != type) 
     {
-        yyerror(("Variabila " + var->name + " - partea dreaptă și cea stângă nu au același tip: " + getReturnType(var->type.typeName) + " - " + getReturnType(type)).c_str());
+        yyerror(("Variabila " + var->name + " - partea dreaptă și cea stângă nu au același tip: " + getReturnType(var->type.typeName) + " - " + getReturnType(type) + "! ").c_str());
         errorCount++;
     }
     
@@ -380,12 +380,12 @@ void SetNewValue(VarInfo *var, ASTNode* value)
             var->value = Value(value->GetStringValue());
             break;
         case CUSTOM_TYPE:
-            yyerror("Nu putem asigna o expresie unei clase!");
+            yyerror("Nu putem asigna o expresie unei clase! ");
             errorCount++;
             break;
         default:
             if(type >= 6 || type < 0) {
-                yyerror("Tip de date necunoscut!");
+                yyerror("Tip de date necunoscut! ");
                 errorCount++;
                 return;
             }
@@ -503,7 +503,7 @@ bool FindToBeModifiedVar(VarSign variable)
 
     if(temp == nullptr && !varExistsInParams) 
     {
-        yyerror(("Variabila " + variable.varName + " nu a fost declarata " ).c_str());
+        yyerror(("Variabila " + variable.varName + " nu a fost declarată! " ).c_str());
         errorCount++;
         return false;
     }
@@ -536,14 +536,14 @@ bool FindToBeModifiedVar(VarSign variable)
     {
         if(!temp->ids[variable.varName].type.isArray)
          {
-            yyerror(("Variabla nu este de tip array! \t Eroare la linia: " + std::to_string(yylineno) + "\n").c_str());
+            yyerror(("Variabla nu este de tip array! \t " + std::to_string(yylineno) + "\n").c_str());
             errorCount++;
             return false;
         }
 
         if(variable.varIndex[0] >= temp->ids[variable.varName].type.arraySizes[0] || variable.varIndex[0] < 0) 
         {
-            yyerror(("Indexul este în afara limitelor! \t Eroare la linia: " + std::to_string(yylineno) + "\n").c_str());
+            yyerror(("Indexul este în afara limitelor! \t " + std::to_string(yylineno) + "\n").c_str());
             errorCount++;
             return false;
         }
@@ -566,7 +566,7 @@ bool FindToBeModifiedVar(VarSign variable)
                     // Verificăm indexul și dimensiunea array-ului
                     if(variable.varIndex[0] >= field->type.arraySizes[0] || variable.varIndex[0] < 0) 
                     {
-                        yyerror(("Index out of bounds pentru membrul array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+                        yyerror(("Index în afara limitelor pentru membrul array! \t " + std::to_string(yylineno) + "\n").c_str());
                         errorCount++;
                         return false;
                     }
@@ -585,7 +585,7 @@ bool FindToBeModifiedVar(VarSign variable)
         }
     }
 
-    yyerror(("Variabila nedefinită in interiorul clasei\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+    yyerror(("Variabila nedefinită in interiorul clasei!\t " + std::to_string(yylineno) + "\n").c_str());
     errorCount++;
     return false;
 
@@ -595,7 +595,7 @@ void UpdateArray(VarInfo *var)
 {
     if(ArrayInitialization.size() > var->type.arraySizes[0]) 
     {
-        yyerror("Prea multe elemente in lista de initializare!");
+        yyerror("Prea multe elemente in lista de inițializare! ");
         errorCount++;
         SetArrayDefaultValue(*var);
         ArrayInitialization.clear();
