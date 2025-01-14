@@ -171,6 +171,7 @@ bool ASTNode::GetBoolValue()
     ReduceToOneNode();
     return valoare.true_or_false;
 }
+
 void ASTNode::ReduceToOneNode()
 {
     if (left != nullptr) 
