@@ -600,11 +600,13 @@ arithm_expr               :     expr '+' expr  {Operation_on_stack(ADD);}
                           
 
 %%
-void yyerror(const char * s){
-     cout << "error: " << s << " at line: " << yylineno << endl;
+void yyerror(const char * s)
+{
+     cout << "Eroare: " << s << " la linia: " << yylineno << endl;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv) 
+{
     #ifdef YYDEBUG
     yydebug = 1;
     #endif
@@ -614,18 +616,22 @@ int main(int argc, char** argv) {
     yyparse();
 
     //std::cout << "Variables in global scope:" << std::endl;
-    for(auto table : tables) {
+    for(auto table : tables) 
+    {
         table->printTable("scope.txt");
     }
     
     // Eliberare memorie pentru toate tabelele
-    for (SymTable* table : tables) {
+    for (SymTable* table : tables) 
+    {
         delete table;
     }
 
-    if (errorCount > 0) {
+    if (errorCount > 0) 
+    {
         std::cout << "Aveți " << errorCount << " erori." << std::endl;
-    } else {
+    } else 
+    {
         std::cout << printToScreen << endl;
         std::cout << "Progrămelul este corect! Bravo!!!" << std::endl;
     }

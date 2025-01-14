@@ -1805,3 +1805,306 @@ Variabile:
 Functions:
 Classes:
 
+Scope: global
+Variabile:
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 304;
+		intreg y = 200;
+	}
+  A oba {
+		intreg x = 100;
+		intreg y = 200;
+	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
+Functions:
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
+Classes:
+  Class A
+
+Scope: A
+Variabile:
+  intreg x = 304
+  intreg y = 200
+Functions:
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+Functions:
+Classes:
+
+Scope: if1
+Variabile:
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+  intreg x = 5
+  intreg y = 1000
+Functions:
+Classes:
+
+Scope: if2
+Variabile:
+  bool flag = false
+  intreg x = 100
+Functions:
+Classes:
+
+Scope: while1_if2
+Variabile:
+  intreg x = 8
+Functions:
+Classes:
+
+Scope: bfunc
+Variabile:
+Functions:
+Classes:
+
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: else0_if3
+Variabile:
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 304;
+		intreg y = 200;
+	}
+  A oba {
+		intreg x = 100;
+		intreg y = 200;
+	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
+Functions:
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
+Classes:
+  Class A
+
+Scope: A
+Variabile:
+  intreg x = 304
+  intreg y = 200
+Functions:
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+Functions:
+Classes:
+
+Scope: if1
+Variabile:
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+  intreg x = 5
+  intreg y = 1000
+Functions:
+Classes:
+
+Scope: if2
+Variabile:
+  bool flag = false
+  intreg x = 100
+Functions:
+Classes:
+
+Scope: while1_if2
+Variabile:
+  intreg x = 8
+Functions:
+Classes:
+
+Scope: bfunc
+Variabile:
+Functions:
+Classes:
+
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: else0_if3
+Variabile:
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+Functions:
+Classes:
+
+Scope: global
+Variabile:
+  bool b1 = false
+  bool b2 = false
+  caracter c = x
+  real fx = 6.500000
+  intreg ix = 130
+  intreg iy = 900
+  intreg iz = 30
+  A ob {
+		intreg x = 304;
+		intreg y = 200;
+	}
+  A oba {
+		intreg x = 100;
+		intreg y = 200;
+	}
+  sir s = "otherstr"
+  intreg v[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 100}
+  intreg x = 60
+Functions:
+  intreg bfunc (bool b,sir s,)
+  intreg f (intreg z,)
+Classes:
+  Class A
+
+Scope: A
+Variabile:
+  intreg x = 304
+  intreg y = 200
+Functions:
+  intreg f (intreg z,)
+  intreg g (intreg z,)
+Classes:
+
+Scope: g
+Variabile:
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+Functions:
+Classes:
+
+Scope: while0_if0
+Variabile:
+  intreg x = 3000
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+Functions:
+Classes:
+
+Scope: if1
+Variabile:
+Functions:
+Classes:
+
+Scope: f
+Variabile:
+  intreg x = 5
+  intreg y = 1000
+Functions:
+Classes:
+
+Scope: if2
+Variabile:
+  bool flag = false
+  intreg x = 100
+Functions:
+Classes:
+
+Scope: while1_if2
+Variabile:
+  intreg x = 8
+Functions:
+Classes:
+
+Scope: bfunc
+Variabile:
+Functions:
+Classes:
+
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: else0_if3
+Variabile:
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+Functions:
+Classes:
+

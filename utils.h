@@ -40,11 +40,15 @@ extern int errorCount;
 
 void SetDefaultValue(VarInfo &var); 
 
-void addScopeName(const string& scopeType) {
+void addScopeName(const string& scopeType) 
+{
     string ScopeName = scopeType;
-    if (!scopeStack.empty()) {
+    if (!scopeStack.empty()) 
+    {
         ScopeName += to_string(scopeCounters[scopeType]++) + "_" + scopeStack.top();
-    } else {
+    } 
+    else 
+    {
         ScopeName += to_string(scopeCounters[scopeType]++);
     }
     scopeStack.push(ScopeName);
@@ -52,12 +56,16 @@ void addScopeName(const string& scopeType) {
     tables.push_back(currentTable);
 }
 
-bool existsParam(const string& name) {
-    if(currentParams.size() == 0) {
+bool existsParam(const string& name) 
+{
+    if(currentParams.size() == 0)
+    {
         return false;
     }
-    for(auto param : currentParams) {
-        if(param.name == name) {
+    for(auto param : currentParams) 
+    {
+        if(param.name == name) 
+        {
             return true;
         }
     }
@@ -200,19 +208,27 @@ bool checkMethod(const string& methodName)
 {
     int i;
 
-    for(int i = 0; i < tables.size();i++) {
-        if(tables[i]->ScopeName == currentClassName) {
-            if(tables[i]->existsFunc(methodName)) {
-                if(checkParams(methodName, *tables[i])) {
+    for(int i = 0; i < tables.size();i++) 
+    {
+        if(tables[i]->ScopeName == currentClassName) 
+        {
+            if(tables[i]->existsFunc(methodName)) 
+            {
+                if(checkParams(methodName, *tables[i])) 
+                {
                     currentParams.clear();
                     return true;
-                } else {
+                } 
+                else 
+                {
                     errorCount++;
                     yyerror("Function's params are not the same type. ");
                     currentParams.clear();
                     return false;
                 }
-            } else {
+            } 
+            else 
+            {
                 errorCount++;
                 yyerror(("Method not declared for class " + currentClassName + ". ").c_str());
                 return false;
@@ -227,10 +243,13 @@ bool checkMethod(const string& methodName)
     return false;
 }
 
-bool setCurrentClassName(const string& objectName) {
+bool setCurrentClassName(const string& objectName) 
+{
     int i;
-    for(i = 0; i < tables.size(); i++) {
-        if(tables[i]->existsId(objectName)) {
+    for(i = 0; i < tables.size(); i++) 
+    {
+        if(tables[i]->existsId(objectName)) 
+        {
             currentClassName = tables[i]->ids[objectName].type.className;
             //std::cout << "Set the currentClassName to " << tables[i]->ids[objectName].type.className;
             return true;
@@ -240,10 +259,13 @@ bool setCurrentClassName(const string& objectName) {
     return false;
 }
 
-bool setObjectMemberReturnType(const string& objectName, const string& memberName) {
+bool setObjectMemberReturnType(const string& objectName, const string& memberName) 
+{
     setCurrentClassName(objectName);
-    for(int i = 0; i < tables.size(); i++) {
-        if(tables[i]->ScopeName == currentClassName) {
+    for(int i = 0; i < tables.size(); i++) 
+    {
+        if(tables[i]->ScopeName == currentClassName) 
+        {
             objectMemberReturnType = tables[i]->ids[memberName].type.typeName;
             return true;
         }
@@ -251,11 +273,14 @@ bool setObjectMemberReturnType(const string& objectName, const string& memberNam
     return false;
 }
 
-bool setCurrentVariableType(const string& varName) {
+bool setCurrentVariableType(const string& varName) 
+{
 
     SymTable* temp = currentTable;
-    while(temp != nullptr) {
-        if (temp->existsId(varName)) {
+    while(temp != nullptr) 
+    {
+        if (temp->existsId(varName)) 
+        {
             currentVariable.type.typeName = temp->ids[varName].type.typeName;
             return true;
         } 
@@ -295,26 +320,33 @@ string getReturnType(int returnType)
      return "";     
 }
 
-bool checkObject(const string& objectName, const string& memberName) {
-    if(!setCurrentClassName(objectName)) {
+bool checkObject(const string& objectName, const string& memberName) 
+{
+    if(!setCurrentClassName(objectName)) 
+    {
         errorCount++;
         yyerror(("Object " + objectName + " was not previously declared." + std::to_string(yylineno)).c_str());
         return false;
     }
     bool memberFound = false;
-    for(int i = 0; i < tables.size(); i++) {
-        if(tables[i]->ScopeName == currentClassName) {
-            for(const auto& [name, var] : tables[i]->ids) {
-                if(name == memberName) {
+    for(int i = 0; i < tables.size(); i++) 
+    {
+        if(tables[i]->ScopeName == currentClassName) 
+        {
+            for(const auto& [name, var] : tables[i]->ids) 
+            {
+                if(name == memberName) 
+                {
                     memberFound = true;
                     break;
                 }
             }
         }
     }
-    if(!memberFound) {
+    if(!memberFound) 
+    {
         errorCount++;
-        yyerror(("Object " + objectName + " does not have member" + memberName + ". Error " + std::to_string(yylineno)).c_str());
+        yyerror(("Obiectul " + objectName + " nu are membrul " + memberName + ". Eroare " + std::to_string(yylineno)).c_str());
         return false;
     }
     return true;
@@ -367,15 +399,19 @@ void SetArrayDefaultValue(VarInfo& var, size_t level = 0)
     if (level >= var.type.arraySizes.size()) return;
 
     int size = var.type.arraySizes[level];
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) 
+    {
         VarInfo element;
         element.type.typeName = var.type.typeName;
         element.type.isArray = (level + 1 < var.type.arraySizes.size());
         element.type.arraySizes = vector<short>(var.type.arraySizes.begin() + level, var.type.arraySizes.end());
 
-        if (element.type.isArray) {
+        if (element.type.isArray) 
+        {
             SetArrayDefaultValue(element, level + 1);
-        } else {
+        } 
+        else 
+        {
             SetDefaultValue(element);
         }
 
@@ -410,7 +446,8 @@ void SetDefaultValue(VarInfo &var)
             var.value = Value(false);
             break;
         case CUSTOM_TYPE:
-            for(auto &table : tables) {
+            for(auto &table : tables) 
+            {
                 if(table->ScopeName == var.type.className) 
                 {
                     //cout << "Current class name: " << table->ScopeName << endl;
@@ -451,25 +488,34 @@ void Operation_on_stack(B_operation op)
      stiva.push_back(new ASTNode(op, expr1, expr2));
 }
 
-bool FindToBeModifiedVar(VarSign variable) {
+bool FindToBeModifiedVar(VarSign variable) 
+{
     bool varExistsInParams = existsParam(variable.varName);
     SymTable* temp = currentTable;
-    while(temp != nullptr) {
-        if (temp->existsId(variable.varName)) {
+    while(temp != nullptr) 
+    {
+        if (temp->existsId(variable.varName)) 
+        {
             break;
         } 
         temp = temp->prev;
     }
-    if(temp == nullptr && !varExistsInParams) {
+
+    if(temp == nullptr && !varExistsInParams) 
+    {
         yyerror(("Variabila " + variable.varName + " nu a fost declarata " ).c_str());
         errorCount++;
         return false;
     }
-    if(varExistsInParams) {
+
+    if(varExistsInParams) 
+    {
         //cout << "Am gasit variabila in parametri" << endl;
         //cout << currentParams.size() << endl;
-        for(auto &param : currentParams) {
-            if(variable.varName == param.name) {
+        for(auto &param : currentParams) 
+        {
+            if(variable.varName == param.name) 
+            {
                 //cout << "Am gasit variabila " << param.name << endl;
                 modifiedVariable = &param;
                 return true;
@@ -477,20 +523,27 @@ bool FindToBeModifiedVar(VarSign variable) {
         }
         return false;
     }
-    if(variable.varType == 0) {
+
+    // 0 simple, 1 arrayElement, 2 objectField
+
+    if(variable.varType == 0) 
+    {
         modifiedVariable = &temp->ids[variable.varName];
         return true;
     }
 
-    if(variable.varType == 1) {
-        if(!temp->ids[variable.varName].type.isArray) {
-            yyerror(("Variabla nu este de tip array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+    if(variable.varType == 1) 
+    {
+        if(!temp->ids[variable.varName].type.isArray)
+         {
+            yyerror(("Variabla nu este de tip array! \t Eroare la linia: " + std::to_string(yylineno) + "\n").c_str());
             errorCount++;
             return false;
         }
 
-        if(variable.varIndex[0] >= temp->ids[variable.varName].type.arraySizes[0] || variable.varIndex[0] < 0) {
-            yyerror(("Index is out of bounds\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
+        if(variable.varIndex[0] >= temp->ids[variable.varName].type.arraySizes[0] || variable.varIndex[0] < 0) 
+        {
+            yyerror(("Indexul este în afara limitelor! \t Eroare la linia: " + std::to_string(yylineno) + "\n").c_str());
             errorCount++;
             return false;
         }
@@ -498,16 +551,21 @@ bool FindToBeModifiedVar(VarSign variable) {
         return true;
     }
 
-    if(variable.varType == 2) {
+    if(variable.varType == 2) 
+    {
     // Parcurgem câmpurile clasei pentru a găsi membrul necesar
-        for(int j = 0; j < temp->ids[variable.varName].fields.size(); j++) {
-            if(variable.varField == temp->ids[variable.varName].fields[j].name) {
+        for(int j = 0; j < temp->ids[variable.varName].fields.size(); j++) 
+        {
+            if(variable.varField == temp->ids[variable.varName].fields[j].name) 
+            {
                 VarInfo* field = &temp->ids[variable.varName].fields[j];
 
                 // Verificăm dacă membrul este un array
-                if(field->type.isArray && variable.varIndex[0] != 0) {
+                if(field->type.isArray && variable.varIndex[0] != 0) 
+                {
                     // Verificăm indexul și dimensiunea array-ului
-                    if(variable.varIndex[0] >= field->type.arraySizes[0] || variable.varIndex[0] < 0) {
+                    if(variable.varIndex[0] >= field->type.arraySizes[0] || variable.varIndex[0] < 0) 
+                    {
                         yyerror(("Index out of bounds pentru membrul array\t ERROR LINE: " + std::to_string(yylineno) + "\n").c_str());
                         errorCount++;
                         return false;
@@ -516,7 +574,9 @@ bool FindToBeModifiedVar(VarSign variable) {
                     // Accesăm elementul specificat de variable.varIndex[0]
                     modifiedVariable = &field->fields[variable.varIndex[0]];
                     return true;
-                } else {
+                } 
+                else 
+                {
                     // Dacă nu este array, returnăm direct membrul
                     modifiedVariable = field;
                     return true;
@@ -531,8 +591,10 @@ bool FindToBeModifiedVar(VarSign variable) {
 
 }
 
-void UpdateArray(VarInfo *var) {
-    if(ArrayInitialization.size() > var->type.arraySizes[0]) {
+void UpdateArray(VarInfo *var) 
+{
+    if(ArrayInitialization.size() > var->type.arraySizes[0]) 
+    {
         yyerror("Prea multe elemente in lista de initializare!");
         errorCount++;
         SetArrayDefaultValue(*var);
@@ -546,25 +608,33 @@ void UpdateArray(VarInfo *var) {
     v.type.isArray = false;
     int i = 0;
     var->fields.clear();
-    for(int i = 0; i < ArrayInitialization.size(); i++) {
+
+    for(int i = 0; i < ArrayInitialization.size(); i++) 
+    {
         SetNewValue(&v, ArrayInitialization[i]);
         var->fields.push_back(v);
     }
+
     SetDefaultValue(v);
-    for(i; i < var->type.arraySizes[0]; i++) {
+
+    for(i; i < var->type.arraySizes[0]; i++)
+    {
         var->fields.push_back(v);
     }
     ArrayInitialization.clear();
 }
 
-void PushVariableToStack() {
+void PushVariableToStack() 
+{
      
-     if(!FindToBeModifiedVar(variableFromExpr)) {
+     if(!FindToBeModifiedVar(variableFromExpr)) 
+     {
           stiva.push_back(new ASTNode(0));
           return;
      }
      
-     switch(modifiedVariable->type.typeName) {
+     switch(modifiedVariable->type.typeName) 
+     {
           case TYPE_INT:
                stiva.push_back(new ASTNode(modifiedVariable->value.getIntValue()));
                break;
@@ -585,7 +655,8 @@ void PushVariableToStack() {
      }
 }
 
-void runPrint() {
+void runPrint() 
+{
     expr1 = stiva.back();
     stiva.pop_back();
 
@@ -594,7 +665,8 @@ void runPrint() {
     sprintf(buffer, "Linia: %d\t", yylineno); 
 
     printToScreen += buffer;
-    switch(type) {
+    switch(type) 
+    {
         case TYPE_BOOL:
             sprintf(buffer, "%s\n", expr1->GetBoolValue() ? "true" : "false");
             printToScreen += buffer;
@@ -618,7 +690,8 @@ void runPrint() {
     }
 }
 
-void runTypeOf() {
+void runTypeOf() 
+{
      expr1 = stiva.back();
      stiva.pop_back();
 
