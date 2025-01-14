@@ -11,35 +11,50 @@
 
 void yyerror(const char * s);
 
+//Variabile utilizate pentru asignari, adaugari in tabele de simboluir
 FuncInfo currentFunction;
 VarInfo currentVariable;
 VarInfo *modifiedVariable;
 VarSign variableToAssign;
 VarSign variableFromExpr;
+
+//pentru a putea prelua numele clasei curente
 ClassInfo currentClass;
+
+//variabile utilizate la definirea unei functii + apelul functiilor
 vector<VarInfo> currentParams;
 vector<VarInfo> currentCallList;
 vector<short> currentArraySizes;
 
 //class SymTable* current;
+//tabelele de simboluri
 vector<SymTable*> tables;
 SymTable* globalTable = new SymTable("global");
 SymTable* currentTable = globalTable;
+
+// pentru a mentine returnType-ul unor functii, membri ai unor clase
 short functionReturnType;
 short objectMemberReturnType;
+
+//numele clasei curente din care face parte un obiect
 string currentClassName;
 
+//pentru a avea nume de scope-uri diferite si imbricate
 stack<string> scopeStack;
 unordered_map<string, int> scopeCounters;
+
+//aici vom stoca output-ul pe care il construim pe parcurs ce apelam functiile Print si TypeOf
 string printToScreen;
 
 using namespace std;
 
-extern int yylineno;
-extern int errorCount;
+extern int yylineno; //numarul liniei curente
+extern int errorCount; //numarul de erori
 
+//seteaza o valoare default in dependenta de tipul de date pe care il are(int, float, ...) este apelat atunci cand declaram o variabila
 void SetDefaultValue(VarInfo &var); 
 
+//adaugam un scope nou cu un nume unic pentru for/while/if/loop
 void addScopeName(const string& scopeType) 
 {
     string ScopeName = scopeType;
@@ -56,13 +71,14 @@ void addScopeName(const string& scopeType)
     tables.push_back(currentTable);
 }
 
+//verificam daca o variabila utilizata sau care doreste a fi declarata se regaseste in lista de parametri curenti ai unei functii
 bool existsParam(const string& name) 
 {
-    if(currentParams.size() == 0)
+    if(currentParams.size() == 0) //daca este 0, nu ne aflam in block-ul unei functii
     {
         return false;
     }
-    for(auto param : currentParams) 
+    for(auto param : currentParams) //iteram prin parametri pentru a vedea daca exista id-ul variabilei acolo
     {
         if(param.name == name) 
         {
@@ -72,6 +88,7 @@ bool existsParam(const string& name)
     return false;
 }
 
+//verificam daca o variabila exista in scope-ul curent si daca nu, o adaugam
 bool exists_or_add(const string& name, bool is_array) 
 {
     //cout << "Current table name: " << currentTable->ScopeName << endl;
@@ -102,6 +119,7 @@ bool exists_or_add(const string& name, bool is_array)
     return true;
 }
 
+//adaugam o instanta a unei clase in tabelul de simboluri in care ne aflam, doar daca nu exista una deja cu acest nume in tabelul curent
 bool exists_or_add_for_custom_type(const string& objectName, const string& className) 
 {
     if (currentTable->existsId(objectName)) 
@@ -123,6 +141,7 @@ bool exists_or_add_for_custom_type(const string& objectName, const string& class
     return true;
 }
 
+//verificam parametrii unei functii sa fie aceiasi cu parametrii cu care am definit functia(nr de parametri, tipul acestora)
 bool checkParams(const string& name, SymTable functionScope)
 {
     int contor = 0;
@@ -153,7 +172,7 @@ bool checkParams(const string& name, SymTable functionScope)
     return true;
 }
 
-
+//verificam apelul unei functii, daca este corect structurat si daca exista functia pe care dorim sa o apelam
 bool checkFunction(const string& name)
 {
     SymTable* temp = currentTable;
@@ -204,6 +223,7 @@ bool checkFunction(const string& name)
     return false;
 }
 
+//verificam o metoda dintr-o clasa, la fel ca si pentru functii, doar ca ne uitam doar in scope-ul clasei careia apartine obiectul
 bool checkMethod(const string& methodName)
 {
     int i;
@@ -243,6 +263,7 @@ bool checkMethod(const string& methodName)
     return false;
 }
 
+//ne uitam de ce tip este un obiect(clasa custom) si setam numele clasei in variabila currentClassName
 bool setCurrentClassName(const string& objectName) 
 {
     int i;
@@ -259,6 +280,7 @@ bool setCurrentClassName(const string& objectName)
     return false;
 }
 
+//setam return type-ul pentru un membru al unei clase, verificand in tabela de simboluri a clase ce tip de date este
 bool setObjectMemberReturnType(const string& objectName, const string& memberName) 
 {
     setCurrentClassName(objectName);
@@ -273,6 +295,7 @@ bool setObjectMemberReturnType(const string& objectName, const string& memberNam
     return false;
 }
 
+//setam tipul de return al variabilei pe care dorim sa o utilizam
 bool setCurrentVariableType(const string& varName) 
 {
 
@@ -290,6 +313,7 @@ bool setCurrentVariableType(const string& varName)
     return false;
 }
 
+//asingam tipul de date dorit pentru un numar(practic casting de la int la string)
 string getReturnType(int returnType)
 {
      if(returnType == 0)
@@ -320,6 +344,7 @@ string getReturnType(int returnType)
      return "";     
 }
 
+//verificam daca membrul memberName este definit pentru clasa din care face parte objectName
 bool checkObject(const string& objectName, const string& memberName) 
 {
     if(!setCurrentClassName(objectName)) 
@@ -352,6 +377,7 @@ bool checkObject(const string& objectName, const string& memberName)
     return true;
 }
 
+//Setam variabilei var, valoarea value
 void SetNewValue(VarInfo *var, ASTNode* value) 
 {
     int type = value->GetType();
@@ -394,6 +420,7 @@ void SetNewValue(VarInfo *var, ASTNode* value)
     variableToAssign = VarSign();
 }
 
+//setam valoare default pentur un array, maxim 2 dimensiuni
 void SetArrayDefaultValue(VarInfo& var, size_t level = 0) 
 {
     if (level >= var.type.arraySizes.size()) return;
@@ -419,6 +446,7 @@ void SetArrayDefaultValue(VarInfo& var, size_t level = 0)
     }
 }
 
+//setam valoarea default pentru o variabila de orice tip(clasa, array, tip de date norma)
 void SetDefaultValue(VarInfo &var) 
 {
     int type = var.type.typeName;
@@ -474,6 +502,7 @@ vector<ASTNode*> ArrayInitialization;
 vector<ASTNode*> stiva;
 ASTNode *expr1, *expr2; 
 
+//introducem in varful stivei o operatie binara, construind-o din cele 2 noduri din varful stivei si operatia binara op
 void Operation_on_stack(B_operation op) 
 {
     //retinem si eliminam primul nod
@@ -488,6 +517,7 @@ void Operation_on_stack(B_operation op)
      stiva.push_back(new ASTNode(op, expr1, expr2));
 }
 
+//cautam variabila care trebuie modificata prin tabelele de simboluri la care avem acess din tabelul curent(doar in prev, prev->prev ...)
 bool FindToBeModifiedVar(VarSign variable) 
 {
     bool varExistsInParams = existsParam(variable.varName);
@@ -524,7 +554,7 @@ bool FindToBeModifiedVar(VarSign variable)
         return false;
     }
 
-    // 0 simple, 1 arrayElement, 2 objectField
+    // 0 tip simplu, 1 element al unui array, 2 membru al unei clase(a unui obiect)
 
     if(variable.varType == 0) 
     {
@@ -591,6 +621,7 @@ bool FindToBeModifiedVar(VarSign variable)
 
 }
 
+//setam valori array-ului prin lista de initializare
 void UpdateArray(VarInfo *var) 
 {
     if(ArrayInitialization.size() > var->type.arraySizes[0]) 
@@ -624,6 +655,7 @@ void UpdateArray(VarInfo *var)
     ArrayInitialization.clear();
 }
 
+//punem o variabila pe stiva
 void PushVariableToStack() 
 {
      
@@ -655,6 +687,7 @@ void PushVariableToStack()
      }
 }
 
+//rulam functia print
 void runPrint() 
 {
     expr1 = stiva.back();
@@ -690,6 +723,7 @@ void runPrint()
     }
 }
 
+//rulam functia TypeOf
 void runTypeOf() 
 {
      expr1 = stiva.back();

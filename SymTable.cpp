@@ -2,6 +2,7 @@
 #include <string.h>
 
 // Definiția clasei Value
+//Constructori
 Value::Value() : type(-1) {}
 
 Value::Value(int x) : intValue(x), type(0) {}
@@ -14,6 +15,7 @@ Value::Value(bool x) : boolValue(x), type(3) {}
 
 Value::Value(char* x) : stringValue(x), type(4) {}
 
+//returnam in format string valoarea
 string Value::toString() 
 {
     if (type == 0) return to_string(intValue);
@@ -255,7 +257,7 @@ bool SymTable::addClass(const string& name)
     classids[name] = ClassInfo(name);
     return true;
 }
-
+//printam un array
 void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t level = 0)
  {
     if (level >= var.type.arraySizes.size()) 
@@ -272,6 +274,7 @@ void SymTable::printArrayValues(VarInfo& var, std::ofstream& outFile, size_t lev
     outFile << "}";
 }
 
+//punem in scope.txt tabelele de simboluri
 void SymTable::printTable(const string& filename) 
 {
     std::ofstream outFile(filename, ios::app); // Deschide fișierul în modul append
