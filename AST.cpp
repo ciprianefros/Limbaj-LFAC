@@ -105,12 +105,12 @@ ASTNode::ASTNode(B_operation operation, ASTNode *left, ASTNode *right)
     if(operation > MOD) 
     {
         type = TYPE_BOOL;
-        if(left->type == TYPE_INT && operation > BAND) 
+        if(left->type == TYPE_INT && operation >= BAND) 
         {
             yyerror("Int nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ");
             errorCount++;
         }
-        if(left->type == TYPE_FLOAT && operation > BAND) 
+        if(left->type == TYPE_FLOAT && operation >= BAND) 
         {
             yyerror("Float nu suporta urmatoarele operatii efectuate asupra sa: AND si OR! ");
             errorCount++;
@@ -216,7 +216,9 @@ void ASTNode::ReduceToOneNode()
             {
                 yyerror("Împărțirea la 0 este imposibilă. ");
                 errorCount++;
-            } else {
+            } 
+            else 
+            {
                 valoare.number = left->valoare.number / right->valoare.number;
             }
         } 

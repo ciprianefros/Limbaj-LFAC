@@ -11,7 +11,7 @@
 
 void yyerror(const char * s);
 
-//Variabile utilizate pentru asignari, adaugari in tabele de simboluir
+//Variabile utilizate pentru asignari, adaugari in tabele de simboluri
 FuncInfo currentFunction;
 VarInfo currentVariable;
 VarInfo *modifiedVariable;
