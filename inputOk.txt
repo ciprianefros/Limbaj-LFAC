@@ -80,6 +80,7 @@ sfarsit_global
 start_programel
 
     fx <- fx + 10.0 * fx - 65.0;
+   
     Print(fx);
     Print(s);
     s <- "otherstr";
@@ -91,9 +92,12 @@ start_programel
     Print(ix);
     Print(f(ix) + 1000 > 100 && oba.x + 2 > 100 || b1 == adevarat);
     b1 <- b2;
+    Print(b1 == adevarat || b2 == fals);
+    TypeOf(oba.x + ob.x);
     bfunc(b1, "s");
     TypeOf(ix + 5 > iy + 6);
     TypeOf(ix + 5 > iy + 6 && b1 == fals || f(ix) > 5);
-
+     ix <- -5 - ix + 6;
+    Print(ix);
 sfarsit_programel
 

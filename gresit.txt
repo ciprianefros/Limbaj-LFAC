@@ -52,6 +52,7 @@ start_programel
     ix <- bfunc(ix, 10, "ceva");
     Print(s + ix);
     Print(f(ix) + g(ix));
-    TypeOf(oba.x + obb.x);
+    TypeOf(oba + obb);
+    Print(xx);
 
 sfarsit_programel
