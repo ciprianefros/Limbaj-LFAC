@@ -1306,3 +1306,123 @@ Variabile:
 Functions:
 Classes:
 
+Scope: global
+Variabile:
+  intreg arr[10] = {1, 12, 13, 4, 5, 6, 7, 8, 9, 10}
+  caracter c = y
+  intreg hello[10] = {20, 20, 20, 20, 20, 20, 20, 20, 0, 0}
+  sir s = "hello world"
+  intreg x = 2
+  intreg y = 412
+  caracter z = z
+Functions:
+  real foo (intreg sdfs,intreg sgsg,)
+  intreg functie (real w,intreg m,)
+Classes:
+  Class B2
+
+Scope: B2
+Variabile:
+  caracter chh = 0
+  intreg x = 0
+  caracter zz[8] = {0, 0, 0, 0, 0, 0, 0, 0}
+Functions:
+  intreg foc (sir wx,real ww,)
+Classes:
+
+Scope: foc
+Variabile:
+  real wy = 2.000000
+  intreg x = 0
+Functions:
+Classes:
+
+Scope: foo
+Variabile:
+Functions:
+Classes:
+
+Scope: functie
+Variabile:
+  caracter B3 = 0
+  intreg yy = 0
+Functions:
+Classes:
+
+Scope: main
+Variabile:
+  B2 A {
+		caracter chh = m;
+		intreg x = 127;
+		caracter zz[8] = {a, z, c, d, e, f, g, h}
+	}
+  B2 B {
+		caracter chh = 0;
+		intreg x = 2;
+		caracter zz[8] = {0, 0, 0, 0, 0, 0, 0, 0}
+	}
+  caracter bibi = 0
+  bool is_true = false
+Functions:
+Classes:
+
+Scope: if0
+Variabile:
+  caracter charact = 0
+  intreg lmnop = 0
+Functions:
+Classes:
+
+Scope: else0_if0
+Variabile:
+  intreg salutari[3,10] = {{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}}
+Functions:
+Classes:
+
+Scope: while0
+Variabile:
+  caracter yolo = h
+Functions:
+Classes:
+
+Scope: loop0
+Variabile:
+Functions:
+Classes:
+
+Scope: if1_loop0
+Variabile:
+  intreg x = 4
+  intreg z[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+Functions:
+Classes:
+
+Scope: else1_if1_loop0
+Variabile:
+Functions:
+Classes:
+
+Scope: if2
+Variabile:
+Functions:
+Classes:
+
+Scope: if3
+Variabile:
+Functions:
+Classes:
+
+Scope: do-while0
+Variabile:
+  sir ccc = 0
+  caracter chhhhh = a
+Functions:
+Classes:
+
+Scope: for0
+Variabile:
+  intreg i32 = 1
+  intreg lol = 0
+Functions:
+Classes:
+

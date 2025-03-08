@@ -1,24 +1,3 @@
 TODO:
 
-DE LA 2):
-    -> Faza cu Value pentru variabile, array-uri!!! (a) ++++
-    -> Pentru Array-uri, SetDefaultValue, de implementat DefaultValue pentru Array-uri!!
-
-DE LA 3): 
-    -> punctul c, d, e de verificat, punctul a de completat!
-
-DE LA 4): 
-    -> Functia Print
-    -> Functia TypeOf
-    -> De verificat toata clasa AST
-
-
-
-ERORI: 
-    -> Parametrii functiei sa poata fi accesati in interiorul functiei;
-    -> De modificat textul pentru erori
-
-Pentru, functii, mai intai verificam daca variabilele se regasesc in lista de parametri, si apoi daca se gaseste in scope.
-
-Varianta finala, fara printf pentru debug: 
-pentru proiect final, de adaptat fisierele
+All done

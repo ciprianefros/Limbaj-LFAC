@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "limbaj.tab.h"
+#include "src/limbaj.tab.h"
 %}
 %option noyywrap
 %%

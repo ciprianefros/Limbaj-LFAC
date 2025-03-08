@@ -591,10 +591,10 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "limbaj.l"
-#line 2 "limbaj.l"
+#line 1 "src/limbaj.l"
+#line 2 "src/limbaj.l"
 #include <stdio.h>
-#include "limbaj.tab.h"
+#include "src/limbaj.tab.h"
 #line 599 "lex.yy.c"
 #line 600 "lex.yy.c"
 
@@ -813,7 +813,7 @@ YY_DECL
 		}
 
 	{
-#line 6 "limbaj.l"
+#line 6 "src/limbaj.l"
 
 
 #line 820 "lex.yy.c"
@@ -875,250 +875,250 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "limbaj.l"
+#line 8 "src/limbaj.l"
 { return INT;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 9 "limbaj.l"
+#line 9 "src/limbaj.l"
 { return FLOAT;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 10 "limbaj.l"
+#line 10 "src/limbaj.l"
 { return CHAR;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 11 "limbaj.l"
+#line 11 "src/limbaj.l"
 { return STRING;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 12 "limbaj.l"
+#line 12 "src/limbaj.l"
 { return BOOL;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 14 "limbaj.l"
+#line 14 "src/limbaj.l"
 {return CLASS;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "limbaj.l"
+#line 16 "src/limbaj.l"
 {return BGIN;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "limbaj.l"
+#line 17 "src/limbaj.l"
 {return END;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 19 "limbaj.l"
+#line 19 "src/limbaj.l"
 {return BGINGLOBAL;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 20 "limbaj.l"
+#line 20 "src/limbaj.l"
 {return ENDGLOBAL;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 22 "limbaj.l"
+#line 22 "src/limbaj.l"
 {return BGINVARS;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 23 "limbaj.l"
+#line 23 "src/limbaj.l"
 {return ENDVARS;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "limbaj.l"
+#line 25 "src/limbaj.l"
 {return BGINCLASS;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "limbaj.l"
+#line 26 "src/limbaj.l"
 {return ENDCLASS;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 28 "limbaj.l"
+#line 28 "src/limbaj.l"
 {return BGINFUNC;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 29 "limbaj.l"
+#line 29 "src/limbaj.l"
 {return ENDFUNC;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 31 "limbaj.l"
+#line 31 "src/limbaj.l"
 { return EQ; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 32 "limbaj.l"
+#line 32 "src/limbaj.l"
 { return NEQ; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 33 "limbaj.l"
+#line 33 "src/limbaj.l"
 { return GT; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 34 "limbaj.l"
+#line 34 "src/limbaj.l"
 { return LT; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 35 "limbaj.l"
+#line 35 "src/limbaj.l"
 { return GTE; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 36 "limbaj.l"
+#line 36 "src/limbaj.l"
 { return LTE; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 37 "limbaj.l"
+#line 37 "src/limbaj.l"
 { return AND; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 38 "limbaj.l"
+#line 38 "src/limbaj.l"
 { return OR; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 39 "limbaj.l"
+#line 39 "src/limbaj.l"
 { return NOT; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 41 "limbaj.l"
+#line 41 "src/limbaj.l"
 {return PRINT;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 42 "limbaj.l"
+#line 42 "src/limbaj.l"
 {return TYPEOF;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "limbaj.l"
+#line 43 "src/limbaj.l"
 {return IF;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "limbaj.l"
+#line 44 "src/limbaj.l"
 {return ELSE;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 45 "limbaj.l"
+#line 45 "src/limbaj.l"
 {return FOR;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 46 "limbaj.l"
+#line 46 "src/limbaj.l"
 {return DO;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 47 "limbaj.l"
+#line 47 "src/limbaj.l"
 {return WHILE;}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 48 "limbaj.l"
+#line 48 "src/limbaj.l"
 {return LOOP;}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 49 "limbaj.l"
+#line 49 "src/limbaj.l"
 {return BREAK;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 50 "limbaj.l"
+#line 50 "src/limbaj.l"
 {return CONTINUE;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 51 "limbaj.l"
+#line 51 "src/limbaj.l"
 {return RETURN;}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 52 "limbaj.l"
+#line 52 "src/limbaj.l"
 { yylval.true_or_false = true; return BVAL; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 53 "limbaj.l"
+#line 53 "src/limbaj.l"
 { yylval.true_or_false = false; return BVAL; }
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 54 "limbaj.l"
+#line 54 "src/limbaj.l"
 { yylval.string = strdup(yytext); return SVAL; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 55 "limbaj.l"
+#line 55 "src/limbaj.l"
 { yylval.caracter = yytext[1]; return CVAL; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 56 "limbaj.l"
+#line 56 "src/limbaj.l"
 {    yylval.real_number = atof(yytext);return FVAL;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 57 "limbaj.l"
+#line 57 "src/limbaj.l"
 {yylval.string = strdup(yytext); return ID;}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 58 "limbaj.l"
+#line 58 "src/limbaj.l"
 {return ASSIGN;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 59 "limbaj.l"
+#line 59 "src/limbaj.l"
 {yylval.number = atoi(yytext); return IVAL;}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 60 "limbaj.l"
+#line 60 "src/limbaj.l"
 { /* Ignorăm comentariile */ }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 61 "limbaj.l"
+#line 61 "src/limbaj.l"
 ;
 	YY_BREAK
 case 47:
 /* rule 47 can match eol */
 YY_RULE_SETUP
-#line 62 "limbaj.l"
+#line 62 "src/limbaj.l"
 {yylineno++;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 63 "limbaj.l"
+#line 63 "src/limbaj.l"
 {return yytext[0];}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 65 "limbaj.l"
+#line 65 "src/limbaj.l"
 ECHO;
 	YY_BREAK
 #line 1125 "lex.yy.c"
@@ -2126,4 +2126,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 65 "limbaj.l"
+#line 65 "src/limbaj.l"

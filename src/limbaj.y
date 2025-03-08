@@ -616,9 +616,10 @@ int main(int argc, char** argv)
     yyparse();
 
     //std::cout << "Variables in global scope:" << std::endl;
+    
     for(auto table : tables) 
     {
-        table->printTable("scope.txt");
+        table->printTable("scopes/scope.txt");
     }
     
     // Eliberare memorie pentru toate tabelele
