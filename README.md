@@ -1,15 +1,8 @@
 # Limbaj-LFAC
+
 ## Overview
+
 This language is a custom-designed programming language built as a project for the Formal Languages, Automata and Compilers Course during our first semester in year II. The language has itw own unique syntax and supports several built-in functions, like Print and TypeOf. This project was developed by Efros Ciprian and Chelba Sergiu-Mihai as an academin exercise to learn the fundamentals of language design, parsing and compilation.
-
-Markdown
-
-Collapse
-# Limbaj LFAC
-
-## Overview
-
-Limbaj LFAC is a custom-designed programming language built as a project for the Formal Languages, Automata, and Compilers course during our first semester in year II. The language has its own unique syntax and supports several built-in functions—most notably, `TypeOf` and `Print`. This project was developed by Efros Ciprian and Chelba Sergiu-Mihai as an academic exercise to learn the fundamentals of language design, parsing, and compilation.
 
 ## Features
 
